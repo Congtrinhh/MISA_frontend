@@ -1,0 +1,36 @@
+.m-select {
+	width: 200px;
+	height: 30px;
+	display: flex;
+	border: 1px solid #babec5;
+	border-radius: 2px;
+	background-color: #fff;
+}
+
+.m-select-input {
+	width: 166px;
+	height: 100%;
+	border: none;
+	outline: none;
+	padding: 0 10px;
+}
+
+.m-select-button {
+	all: unset;
+
+	width: 32px;
+	height: 100%;
+	appearance: none;
+
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+
+.m-select-button-icon {
+	display: inline-block;
+	background-repeat: no-repeat;
+}
+
+.m-select-list {
+}

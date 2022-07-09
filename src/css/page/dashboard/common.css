@@ -1,0 +1,618 @@
+@import url(../../base/button.css);
+@import url(../../base/input.css);
+@import url(../../base/select.css);
+
+:root {
+	--primary-color: #2ca01c;
+	--blue-color: #2489ca;
+	--header-height: 48px;
+	--sidebar-width: 180px;
+	--input-height: 32px;
+	--sidebar-collapse-width: 52px;
+	--sidebar-bg-color: #393a3d;
+}
+
+/* --------------------------------- LAYOUT - COMMON --------------------------------- */
+body {
+	display: flex;
+	min-height: 100vh;
+}
+
+.m-sidebar {
+	width: var(--sidebar-width);
+	height: calc(100vh - var(--header-height));
+	background-color: var(--sidebar-bg-color);
+
+	position: fixed;
+	top: var(--header-height);
+	left: 0;
+	z-index: 9999;
+}
+
+.m-header {
+	height: var(--header-height);
+	background-color: #fff;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+}
+
+/* +, collapse of sidebar and header */
+body.sidebar-collapse .m-sidebar {
+	width: var(--sidebar-collapse-width);
+}
+
+body.sidebar-collapse .m-sidebar .m-sidebar-list .m-sidebar-link-text {
+	display: none;
+}
+
+body.sidebar-collapse .m-content {
+	max-width: calc(100vw - 70px);
+	left: var(--sidebar-collapse-width);
+}
+
+body.sidebar-collapse button#sidebarToggle {
+	color: #fff;
+	position: absolute;
+	top: 14px;
+	left: 5px;
+	z-index: 9999;
+	background-position: -312px -32px;
+}
+
+body.sidebar-collapse .m-header .m-header-left-hybrid > * {
+	visibility: hidden;
+}
+
+body.sidebar-collapse .m-header .m-header-left-hybrid {
+	width: var(--sidebar-collapse-width);
+}
+
+button#sidebarToggle {
+	border: none;
+	color: #111;
+	background: url(../../../assets/img/Sprites.64af8f61.svg) no-repeat;
+	width: 24px;
+	height: 24px;
+	min-width: 24px;
+	min-height: 24px;
+	background-position: -843px -30px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+body.sidebar-collapse .m-sidebar .m-sidebar-list .m-sidebar-link-icon {
+	margin-right: 0;
+}
+
+body.sidebar-collapse .m-sidebar .m-sidebar-list .m-sidebar-link {
+	justify-content: center;
+}
+
+/* --------------------------------- UTILITIES --------------------------------- */
+/* +, DROPDOWN OF TABLE */
+.m-dropdown {
+	font-size: 0;
+	display: inline-flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.m-dropdown .m-dropdown-button {
+	appearance: none;
+	border: none;
+	background: transparent;
+	font-weight: 600;
+	cursor: pointer;
+	color: var(--blue-color);
+}
+
+.m-dropdown .m-dropdown-button.m-dropdown-button-left {
+	padding: 6px 0 6px 16px;
+}
+
+.m-dropdown .m-dropdown-button .m-small-wrapper {
+	outline: 1px solid transparent;
+}
+
+.m-dropdown .m-dropdown-button.m-dropdown-button-right {
+	padding: 8px 10px;
+}
+
+.m-dropdown .m-dropdown-button.m-dropdown-button-left .m-small-wrapper {
+	line-height: 0.9rem;
+	padding: 0 2px;
+}
+.m-dropdown .m-dropdown-button.m-dropdown-button-right .m-small-wrapper {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -896px -359px;
+}
+
+.m-dropdown .m-dropdown-button.m-dropdown-button-left:focus .m-small-wrapper,
+.m-dropdown .m-dropdown-button.m-dropdown-button-right:focus .m-small-wrapper {
+	outline-color: var(--blue-color);
+}
+
+/* hidden dropdown content */
+.m-dropdown-content {
+	width: 120px;
+	z-index: 9999;
+	position: fixed;
+	display: none;
+}
+.m-dropdown-content ul {
+	background: #fff;
+	padding: 2px 1px;
+	border-radius: 2px;
+	border: 1px solid #babec5;
+}
+
+.m-dropdown-content ul li {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: block;
+}
+
+.m-dropdown-content ul li:hover {
+	background: #ddd;
+	color: var(--primary-color);
+}
+
+/* +, DIALOG */
+.m-dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99999;
+	background: rgba(0, 0, 0, 0.6);
+	/* display: none; */
+}
+
+.m-dialog .m-dialog-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	background: #fff;
+	border-radius: 4px;
+	padding: 20px 32px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header {
+	margin-bottom: 24px;
+	align-items: center;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header h3 {
+	font-size: 24px;
+	color: #111;
+	font-weight: 700;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header .m-row {
+	margin: 0 21px;
+	align-items: center;
+}
+
+.m-dialog .m-dialog-content .m-row-input {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.m-dialog .m-dialog-content .m-input-label {
+	font-weight: bold;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	background: transparent;
+	font-size: 1.5rem;
+}
+
+.m-dialog .m-dialog-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+
+	margin-top: 38px;
+	padding-top: 24px;
+	border-top: 1px solid #aaa;
+}
+
+.m-dialog .m-dialog-footer .m-button-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+
+.m-dialog .m-dialog-footer .m-button-group .m-button-secondary {
+	margin-right: 10px;
+}
+
+.asterisk {
+	color: red;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: repeat(2, auto);
+	grid-template-areas:
+		"section1 section2"
+		"section3 section3";
+	column-gap: 30px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-1 {
+	grid-area: section1;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-2 {
+	grid-area: section2;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-3 {
+	grid-area: section3;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-id {
+	width: 40%;
+	margin-right: 6px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-name {
+	flex-grow: 1;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section select[name="emp-organization"] {
+	width: 100%;
+	height: var(--input-height);
+	border: 1px solid #babec5;
+	outline: none;
+	border-radius: 2px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section select[name="emp-organization"]:focus {
+	border-color: var(--primary-color);
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-dob {
+	width: 40%;
+	margin-right: 6px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-checkbox-emp-gender {
+	width: 100%;
+	height: var(--input-height);
+	display: flex;
+	align-items: center;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-identification-number {
+	flex-grow: 1;
+}
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-identification-number-release-date {
+	margin-left: 6px;
+	width: 40%;
+}
+
+/* +, dialog confirm delete */
+.m-dialog.m-confirm-delete-dialog .m-dialog-content {
+	min-width: 444px;
+}
+
+.m-dialog.m-confirm-delete-dialog .m-dialog-body {
+	display: flex;
+	justify-content: space-between;
+}
+
+.m-dialog.m-confirm-delete-dialog .m-dialog-body .m-dialog-body-text {
+	overflow: auto;
+	max-height: 400px;
+	padding-left: 16px;
+	padding-top: 12px;
+}
+
+.m-dialog.m-confirm-delete-dialog .m-dialog-body .m-dialog-body-icon {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -592px -456px;
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
+	min-height: 48px;
+}
+
+.m-row-phone-and-email,
+.m-row-bank-info {
+	column-gap: 6px;
+}
+.m-row-phone-and-email .m-row-input,
+.m-row-bank-info .m-row-input {
+	flex-grow: 1;
+}
+
+.m-row.m-row-input {
+	margin-bottom: 12px;
+}
+
+.m-row.m-row-input .m-input-label {
+	margin: 0 0 4px 0;
+}
+
+.m-checkbox + label {
+	margin-right: 20px;
+	margin-left: 10px;
+}
+
+.m-error-message-dialog.m-dialog .m-dialog-content {
+	min-width: 444px;
+}
+
+.m-error-message-dialog.m-dialog .m-dialog-body {
+	display: flex;
+	align-items: center;
+}
+
+.m-error-message-dialog.m-dialog .m-dialog-body .m-dialog-body-icon {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -24px -954px;
+
+	width: 48px;
+	height: 48px;
+	min-width: 48px;
+	min-height: 48px;
+
+	margin-right: 20px;
+}
+
+.m-error-message-dialog.m-dialog .m-dialog-footer {
+	justify-content: center;
+}
+
+/* utilities */
+[invalid] {
+	border: 1px solid red !important;
+}
+
+.m-error-message-dialog {
+	/* display: none; */
+}
+
+.error {
+	color: red !important;
+}
+
+.m-row-input {
+	position: relative;
+}
+
+.m-row-input > .m-input-error-label {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	z-index: 9999;
+	transform: translate(-50%, -10px);
+	background-color: #333;
+	color: #fff;
+	padding: 6px;
+	white-space: nowrap;
+
+	display: none;
+}
+
+.m-row-input > input[invalid]:hover ~ .m-input-error-label,
+.m-row-input > select[invalid]:hover ~ .m-input-error-label,
+.m-row-input > textarea[invalid]:hover ~ .m-input-error-label {
+	display: block;
+}
+
+.radio-wrapper {
+	display: flex;
+	align-items: center;
+}
+
+[type="radio"] {
+	opacity: 0;
+}
+
+[type="radio"] + label {
+	position: relative;
+}
+
+[type="radio"] + label:before {
+	position: absolute;
+	content: "";
+	top: 50%;
+	left: -24px;
+	transform: translate(0%, -50%);
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	outline-offset: 4px;
+	outline: 1px solid #888888;
+}
+
+[type="radio"]:checked + label:before {
+	outline-color: var(--primary-color);
+	background: var(--primary-color);
+}
+
+/* custom checkbox */
+input[type="checkbox"] {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+input[type="checkbox"] {
+	position: relative;
+	width: 18px;
+	height: 18px;
+	border-radius: 2px;
+	border: 1px solid gray;
+	vertical-align: -2px;
+	background-color: #fff;
+	cursor: pointer;
+
+	transition: all 0.25s ease;
+	transform: rotate(-90deg);
+}
+
+input[type="checkbox"]::before {
+	/* content: "✔"; */
+	content: "";
+	background: url(../../../assets/img/Sprites.64af8f61.svg) no-repeat;
+
+	display: inline-block;
+	position: absolute;
+	font-size: 1.2em;
+	right: 0px;
+	top: -1px;
+	visibility: hidden;
+
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+}
+
+input[type="checkbox"]:checked::before {
+	/* Use `visibility` instead of `display` to avoid recalculating layout */
+	visibility: visible;
+	background-position: -1224px -360px;
+}
+
+input[type="checkbox"]:checked {
+	transform: rotate(0);
+	border-color: #2ca01c;
+}
+
+input[type="checkbox"]:disabled {
+	border-color: black;
+	background: #ddd;
+	color: gray;
+}
+
+/* dropdown paging */
+.m-select {
+	position: relative;
+}
+
+.m-select.active,
+.m-select:focus {
+	border: 1px solid var(--primary-color);
+}
+
+.m-select-input {
+}
+
+.m-select-input:focus {
+}
+
+.m-select-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.m-select-button.active .m-select-button-icon {
+	transform: rotate(180deg);
+}
+
+.m-select-button:hover,
+.m-select-button:focus {
+	background-color: #e0e0e0;
+	border-color: #e0e0e0;
+}
+
+.m-select-button-icon {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -560px -359px;
+
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	transition: all 0.25s ease;
+}
+
+.m-select-list {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: calc(100% + 4px);
+	background: #fff;
+	border: 1px solid #babec5;
+
+	visibility: hidden;
+}
+
+.m-select-list ul {
+	margin: 0;
+}
+
+.m-select-list ul li {
+	display: block;
+	height: 32px;
+	padding: 0 10px;
+	cursor: pointer;
+	line-height: 32px;
+}
+
+.m-select-list ul li:hover {
+	background: #e0e0e0;
+	color: var(--primary-color);
+}
+
+.m-select-list ul li.active {
+	background: var(--primary-color);
+	color: #fff;
+}
+
+.m-select-button.active ~ .m-select-list {
+	visibility: visible;
+	z-index: 9999;
+}
+
+/* main dialog additional styles */
+.m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon,
+.m-dialog .m-dialog-content .m-dialog-close .m-button-cancel-icon {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -592px -456px;
+	width: 24px;
+	height: 24px;
+	min-width: 24px;
+	min-height: 24px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon {
+	background-position: -89px -144px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close .m-button-cancel-icon {
+	background-position: -144px -144px;
+}

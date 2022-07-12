@@ -1,0 +1,67 @@
+.el-pagination {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.el-pagination button {
+	padding: 0;
+}
+
+.el-pagination button:hover {
+	color: unset;
+}
+
+.el-pagination button[disabled] {
+}
+
+.el-pagination button[disabled]:hover {
+	color: #c0c4cc;
+	cursor: default;
+}
+
+.el-pagination .btn-prev {
+	padding-right: 0;
+	margin-right: 13px;
+}
+
+.el-pagination .btn-next {
+	padding-left: 0;
+	margin-left: 13px;
+}
+
+.el-pagination .el-pager {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.el-pagination .el-pager li {
+	background: #fff;
+	min-width: unset;
+
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	cursor: pointer;
+	padding: 0 7px;
+
+	font-weight: normal;
+}
+
+.el-pagination .el-pager li.el-icon {
+}
+
+.el-pagination .el-pager li:hover {
+	color: unset;
+}
+
+.el-pagination .el-pager li.active {
+	border: 1px solid #e0e0e0;
+	font-weight: 700;
+	color: #111;
+}
+
+.el-pagination__sizes {
+	margin-right: 16px;
+}

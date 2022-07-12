@@ -60,6 +60,16 @@ img {
 	height: auto;
 }
 
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
 /*  */
 .mi-16 {
 	width: 16px;
@@ -251,7 +261,7 @@ img {
 }
 
 /* utilities */
-[invalid] {
+[invalid]:not(.el-select) {
 	border: 1px solid red !important;
 }
 
@@ -283,7 +293,8 @@ img {
 
 .m-row-input > input[invalid]:hover ~ .m-input-error-label,
 .m-row-input > select[invalid]:hover ~ .m-input-error-label,
-.m-row-input > textarea[invalid]:hover ~ .m-input-error-label {
+.m-row-input > textarea[invalid]:hover ~ .m-input-error-label ,
+.m-row-input > .el-select[invalid]:hover ~ .m-input-error-label{
 	display: block;
 }
 
@@ -371,4 +382,30 @@ input[type="checkbox"]:disabled {
 	border-color: black;
 	background: #ddd;
 	color: gray;
+}
+
+/* custom input date  */
+input[type="date"] {
+	padding-right: 0 !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	width: 30px;
+	outline: none;
+	background: url(../assets/img/Sprites.64af8f61.svg) no-repeat -118px -304px;
+	cursor: pointer;
+	height: 30px;
+}
+input[type="date" i]:hover::-webkit-calendar-picker-indicator {
+	background-color: #e0e0e0;
+	border-color: #e0e0e0;
+}
+
+input::-webkit-datetime-edit-fields-wrapper {
+	text-transform: uppercase;
+	font-family: notosans-italic;
+	color: #111;
+}
+
+input[type="date"]::-webkit-datetime-edit {
 }

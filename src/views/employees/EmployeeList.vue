@@ -70,11 +70,11 @@
 								<template>
 									<td><input type="checkbox" name="check-row" id="" /></td>
 									<td class="emp-id">{{ emp.EmployeeCode }}</td>
-									<td>{{ emp.EmployeeName ? emp.EmployeeName : "-" }}</td>
+									<td>{{ emp.FullName ? emp.FullName : "-" }}</td>
 									<td>{{ emp.GenderName ? emp.GenderName : "-" }}</td>
 									<td class="emp-dob">{{ formatDate(emp.DateOfBirth) }}</td>
 									<td>{{ emp.IdentityNumber ? emp.IdentityNumber : "-" }}</td>
-									<td>{{ emp.EmployeePosition ? emp.EmployeePosition : "-" }}</td>
+									<td>{{ emp.PositionName ? emp.PositionName : "-" }}</td>
 									<td>{{ emp.DepartmentName ? emp.DepartmentName : "" }}</td>
 									<td>{{ emp.BankAccountNumber ? emp.BankAccountNumber : "-" }}</td>
 									<td>{{ emp.BankName ? emp.BankName : "-" }}</td>
@@ -111,31 +111,21 @@
 
 				<div class="m-paging-container">
 					<div class="m-paging-total-records">
-						Tổng số: <b>{{ employees.length }}</b> bản ghi
+						Tổng số: <b>{{ totalRecords }}</b> bản ghi
 					</div>
 					<div class="m-paging">
-						<div class="m-select m-paging-select">
-							<input type="text" class="m-select-input" />
-							<button class="m-select-button">
-								<div class="m-select-button-icon"></div>
-							</button>
-
-							<div class="m-select-list">
-								<ul>
-									<li>what...</li>
-									<li>what...</li>
-									<li>what...</li>
-								</ul>
-							</div>
-						</div>
-						<ul class="m-paging-bar">
-							<li><a href="#" class="m-paging-btn disabled">Trước</a></li>
-							<li><a href="#" class="m-paging-btn current">1</a></li>
-							<li><a href="#" class="m-paging-btn">2</a></li>
-							<li><a href="#" class="m-paging-btn">3</a></li>
-							<li><a href="#" class="m-paging-btn">4</a></li>
-							<li><a href="#" class="m-paging-btn">Sau</a></li>
-						</ul>
+						<el-pagination
+							@size-change="raisePageSizeChangeEvent"
+							@current-change="raisePageIndexChangeEvent"
+							:page-sizes="[10, 20, 30, 50, 100]"
+							:page-size="pageSize"
+							:pager-count="5"
+							layout="sizes, prev, pager, next"
+							:total="totalRecords"
+							prev-text="Trước"
+							next-text="Sau"
+						>
+						</el-pagination>
 					</div>
 				</div>
 			</div>
@@ -145,6 +135,9 @@
 				ref="dropdownFunctionality"
 				@click="closeDropdownFunctionality"
 				class="m-dropdown-content m-dropdown-content-delete"
+				@focus="handleDropdownOptionFocus"
+				@focusout="handleDropdownOptionFocusOut"
+				tabindex="0"
 			>
 				<ul>
 					<li class="delete" @click="$emit('onShowConfirmDeleteDialog')">Xoá</li>
@@ -155,6 +148,7 @@
 </template>
 
 <script>
+// import { pagingConfig, apiUrls } from "../../utils.js";
 export default {
 	components: {},
 
@@ -166,9 +160,44 @@ export default {
 
 	props: {
 		employees: { type: Array },
+		pageSize: { type: Number },
+		totalRecords: { type: Number },
+		currentPageIndex: { type: Number },
 	},
 
 	methods: {
+		/**
+		 * hàm xử lý khi  bấm vào dropdown xoá employee
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		handleDropdownOptionFocus() {},
+
+		/**
+		 * hàm xử lý khi  bấm ra ngoài dropdown xoá employee
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		handleDropdownOptionFocusOut() {
+			console.log("dropdown focus out");
+			// ẩn dropdown option khi bấm ra ngoài dropdown option
+			this.$refs.dropdownFunctionality.style.display = "none";
+		},
+
+		/**
+		 * hàm xử lý khi page index thay đổi
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		raisePageSizeChangeEvent(pageSize) {
+			this.$emit("onPageSizeChange", pageSize, this.employeeKeyword);
+		},
+
+		/**
+		 * hàm xử lý khi page index thay đổi
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		raisePageIndexChangeEvent(pageNumber) {
+			this.$emit("onPageIndexChange", pageNumber, this.employeeKeyword);
+		},
+
 		/**
 		 * close dropdown functionality
 		 * author: Trinh Quy Cong 7/7/22
@@ -190,7 +219,8 @@ export default {
 			dropdownEl.style.left = posX - 80 + "px";
 			dropdownEl.style.top = posY + 10 + "px";
 
-			// chua xong, tiep tuc o day...
+			// focus vào dropdown option
+			this.$refs.dropdownFunctionality.focus();
 		},
 
 		/**
@@ -200,7 +230,7 @@ export default {
 		formatDate(date) {
 			try {
 				date = new Date(date);
-				let day = date.getDay();
+				let day = date.getDate();
 				let month = date.getMonth() + 1;
 				let year = date.getFullYear();
 

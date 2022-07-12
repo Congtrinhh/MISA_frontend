@@ -1,0 +1,308 @@
+/* ----------------------------dropdown select page number---------------------------- */
+.el-select {
+}
+
+/* wrapper */
+.el-pagination .el-select .el-input {
+	width: 200px;
+	height: 30px;
+	display: flex;
+	border-radius: 2px;
+	background-color: #fff;
+}
+
+/* input */
+.el-pagination .el-select .el-input .el-input__inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	text-align: left;
+	border: 1px solid #babec5;
+	height: 100%;
+}
+
+/* ngang hàng với input */
+.el-input__suffix {
+	width: 32px;
+	height: 30px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.el-pagination .el-input__suffix {
+	right: 0;
+	transform: scale(1);
+	width: 32px;
+
+	border: none;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+
+	top: 1px;
+	bottom: 1px;
+	right: 1px;
+	height: 28px;
+}
+
+/* icon parent */
+.el-input__suffix-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* icon default styles */
+.el-select .el-input .el-select__caret.is-reverse {
+	transform: rotateZ(180deg);
+}
+
+.el-select .el-input .el-select__caret {
+	color: #c0c4cc;
+	font-size: 14px;
+	transition: transform 0.3s;
+	transform: rotateZ(0deg);
+	cursor: pointer;
+
+	/* my style */
+	background-image: url(../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -560px -359px;
+
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	transition: all 0.25s ease;
+}
+
+.el-input--mini .el-input__icon {
+	line-height: 28px;
+}
+
+.el-input__icon {
+	height: 100%;
+	width: 25px;
+	text-align: center;
+	transition: all 0.3s;
+	line-height: 30px;
+}
+
+.el-icon-arrow-up:before {
+	display: none;
+}
+
+.el-input__icon:after {
+	display: none;
+}
+
+/* change border color when focused */
+.el-range-editor.is-active,
+.el-range-editor.is-active:hover,
+.el-select .el-input.is-focus .el-input__inner {
+	border-color: var(--primary-color);
+}
+
+.el-select .el-input__inner:focus {
+	border-color: var(--primary-color);
+}
+
+.el-pagination__sizes .el-input .el-input__inner:hover {
+	border-color: var(--primary-color);
+}
+
+/* gray square background on arrow */
+.el-pagination .el-input__suffix:hover {
+	background-color: #e0e0e0;
+}
+
+/* ----------------------------dropdown select page number (list)---------------------------- */
+.el-select-dropdown {
+	min-width: 200px !important;
+}
+
+.el-select-dropdown__list {
+	list-style: none;
+	padding: 2px 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.el-select-dropdown__item {
+	display: block;
+	height: 32px;
+	padding: 0 10px;
+	cursor: pointer;
+	line-height: 32px;
+}
+
+.el-select-dropdown__item:hover {
+	color: var(--primary-color);
+	background-color: #e0e0e0;
+}
+
+.el-select-dropdown__item.selected {
+	background: var(--primary-color);
+	color: #fff;
+}
+
+/* ----------------------------SELECT FOR ORGANIZATION - DEPARTMENT---------------------------- */
+.select-organization.el-select {
+	width: 100%;
+	height: 32px;
+}
+
+/* wrapper */
+.el-pagination .el-select .el-input {
+	width: 200px;
+	height: 30px;
+	display: flex;
+	border-radius: 2px;
+	background-color: #fff;
+}
+
+/* input */
+.select-organization.el-select .el-input .el-input__inner {
+	height: 32px;
+	border-radius: 2px;
+	transition:none;
+	border: 1px solid #babec5;
+	color: #111;
+	padding-left: 10px;
+}
+
+/* ngang hàng với input */
+.select-organization.el-select .el-input__suffix {
+	width: 32px;
+
+	border: none;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+
+	top: 1px;
+	bottom: 0px;
+	right: 1px;
+	height: 30px;
+}
+
+.select-organization.el-select .el-input__suffix:hover {
+	background-color: #e0e0e0;
+
+}
+.el-pagination .el-input__suffix {
+	right: 0;
+	transform: scale(1);
+	width: 32px;
+
+	border: none;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+
+	top: 1px;
+	bottom: 1px;
+	right: 1px;
+	height: 28px;
+}
+
+/* icon parent */
+.el-input__suffix-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* icon default styles */
+.el-select .el-input .el-select__caret.is-reverse {
+	transform: rotateZ(180deg);
+}
+
+.el-select .el-input .el-select__caret {
+	color: #c0c4cc;
+	font-size: 14px;
+	transition: transform 0.3s;
+	transform: rotateZ(0deg);
+	cursor: pointer;
+
+	/* my style */
+	background-image: url(../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -560px -359px;
+
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	transition: all 0.25s ease;
+}
+
+.el-input--mini .el-input__icon {
+	line-height: 28px;
+}
+
+.el-input__icon {
+	height: 100%;
+	width: 25px;
+	text-align: center;
+	transition: all 0.3s;
+	line-height: 30px;
+}
+
+.el-icon-arrow-up:before {
+	display: none;
+}
+
+.el-input__icon:after {
+	display: none;
+}
+
+/* change border color when focused */
+.el-range-editor.is-active,
+.el-range-editor.is-active:hover,
+.el-select .el-input.is-focus .el-input__inner {
+	border-color: var(--primary-color);
+}
+
+.el-select .el-input__inner:focus {
+	border-color: var(--primary-color);
+}
+
+.el-pagination__sizes .el-input .el-input__inner:hover {
+	border-color: var(--primary-color);
+}
+
+/* gray square background on arrow */
+.el-pagination .el-input__suffix:hover {
+	background-color: #e0e0e0;
+}
+
+/* ----------------------------dropdown select page number (list)---------------------------- */
+.select-dropdown-organization.el-select-dropdown {
+	min-width: 408px !important;
+	z-index: 99999 !important;
+}
+
+.el-select-dropdown__list {
+	list-style: none;
+	padding: 2px 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.el-select-dropdown__item {
+	display: block;
+	height: 32px;
+	padding: 0 10px;
+	cursor: pointer;
+	line-height: 32px;
+}
+
+.el-select-dropdown__item:hover {
+	color: var(--primary-color);
+	background-color: #e0e0e0;
+}
+
+.el-select-dropdown__item.selected {
+	background: var(--primary-color);
+	color: #fff;
+}

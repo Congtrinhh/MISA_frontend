@@ -1,7 +1,7 @@
 const apiUrls = {
-	department: "https://amis.manhnv.net/api/v1/Departments",
-	employee: "https://amis.manhnv.net/api/v1/Employees",
-	position: "https://amis.manhnv.net/api/v1/Positions",
+	employee: "https://localhost:7247/api/v1/Employees",
+	department: "https://localhost:7247/api/v1/Departments",
+	position: "https://localhost:7247/api/v1/Positions",
 };
 
 class FormModeEnum {
@@ -44,4 +44,7 @@ const errorValidationMessageEmployee = {
 	},
 };
 
-export { apiUrls, FormModeEnum, genders, errorValidationMessageEmployee };
+const pagingConfig = {
+	pageSize: 20,
+};
+export { apiUrls, FormModeEnum, genders, errorValidationMessageEmployee, pagingConfig };

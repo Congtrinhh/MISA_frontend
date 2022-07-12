@@ -10,7 +10,7 @@
 				<div class="m-dialog-header"></div>
 				<div v-if="showBody" class="m-dialog-body">
 					<div class="m-dialog-body-icon"></div>
-					<div class="m-dialog-body-text" v-html="body"></div>
+					<div class="m-dialog-body-text" v-html="mainContentDisplay"></div>
 				</div>
 				<div class="m-dialog-footer" :class="{ 'space-between': showConfirmButton }">
 					<button v-if="showConfirmButton" class="m-button" @click="$emit('onConfirm')">
@@ -60,7 +60,7 @@ export default {
 		},
 
 		// content of the dialog
-		body: String,
+		body: null,
 
 		// show confirm button or not
 		showConfirmButton: Boolean,
@@ -80,6 +80,15 @@ export default {
 			default: "Agree",
 		},
 	},
+
+	computed: {
+		mainContentDisplay(){
+			if (Array.isArray(this.body) && this.body.length > 0) {
+				return this.body.join('<br></span><span>')
+			}
+			return this.body;
+		},
+	}
 };
 </script>
 

@@ -40,11 +40,11 @@
 							<div class="m-row m-row-input m-row-input-emp-name">
 								<p class="m-input-label">Tên <b class="asterisk">*</b></p>
 								<input
-									ref="inputEmployeeName"
+									ref="inputFullName"
 									type="text"
 									class="m-input"
 									name="emp-name"
-									v-model="employee.EmployeeName"
+									v-model.trim="employee.FullName"
 									required
 									placeholder="Tên nhân viên"
 									@blur="validateOnBlur($event)"
@@ -55,11 +55,11 @@
 
 						<div class="m-row m-row-input">
 							<p class="m-input-label">Đơn vị <b class="asterisk">*</b></p>
-							<select
+							<!-- <select
 								ref="inputDepartmentId"
 								name="emp-organization"
 								propName="DepartmentId"
-								v-model="employee.DepartmentId"
+								v-model.trim="employee.DepartmentId"
 								required
 								@blur="validateOnBlur($event)"
 							>
@@ -68,7 +68,27 @@
 										{{ dep.DepartmentName }}
 									</option>
 								</template>
-							</select>
+							</select> -->
+
+							<el-select
+								v-model="employee.DepartmentId"
+								filterable
+								placeholder=""
+								name="emp-organization"
+								ref="inputDepartmentId"
+								required
+								@blur="validateOnBlur($event)"
+								class="select-organization"
+								popper-class="select-dropdown-organization"
+							>
+								<el-option
+									v-for="dep in departments"
+									:key="dep.DepartmentId"
+									:label="dep.DepartmentName"
+									:value="dep.DepartmentId"
+								>
+								</el-option>
+							</el-select>
 							<div class="m-input-error-label"></div>
 						</div>
 
@@ -80,7 +100,7 @@
 								class="m-input"
 								name="emp-position"
 								propName="EmployeePosition"
-								v-model="employee.EmployeePosition"
+								v-model="employee.PositionName"
 							/>
 							<div class="m-input-error-label"></div>
 						</div>
@@ -94,8 +114,10 @@
 								<input
 									ref="inputDateOfBirth"
 									type="date"
-									placeholder="DD-MM-YYYY"
-									class="m-input"
+									placeholder="DD/MM/YYYY"
+									min="1960-01-01"
+									max="2050-12-31"
+									class="m-input input-date"
 									name="emp-dob"
 									propName="DateOfBirth"
 									v-model="employee.DateOfBirth"
@@ -109,9 +131,9 @@
 									<div class="radio-wrapper">
 										<input
 											type="radio"
-											v-model="employee.Gender"
+											v-model.number="employee.Gender"
 											name="emp-gender"
-											value="1"
+											:value="genderOptions.male.value"
 											checked
 											class="m-checkbox"
 											id="empGenderMale"
@@ -121,9 +143,9 @@
 									<div class="radio-wrapper">
 										<input
 											type="radio"
-											v-model="employee.Gender"
+											v-model.number="employee.Gender"
 											name="emp-gender"
-											value="0"
+											:value="genderOptions.female.value"
 											class="m-checkbox"
 											id="empGenderFemale"
 										/>
@@ -132,9 +154,9 @@
 									<div class="radio-wrapper">
 										<input
 											type="radio"
-											v-model="employee.Gender"
+											v-model.number="employee.Gender"
 											name="emp-gender"
-											value="2"
+											:value="genderOptions.other.value"
 											class="m-checkbox"
 											id="empGenderOther"
 										/>
@@ -305,7 +327,7 @@
 			showBody
 			closeButtonPrimary
 			closeButtonText="Đóng"
-			:body="toHtmlMessage(errors)"
+			:body="errors"
 			@onCloseInfoDialog="handleCloseInfoDialog"
 		/>
 	</div>
@@ -313,7 +335,7 @@
 
 <script>
 import Employee from "../../models/Employee.model.js";
-import { apiUrls, FormModeEnum, errorValidationMessageEmployee } from "../../utils.js";
+import { apiUrls, FormModeEnum, errorValidationMessageEmployee, genders } from "../../utils.js";
 import InfoDialog from "../../components/base/InfoDialog.vue";
 import { toastModes } from "../../components/base/ToastNotifier.vue";
 
@@ -321,9 +343,9 @@ export default {
 	components: { InfoDialog },
 	props: {
 		//
-		employeeProp: Employee,
+		employeeProp: null,
 		//
-		formModeProp: FormModeEnum.add,
+		formModeProp: null,
 	},
 
 	data() {
@@ -347,7 +369,10 @@ export default {
 			departments: [],
 
 			// element to focus on
-			elementToFocus: this.$refs.inputEmployeeCode,
+			elementToFocus: null,
+
+			// gender options for radio input
+			genderOptions: genders,
 		};
 	},
 
@@ -379,8 +404,6 @@ export default {
 						return;
 					}
 
-					debugger;
-
 					// call api post
 					this.$http
 						.post(apiUrls.employee, this.employee)
@@ -406,13 +429,13 @@ export default {
 											employee.EmployeeCode = employeeCode;
 											this.employee = employee;
 										})
-										.catch((error) =>
+										.catch((error) => {
 											this.handleShowToast(
 												error.response.data.userMsg,
 												toastModes.danger.backgroundColor,
 												toastModes.danger.icon
-											)
-										);
+											);
+										});
 								}
 								//
 								console.log("them thanh cong");
@@ -427,10 +450,17 @@ export default {
 							}
 						})
 						.catch((error) => {
+							// nếu có mảng thông báo lỗi, mở dialog hiển thị các lỗi đó
+							if (Array.isArray(error.response.data.data.errors)) {
+								console.log("có mảng thông báo lỗi");
+								this.showErrorMessageDialog = true;
+								this.errors = error.response.data.data.errors;
+							}
 							console.log(error);
+
 							this.$emit(
 								"onShowToast",
-								"Có lỗi xảy ra",
+								error.response.data.userMsg,
 								toastModes.danger.backgroundColor,
 								toastModes.danger.icon
 							);
@@ -447,7 +477,7 @@ export default {
 
 					// call api put
 					this.$http
-						.put(`${apiUrls.employee}/${this.employee.EmployeeId}`, this.employee)
+						.put(`${apiUrls.employee}`, this.employee)
 						.then((response) => {
 							console.log(response);
 							const row = response.data;
@@ -485,10 +515,17 @@ export default {
 							}
 						})
 						.catch((error) => {
+							// nếu có mảng thông báo lỗi, mở dialog hiển thị các lỗi đó
+							if (Array.isArray(error.response.data.data.errors)) {
+								console.log("có mảng thông báo lỗi");
+								this.showErrorMessageDialog = true;
+								this.errors = error.response.data.data.errors;
+							}
 							console.log(error);
+
 							this.$emit(
 								"onShowToast",
-								"Có lỗi xảy ra",
+								error.response.data.userMsg,
 								toastModes.danger.backgroundColor,
 								toastModes.danger.icon
 							);
@@ -552,29 +589,33 @@ export default {
 					this.elementToFocus = null;
 				}
 
-				if (!this.employee.EmployeeName) {
+				if (!this.employee.FullName) {
 					isValid = false;
 					errorMsg = errorMsg ? errorMsg : errorValidationMessageEmployee.fullName.required;
-					this.elementToFocus = this.elementToFocus ? this.elementToFocus : this.$refs.inputEmployeeName;
-					this.$refs.inputEmployeeName.setAttribute("invalid", true);
-					this.$refs.inputEmployeeName
-						.closest(".m-row-input")
-						.querySelector(".m-input-error-label").textContent =
+					this.elementToFocus = this.elementToFocus ? this.elementToFocus : this.$refs.inputFullName;
+					this.$refs.inputFullName.setAttribute("invalid", true);
+					this.$refs.inputFullName.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
 						errorValidationMessageEmployee.fullName.required;
 				} else {
-					this.$refs.inputEmployeeName.removeAttribute("invalid");
+					this.$refs.inputFullName.removeAttribute("invalid");
 				}
+
+				// vì dùng element ui nên không thể set ref, nên lấy trực tiếp từ dom
+				const selectDepartmentEl = document.querySelector('[name="emp-organization"]');
 				if (!this.employee.DepartmentId) {
 					isValid = false;
+
+					debugger;
+
 					errorMsg = errorMsg ? errorMsg : errorValidationMessageEmployee.departmentId.required;
-					this.elementToFocus = this.elementToFocus ? this.elementToFocus : this.$refs.inputDepartmentId;
-					this.$refs.inputDepartmentId.setAttribute("invalid", true);
-					this.$refs.inputDepartmentId
-						.closest(".m-row-input")
-						.querySelector(".m-input-error-label").textContent =
+					this.elementToFocus = this.elementToFocus ? this.elementToFocus : selectDepartmentEl;
+					selectDepartmentEl.setAttribute("invalid", true);
+					selectDepartmentEl.closest(".el-select").setAttribute("invalid", true);
+					selectDepartmentEl.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
 						errorValidationMessageEmployee.departmentId.required;
 				} else {
-					this.$refs.inputDepartmentId.removeAttribute("invalid");
+					selectDepartmentEl.removeAttribute("invalid");
+					selectDepartmentEl.closest(".el-select").removeAttribute("invalid");
 				}
 				if (this.employee.Email && !this.isEmailValid(this.employee.Email)) {
 					isValid = false;
@@ -601,6 +642,7 @@ export default {
 		 */
 		isEmailValid(email) {
 			try {
+				// const regex  =/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
 				const regexEmail =
 					/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 				return String(email).toLowerCase().match(regexEmail);
@@ -657,7 +699,7 @@ export default {
 			this.$http
 				.get(apiUrls.department)
 				.then((res) => {
-					const data = res.data;
+					const data = res.data.Data;
 					this.departments = data;
 				})
 				.catch((error) => {
@@ -680,7 +722,7 @@ export default {
 		try {
 			// gán input employee code cho biến để focus khi mở dialog
 			this.elementToFocus = this.$refs.inputEmployeeCode;
-			// focus vào input
+			// focus vào input employee code (mặc định)
 			this.elementToFocus.focus();
 		} catch (e) {
 			console.log(e);

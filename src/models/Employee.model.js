@@ -1,9 +1,10 @@
 export default class Employee {
 	constructor(
+		EmployeeId,
 		EmployeeCode,
-		EmployeeName,
+		FullName,
 		DepartmentId,
-		EmployeePosition,
+		PositionName,
 		DateOfBirth,
 		Gender,
 		IdentityNumber,
@@ -16,10 +17,11 @@ export default class Employee {
 		BankName,
 		BankBranchName
 	) {
+		this.EmployeeId = EmployeeId;
 		this.EmployeeCode = EmployeeCode;
-		this.EmployeeName = EmployeeName;
+		this.FullName = FullName;
 		this.DepartmentId = DepartmentId;
-		this.EmployeePosition = EmployeePosition;
+		this.PositionName = PositionName;
 		this.DateOfBirth = DateOfBirth;
 		this.Gender = Gender;
 		this.IdentityNumber = IdentityNumber;

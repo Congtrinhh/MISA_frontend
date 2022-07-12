@@ -8,8 +8,10 @@
 			@onCloseToast="showToast = false"
 		/>
 
-		<EmployeeList
+		<EmployeeList2
 			:employees="employees"
+			:pageSize="pageSize"
+			:totalRecords="totalRecords"
 			@onOpenMainDialog="handleOpenMainDialog"
 			@onSelectedEmployeeChange="handleUpdateSelectedEmployee"
 			@onFormModeAdd="handleUpdateFormModeAdd"
@@ -18,6 +20,8 @@
 			@onSearchEmployees="searchEmployees"
 			@onShowConfirmDeleteDialog="showConfirmDeleteDialog = true"
 			@onShowToast="handleShowToast"
+			@onPageIndexChange="handlePageIndexChange"
+			@onPageSizeChange="handlePageSizeChange"
 		/>
 
 		<!-- main dialog -->
@@ -52,15 +56,15 @@
 import $ from "jquery";
 import _ from "lodash";
 import Employee from "../../models/Employee.model.js";
-import { apiUrls, FormModeEnum, genders } from "../../utils.js";
-import EmployeeList from "./EmployeeList.vue";
+import { apiUrls, FormModeEnum, genders, pagingConfig } from "../../utils.js";
+import EmployeeList2 from "./EmployeeList2.vue";
 import EmployeeDetail from "./EmployeeDetail.vue";
 import InfoDialog from "../../components/base/InfoDialog.vue";
 import ToastNotifier, { toastModes } from "../../components/base/ToastNotifier.vue";
 import PageLoader from "../../components/base/PageLoader.vue";
 
 export default {
-	components: { EmployeeList, EmployeeDetail, PageLoader, InfoDialog, ToastNotifier },
+	components: { EmployeeList2, EmployeeDetail, PageLoader, InfoDialog, ToastNotifier },
 
 	data() {
 		return {
@@ -87,6 +91,12 @@ export default {
 
 			// search employee time out
 			timeOutSearchEmployee: 0,
+
+			// page size cho phân trang trong employee list
+			pageSize: pagingConfig.pageSize,
+
+			// tổng số bản ghi employee trong database
+			totalRecords: 0,
 		};
 	},
 
@@ -98,7 +108,64 @@ export default {
 
 	props: {},
 
+	/**
+	 * get employee list as soon as the component is created
+	 * author: Trinh Quy Cong 28/6/22
+	 */
+	created() {
+		this.getEmployees();
+	},
+
+	/**
+	 *
+	 * author: Trinh Quy Cong 28/6/22
+	 */
+	mounted() {},
+
+	/**
+	 * when component updated
+	 * author: Trinh Quy Cong 28/6/22
+	 */
+	updated() {
+		console.log("employeePage updated");
+	},
+
 	methods: {
+		/**
+		 * hàm xử lý khi page size thay đổi
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		handlePageSizeChange(pageSize, keyword) {
+			this.pageSize = pageSize;
+			this.$http
+				.get(`${apiUrls.employee}?size=${pageSize}&size=${this.pageSize}&keyword=${keyword}`)
+				.then((res) => {
+					console.log(res.data);
+					this.employees = res.data.Data;
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		},
+
+		/**
+		 * hàm xử lý khi page index thay đổi
+		 * author: Trinh Quy Cong 10/7/22
+		 */
+		handlePageIndexChange(pageNumber, keyword) {
+			// vì api quy định lấy theo pageIndex
+			let pageIndex = pageNumber - 1;
+			this.$http
+				.get(`${apiUrls.employee}?pageIndex=${pageIndex}&size=${this.pageSize}&keyword=${keyword}`)
+				.then((res) => {
+					console.log(res.data);
+					this.employees = res.data.Data;
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		},
+
 		/**
 		 * show toast
 		 * author: Trinh Quy Cong 7/7/22
@@ -167,8 +234,9 @@ export default {
 
 				// get new employee code
 				this.$http
-					.get(`${apiUrls.employee}/NewEmployeeCode`)
+					.get(`${apiUrls.employee}/newEmployeeCode`)
 					.then((data) => {
+						
 						const employeeCode = data.data;
 						let employee = new Employee();
 						employee.EmployeeCode = employeeCode;
@@ -216,17 +284,33 @@ export default {
 		 */
 		handleUpdateSelectedEmployee(newEmployee) {
 			try {
+				// 1967-11-16T00:00:00
 				// chuyển đổi date để có thể hiển thị trên dialog
-				const dateOfBirth = new Date(newEmployee.DateOfBirth).toJSON().slice(0, 10).split("-").join("-");
-				newEmployee.DateOfBirth = dateOfBirth;
-
-				const identityDate = new Date(newEmployee.IdentityDate).toJSON().slice(0, 10).split("-").join("-");
-				newEmployee.IdentityDate = identityDate;
+				if (newEmployee.DateOfBirth) {
+					newEmployee.DateOfBirth = newEmployee.DateOfBirth.substring(0, 10);
+				}
+				if (newEmployee.IdentityDate) {
+					newEmployee.IdentityDate = newEmployee.IdentityDate.substring(0, 10);
+				}
 
 				this.selectedEmployee = newEmployee;
 			} catch (e) {
 				console.log(e);
 			}
+		},
+
+		/**
+		 * convert date from api entity (format yyyy/mm/ddd) into vn date format (dd/mm/yyyy)
+		 * author: Trinh Quy Cong 28/6/22
+		 */
+		convertDateIntoVNFormat(rawDate) {
+			// raw date format: 1967-11-16T00:00:00
+			let date, month, year;
+			let dateObject = new Date(rawDate);
+			date = dateObject.getDate() < 10 ? `0${dateObject.getDate()}` : dateObject.getDate();
+			month = dateObject.getMonth() + 1 < 10 ? `0${dateObject.getMonth() + 1}` : dateObject.getMonth() + 1;
+			year = dateObject.getFullYear();
+			return `${date}-${month}-${year}`;
 		},
 
 		/**
@@ -244,14 +328,18 @@ export default {
 		 * get employee list from api with paging
 		 * author: Trinh Quy Cong 30/6/22
 		 */
-		getEmployees() {
+		async getEmployees(keyword='') {
 			try {
 				this.showLoader = true;
 				this.$http
-					.get("https://amis.manhnv.net/api/v1/Employees/filter")
+					.get(`${apiUrls.employee}?keyword=${keyword}`)
 					.then((response) => {
 						const data = response.data;
+						// set employee list
 						this.employees = data.Data;
+						// set total records
+						this.totalRecords = data.TotalRecords;
+						// hide loader animation
 						this.showLoader = false;
 					})
 					.catch((error) => {
@@ -264,6 +352,7 @@ export default {
 					});
 			} catch (e) {
 				console.log(e);
+				this.showLoader = false;
 			}
 		},
 
@@ -280,10 +369,12 @@ export default {
 				this.timeOutSearchEmployee = setTimeout(() => {
 					me.showLoader = true;
 					me.$http
-						.get("https://amis.manhnv.net/api/v1/Employees/filter?employeeFilter=" + keyword)
+						.get(`${apiUrls.employee}?keyword=${keyword}&size=${this.pageSize}`)
 						.then((response) => {
 							const data = response.data;
 							me.employees = data.Data;
+							me.totalRecords = data.TotalRecords;
+
 							me.showLoader = false;
 						})
 						.catch((error) => {
@@ -299,22 +390,6 @@ export default {
 				);
 			}
 		},
-	},
-
-	/**
-	 * get employee list as soon as the component is created
-	 * author: Trinh Quy Cong 28/6/22
-	 */
-	created() {
-		this.getEmployees();
-	},
-
-	/**
-	 * when component updated
-	 * author: Trinh Quy Cong 28/6/22
-	 */
-	updated() {
-		console.log("employeePage updated");
 	},
 };
 
@@ -803,7 +878,7 @@ class EmployeePage {
 						<tr>
 							<td><input type="checkbox" name="check-row" id="" /></td>
 							<td class="emp-id">${emp.EmployeeCode}</td>
-							<td>${emp.EmployeeName ? emp.EmployeeName : "-"}</td>
+							<td>${emp.FullName ? emp.FullName : "-"}</td>
 							<td>${emp.GenderName ? emp.GenderName : "-"}</td>
 							<td class="emp-dob">${_this.formatDate(emp.DateOfBirth)}</td>
 							<td>${emp.IdentityNumber ? emp.IdentityNumber : "-"}</td>

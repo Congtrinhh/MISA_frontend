@@ -17,8 +17,9 @@
 	transform: translate(-50%, -50%);
 
 	background: #fff;
-	border-radius: 4px;
 	padding: 20px 32px;
+
+	border-radius: 0;
 }
 
 .m-dialog .m-dialog-content .m-dialog-header {
@@ -37,6 +38,10 @@
 	align-items: center;
 }
 
+.m-dialog .m-dialog-content .m-dialog-header .m-row input[type="checkbox"] {
+	margin-right: 10px;
+}
+ 
 .m-dialog .m-dialog-content .m-row-input {
 	display: flex;
 	flex-direction: column;

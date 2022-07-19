@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import EmployeePage from "../views/employees/EmployeePage.vue";
+import EmployeePage from "../views/employee/EmployeePage.vue";
 import OverAllPage from "../views/overall/OverAllPage.vue";
 import PurchasePage from "../views/purchase/PurchasePage.vue";
 import CashPage from "../views/cash/CashPage.vue";
@@ -13,15 +13,6 @@ const routes = [
 		name: "home",
 		component: OverAllPage,
 	},
-
-	// {
-	// 	path: "/about",
-	// 	name: "about",
-	// 	// route level code-splitting
-	// 	// this generates a separate chunk (about.[hash].js) for this route
-	// 	// which is lazy-loaded when the route is visited.
-	// 	// component: () => import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-	// },
 
 	{
 		path: "/employee",

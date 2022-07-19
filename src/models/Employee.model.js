@@ -1,3 +1,7 @@
+/**
+ * Class nhân viên
+ * Created by Trinh Quy Cong 28/6/22
+ */
 export default class Employee {
 	constructor(
 		EmployeeId,

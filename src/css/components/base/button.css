@@ -20,11 +20,14 @@
 	box-sizing: border-box;
 	overflow: visible;
 
-	font-weight: 600;
 	white-space: nowrap;
 	font-size: 13px;
 	line-height: 13px;
+
+	font-family: misa-semibold;
 }
+
+
 
 .m-button:hover {
 	background-color: #35bf22;
@@ -88,4 +91,17 @@
 .m-button.m-button-secondary:hover,
 .m-button.m-button-secondary:active {
 	background-color: #d2d3d6;
+}
+
+
+.m-button[disabled] {
+	filter: brightness(80%);
+}
+
+.m-button.rounded {
+	border-radius: 21px;
+}
+
+.m-button.outlined {
+	border: 2px solid #333;
 }

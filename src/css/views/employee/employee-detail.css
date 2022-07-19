@@ -6,7 +6,7 @@
 	right: 0;
 	bottom: 0;
 	z-index: 99999;
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(0, 0, 0, 0.4);
 	/* display: none; */
 }
 
@@ -28,6 +28,7 @@
 }
 
 .m-dialog .m-dialog-content .m-dialog-header h3 {
+	font-family: 'misa-bold';
 	font-size: 24px;
 	color: #111;
 	font-weight: 700;
@@ -41,7 +42,7 @@
 .m-dialog .m-dialog-content .m-dialog-header .m-row input[type="checkbox"] {
 	margin-right: 10px;
 }
- 
+
 .m-dialog .m-dialog-content .m-row-input {
 	display: flex;
 	flex-direction: column;
@@ -155,10 +156,6 @@
 	width: 40%;
 }
 
-
-
-
-
 .m-row-phone-and-email,
 .m-row-bank-info {
 	column-gap: 6px;
@@ -180,8 +177,6 @@
 	margin-right: 20px;
 	margin-left: 10px;
 }
-
-
 
 /* main dialog additional styles  (maybe need or not) */
 .m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon,

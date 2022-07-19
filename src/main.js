@@ -3,9 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import Axios from "axios";
 
-import ElementUI from "element-ui"; // full import
+// import element ui - full import
+import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import locale from "element-ui/lib/locale/lang/vi"; // locale for vietnamese (for pagination display vietnamese)
+
+// locale for vietnamese (for pagination display vietnamese)
+import locale from "element-ui/lib/locale/lang/vi";
 
 // global css
 import "./css/base.css";
@@ -16,10 +19,13 @@ import "./css/layout.css";
 import "./css/customize/pagination.css";
 import "./css/customize/select.css";
 
+// dùng element ui kèm config
 Vue.use(ElementUI, { locale });
 
 Vue.config.productionTip = false;
-Vue.prototype.$http = Axios; //set axios as default $http
+
+//set axios as default $http
+Vue.prototype.$http = Axios;
 
 new Vue({
 	router,

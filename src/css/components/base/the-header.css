@@ -17,18 +17,21 @@
 	background-color: var(--sidebar-bg-color);
 	display: flex;
 	align-items: center;
-	padding-top: 8px;
+	padding-top: 6px;
 }
 
 .m-header .m-header-left-hybrid .m-header-left-hybrid-icon {
 	display: inline-block;
 	color: #fff;
-	margin-right: 16px;
+	margin-right: 10px;
 	margin-left: 24px;
 
 	background: url(../../../assets/img/Sprites.64af8f61.svg) no-repeat -424px -86px;
 	width: 24px;
 	height: 24px;
+
+	    position: relative;
+    top: -3px;
 }
 
 .m-header .m-header-left-hybrid .m-header-left-hybrid-brand {

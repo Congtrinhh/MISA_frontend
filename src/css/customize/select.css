@@ -1,3 +1,7 @@
+/* --------- common ------------ */
+.el-input__inner {
+	color: var(--text-color);
+}
 /* ----------------------------dropdown select page number---------------------------- */
 .el-select {
 }
@@ -166,7 +170,7 @@
 .select-organization.el-select .el-input .el-input__inner {
 	height: 32px;
 	border-radius: 2px;
-	transition:none;
+	transition: none;
 	border: 1px solid #babec5;
 	color: #111;
 	padding-left: 10px;
@@ -188,7 +192,6 @@
 
 .select-organization.el-select .el-input__suffix:hover {
 	background-color: #e0e0e0;
-
 }
 .el-pagination .el-input__suffix {
 	right: 0;

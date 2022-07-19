@@ -5,12 +5,8 @@
 </template>
 
 <script>
-// import EmployeePage from "../../views/employees/EmployeePage.vue";
-
 export default {
-	components: {
-		// EmployeePage
-	},
+	components: {},
 };
 </script>
 

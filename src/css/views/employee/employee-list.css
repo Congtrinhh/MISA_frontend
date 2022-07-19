@@ -1,133 +1,4 @@
-.m-content .m-header {
-	background-color: #fff;
-	height: 48px;
-}
-
-.m-content .m-top {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.m-content .m-top .m-sub-header {
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.m-content .m-top .m-top-btns {
-}
-
-.m-content .m-breadcrumb {
-	margin-bottom: 20px;
-}
-
-.m-breadcrumb {
-	color: #3d7bc0;
-	font-size: inherit;
-}
-
-.m-breadcrumb i {
-	font-size: 1.1em;
-}
-
 /* table area */
-.m-table-wrapper-parent {
-}
-
-.m-table-wrapper {
-	background-color: #fff;
-	padding-left: 20px;
-	padding-top: 16px;
-	overflow: auto;
-}
-
-.m-table-header .m-table-header-right-search-wrapper {
-	width: 240px;
-	height: 32px;
-
-	position: relative;
-}
-
-.m-table-header .m-table-header-right-search-wrapper input {
-	width: 100%;
-	height: 100%;
-	border-radius: 2px;
-	border: 1px solid #babec5;
-	outline: none;
-	padding: 0 36px 0 10px;
-}
-
-.m-table-header .m-table-header-right-search-wrapper input:focus {
-	border: 1px solid var(--primary-color);
-}
-
-.m-table-header .m-table-header-right-search-wrapper input::placeholder {
-	/* Chrome, Firefox, Opera, Safari 10.1+ */
-	font-style: italic;
-	font-size: 11px;
-	color: rgb(0 0 0 / 40%);
-}
-
-.m-table-header .m-table-header-right-search-wrapper button {
-	background-color: transparent;
-	outline: none;
-	border: none;
-	font-size: 1.06rem;
-
-	position: absolute;
-	right: 0;
-	top: 0;
-
-	width: 36px;
-	height: 100%;
-	padding: 0;
-	color: rgb(0 0 0 / 40%);
-	cursor: pointer;
-}
-
-.m-table-header .m-table-header-right-search-wrapper .m-button-search {
-	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
-	background-repeat: no-repeat;
-	background-position: -986px -353px;
-}
-
-.m-table-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 15px 0;
-
-	background: #fff;
-}
-.m-table-header .m-table-header-right {
-	display: flex;
-	align-items: center;
-}
-
-.m-table-header .m-table-header-right-reload {
-	margin-left: 10px;
-}
-
-.m-table-header .m-table-header-right-reload button {
-	background-color: transparent;
-	outline: none;
-	border: none;
-	font-size: 1.5rem;
-
-	width: 36px;
-	color: rgb(0 0 0 / 40%);
-	cursor: pointer;
-
-	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
-	background-repeat: no-repeat;
-	background-position: -423px -201px;
-}
-
-.m-table-content {
-	position: relative;
-	/* overflow: auto; */
-}
-
 .m-table {
 }
 
@@ -135,12 +6,20 @@
 td {
 	padding: 6px 10px;
 	text-align: left;
+	background-color: #fff;
 }
 
 .m-table th {
 	background-color: #e5e8ec;
 	border-right: 1px solid #c7c7c7;
 	border-bottom: 1px solid #c7c7c7;
+	font-size: 12px;
+	cursor: pointer;
+	
+	padding: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 34px;
 }
 
 .m-table td {
@@ -197,9 +76,6 @@ td {
 	min-width: 150px;
 }
 
-.m-table {
-}
-
 .m-table tr:hover {
 	background-color: #e9f3fc;
 }
@@ -213,6 +89,7 @@ td {
 	position: sticky;
 	right: 0;
 	top: 0;
+	z-index: 9;
 	border-left: 1px solid #c7c7c7;
 }
 
@@ -222,6 +99,20 @@ td {
 	z-index: 1;
 	background: #fff;
 	border-left: 1px dotted #c7c7c7;
+}
+
+th.spacer,
+td.spacer {
+	width: 16px;
+	background: #fff;
+	border: none;
+}
+
+th.spacer.sticky,
+td.spacer.sticky {
+	position: sticky;
+	top: 0;
+	left: 0;
 }
 
 /* paging */
@@ -278,8 +169,6 @@ td {
 .m-paging .m-paging-bar li.active a {
 	font-weight: bold;
 	border: 1px solid #e0e0e0;
-
-	
 }
 
 .m-paging .m-paging-bar li.disabled a {
@@ -296,7 +185,6 @@ td {
 	font-weight: bold;
 	border: 1px solid #e0e0e0;
 }
-
 
 /* +, DROPDOWN OF TABLE */
 .m-dropdown {
@@ -450,4 +338,245 @@ td {
 .m-select-button.active ~ .m-select-list {
 	visibility: visible;
 	z-index: 9999;
+}
+/* ------------------------ NEW CSS ------------------------ */
+.m-content {
+	padding: 0 30px 0 20px;
+	max-height: calc(100vh - var(--header-height));
+}
+
+.m-content section.m-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 24px 0 12px 0;
+}
+
+.m-content section.m-top .m-sub-header {
+	font-family: misa-bold;
+	font-size: 24px;
+	font-weight: 700;
+	color: #111;
+}
+
+.m-content section.m-body {
+	scroll-behavior: smooth;
+	position: relative;
+	flex: 1;
+	min-height: 0;
+}
+
+.m-content section.m-body .m-body-top {
+	margin-top: 20px;
+	padding: 16px 16px 32px 16px;
+	background-color: #fff;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.m-content section.m-body .m-body-top-right {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* search box */
+.m-content section.m-body .m-body-top-right-search-wrapper {
+	width: 240px;
+	height: 32px;
+	margin-right: 10px;
+
+	position: relative;
+}
+
+.m-content section.m-body .m-body-top-right-search-wrapper input {
+	width: 100%;
+	height: 100%;
+	border-radius: 2px;
+	border: 1px solid #babec5;
+	outline: none;
+	padding: 0 36px 0 10px;
+}
+
+.m-content section.m-body .m-body-top-right-search-wrapper input:focus {
+	border: 1px solid var(--primary-color);
+}
+
+.m-content section.m-body .m-body-top-right-search-wrapper input::placeholder {
+	font-style: italic;
+	font-size: 11px;
+	color: rgb(0 0 0 / 40%);
+}
+
+.m-content section.m-body .m-body-top-right-search-wrapper button {
+	background-color: transparent;
+	outline: none;
+	border: none;
+	font-size: 1.06rem;
+
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	width: 36px;
+	height: 100%;
+	padding: 0;
+	color: rgb(0 0 0 / 40%);
+	cursor: pointer;
+}
+/* end */
+
+.m-content section.m-body .m-body-top-right-search-wrapper .m-button-search {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -986px -353px;
+}
+
+/* button utility (reload, excel) */
+.m-button-utility-wrapper {
+	padding: 0 6px;
+}
+
+.m-button-utility-wrapper button {
+	background-color: transparent;
+	outline: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+}
+
+.m-button-reload {
+	background-position: -423px -201px;
+}
+
+.m-button-reload:hover {
+	background-position: -1097px -88px;
+}
+
+.m-button-excel {
+	background-position: -704px -200px;
+}
+
+.m-button-excel:hover {
+	background-position: -704px -256px;
+}
+/* end */
+
+.m-content section.m-body .m-body-main {
+	background-color: #fff;
+	display: flex;
+	padding-right: 30px;
+	/* overflow: auto; */
+}
+
+.m-content section.m-body .m-body-main-wrapper-level-1 {
+	min-width: 100%;
+
+	/* overflow: auto; */
+}
+
+.m-content section.m-body .m-body-main-wrapper-level-2 {
+	max-height: none;
+	min-width: 100%;
+
+	overflow: auto;
+	max-height: calc(100vh - 279px);
+}
+
+.m-content section.m-body table {
+	border-spacing: 0;
+	min-width: 100%;
+}
+
+.m-content section.m-body table thead {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+
+.m-content section.m-body table tbody tr:hover td:not(.spacer) {
+	background: #f2f9ff;
+}
+
+.m-content section.m-body table tbody tr:focus td:not(.spacer) {
+	background: #e5f3ff;
+}
+
+.m-content section.m-body .m-paging-container {
+	position: -webkit-sticky;
+	position: sticky;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	background-color: #fff;
+	display: flex;
+
+	padding: 12px;
+}
+
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #b8bcc3;
+	transition: all 0.35s ease;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #999;
+}
+
+/* no result found image */
+.no-result-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.no-result-wrapper img {
+	margin: 50px 50px 30px;
+}
+
+/* NEW CSS FOR EXCEL EXPORT AND BUTTON DO MANY  */
+.m-body-top-left .m-button-do-many {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 0 16px;
+	height: 36px;
+}
+
+.m-body-top-left .m-button-do-many > * {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.m-body-top-left .m-button-do-many > * > .text {
+	margin-right: 4px;
+}
+
+.m-body-top-left .m-button-do-many > * > .icon {
+	background-image: url(../../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -560px -359px;
+	opacity: 0.5;
 }

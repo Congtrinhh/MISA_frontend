@@ -15,7 +15,7 @@ td {
 	border-bottom: 1px solid #c7c7c7;
 	font-size: 12px;
 	cursor: pointer;
-	
+
 	padding: 0;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -506,6 +506,10 @@ td.spacer.sticky {
 }
 
 .m-content section.m-body table tbody tr:focus td:not(.spacer) {
+	background: #e5f3ff;
+}
+/* new */
+.m-content section.m-body table tbody tr.selected td:not(.spacer) {
 	background: #e5f3ff;
 }
 

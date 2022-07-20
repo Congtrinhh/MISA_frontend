@@ -1,13 +1,7 @@
 <template>
 	<div>
 		<!-- Toast message -->
-		<ToastNotifier
-			v-if="showToast"
-			:text="toastText"
-			:background="toastBackground"
-			:icon="toastIcon"
-			@onCloseToast="showToast = false"
-		/>
+		<ToastNotifier v-if="showToast" :text="toastText" :background="toastBackground" :icon="toastIcon" @onCloseToast="showToast = false" />
 		<!-- end Toast message -->
 
 		<!-- employee list -->
@@ -154,11 +148,7 @@ export default {
 					})
 					.catch((res) => {
 						// hiển thị toast lỗi
-						this.handleShowToast(
-							res.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						this.handleShowToast(res.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (e) {
 				// hiển thị toast lỗi
@@ -213,11 +203,7 @@ export default {
 						// nếu xoá thành công
 						if (res.data == 1) {
 							// hiển thị toast thành công
-							this.handleShowToast(
-								"Xoá nhân viên thành công",
-								toastModes.success.backgroundColor,
-								toastModes.success.icon
-							);
+							this.handleShowToast("Xoá nhân viên thành công", toastModes.success.backgroundColor, toastModes.success.icon);
 						}
 
 						// load lại trang
@@ -228,11 +214,7 @@ export default {
 					})
 					.catch((error) => {
 						// hiển thị toast thất bại
-						this.handleShowToast(
-							error.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 						// ẩn dialog xác nhận xoá
 						this.showConfirmDeleteDialog = false;
 					});
@@ -279,11 +261,7 @@ export default {
 					})
 					.catch((error) => {
 						// hiện toast báo lỗi
-						this.handleShowToast(
-							error.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (error) {
 				this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
@@ -343,11 +321,7 @@ export default {
 						})
 						.catch((error) => {
 							// hiện toast báo lỗi
-							this.handleShowToast(
-								error.response.data.userMsg,
-								toastModes.danger.backgroundColor,
-								toastModes.danger.icon
-							);
+							this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 						});
 				}
 
@@ -392,11 +366,12 @@ export default {
 					})
 					.catch((res) => {
 						// hiện toast báo lỗi
-						this.handleShowToast(
-							res.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						if (res.response.data){
+							this.handleShowToast(res.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+
+						} else {
+							this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+						}
 
 						// ẩn loader
 						this.showLoader = false;

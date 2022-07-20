@@ -37,7 +37,10 @@
 								type="text"
 								name="employee-keyword"
 								v-model="employeeKeyword"
-								@input="$emit('onSearchEmployees', employeeKeyword)"
+								@input="
+									removeAllSelectedEmployeesToDelete();
+									$emit('onSearchEmployees', employeeKeyword);
+								"
 								placeholder="Tìm theo mã, tên nhân viên"
 							/>
 							<button class="m-button-search mi-16"></button>
@@ -260,6 +263,60 @@ export default {
 
 	methods: {
 		/**
+		 * HÀM CON xử lý khi bỏ chọn checkbox chọn tất cả
+		 * author: Trinh Quy Cong 20/7/22
+		 */
+		removeAllSelectedEmployeesToDelete() {
+			// bỏ chọn checkbox chọn tất cả
+			this.$refs.checkBoxAllRows.checked = false;
+			// bỏ chọn tất cả checkbox item và background
+			this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
+				input.checked = false;
+				input.closest("tr").classList.remove("selected");
+			});
+			// xoá hết employee id trong mảng chứa
+			this.employeeIdsToDelete = [];
+		},
+
+		/**
+		 * HÀM CON xử lý khi tích chọn checkbox chọn tất cả
+		 * author: Trinh Quy Cong 20/7/22
+		 */
+		addAllSelectedEmployeesToDelete() {
+			// tích chọn checkbox chọn tất cả
+			this.$refs.checkBoxAllRows.checked = true;
+			// chọn tất cả các checkbox item và background
+			this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
+				input.checked = true;
+				input.closest("tr").classList.add("selected");
+			});
+
+			// thêm tất cả employee id của từng checkbox item vào mảng chứa
+			this.employeeIdsToDelete = [];
+			this.employees.forEach((employee) => {
+				this.employeeIdsToDelete.push(employee.EmployeeId);
+			});
+		},
+
+		/**
+		 * HÀM CON xử lý khi bỏ chọn input checkbox của 1 bản ghi
+		 * author: Trinh Quy Cong 20/7/22
+		 */
+		removeSelectedEmployeeToDelete(inputElement, employeeId) {
+			this.employeeIdsToDelete = this.employeeIdsToDelete.filter((id) => id !== employeeId);
+			inputElement.closest("tr").classList.remove("selected");
+		},
+
+		/**
+		 * HÀM CON xử lý khi tích chọn input checkbox của 1 bản ghi
+		 * author: Trinh Quy Cong 20/7/22
+		 */
+		addSelectedEmployeeToDelete(inputElement, employeeId) {
+			this.employeeIdsToDelete.push(employeeId);
+			inputElement.closest("tr").classList.add("selected");
+		},
+
+		/**
 		 * hàm xử lý khi bấm ra ngoài khu vực dropdown thực hiện hàng loạt
 		 * author: Trinh Quy Cong 19/7/22
 		 */
@@ -293,18 +350,9 @@ export default {
 		checkBoxAllRowsClick(target) {
 			// nếu input vừa được chọn
 			if (target.checked) {
-				// chọn tất cả các checkbox item
-				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => (input.checked = true));
-
-				// thêm tất cả employee id của từng checkbox item vào mảng chứa
-				this.employees.forEach((employee) => {
-					this.employeeIdsToDelete.push(employee.EmployeeId);
-				});
+				this.addAllSelectedEmployeesToDelete();
 			} else {
-				// bỏ chọn tất cả checkbox item
-				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => (input.checked = false));
-				// xoá hết employee id trong mảng chứa
-				this.employeeIdsToDelete = [];
+				this.removeAllSelectedEmployeesToDelete();
 			}
 		},
 
@@ -387,11 +435,11 @@ export default {
 			const target = $event.currentTarget || $event.target;
 			// nếu checkbox được check, thêm employee id đó vào ds
 			if (target.checked) {
-				this.employeeIdsToDelete.push(employeeId);
+				this.addSelectedEmployeeToDelete(target, employeeId);
 			}
 			// nếu checkbox được bỏ check, bỏ employee id đó từ ds
 			else {
-				this.employeeIdsToDelete = this.employeeIdsToDelete.filter((id) => id !== employeeId);
+				this.removeSelectedEmployeeToDelete(target, employeeId);
 			}
 		},
 
@@ -430,10 +478,8 @@ export default {
 			try {
 				this.$emit("onPageSizeChange", pageSize, this.employeeKeyword);
 
-				// reset employee id to delete
-				this.$refs.checkBoxAllRows.checked = false;
-				this.employeeIdsToDelete = [];
-				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => (input.checked = false));
+				// reset list employee id to delete và style
+				this.removeAllSelectedEmployeesToDelete();
 			} catch (e) {
 				console.log(e);
 			}
@@ -447,10 +493,8 @@ export default {
 			try {
 				this.$emit("onPageIndexChange", pageNumber, this.employeeKeyword);
 
-				// reset employee id to delete
-				this.$refs.checkBoxAllRows.checked = false;
-				this.employeeIdsToDelete = [];
-				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => (input.checked = false));
+				// reset list employee id to delete và style
+				this.removeAllSelectedEmployeesToDelete();
 			} catch (e) {
 				console.log(e);
 			}

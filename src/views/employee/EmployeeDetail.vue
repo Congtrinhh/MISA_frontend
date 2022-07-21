@@ -774,4 +774,10 @@ export default {
 .m-dialog.m-main-dialog .m-dialog-content .m-row-bank-info .m-row-input {
 	max-width: 205px;
 }
+
+.m-dialog .m-dialog-content {
+	min-width: 900px;
+	max-width: 900px;
+	width: 900px;
+}
 </style>

@@ -346,15 +346,16 @@ export default {
 
 		/**
 		 * lấy danh sách nhân viên từ API kèm phân trang
+		 * set keyword mặc định bằng chuỗi rỗng; set page index mặc định từ data page index nếu không được truyền vào
 		 * author: Trinh Quy Cong 30/6/22
 		 */
-		getEmployees(keyword = "") {
+		getEmployees(keyword = "", pageIndex=this.pageIndex) {
 			try {
 				// hiện loader
 				this.showLoader = true;
 
 				// call api
-				EmployeeService.getPaging(this.pageIndex, this.pageSize, keyword)
+				EmployeeService.getPaging(pageIndex, this.pageSize, keyword)
 					.then((res) => {
 						const { Data, TotalRecords } = res.data;
 						// set employee list
@@ -397,7 +398,8 @@ export default {
 
 				// thực hiện tìm kiếm sau mỗi 500 mili giây
 				this.timeOutSearchEmployee = setTimeout(() => {
-					me.getEmployees(keyword);
+					// truyền page index để luôn lấy trang đầu
+					me.getEmployees(keyword, 0);
 				}, 500);
 			} catch (error) {
 				// hiện toast báo lỗi

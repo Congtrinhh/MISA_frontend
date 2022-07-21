@@ -139,6 +139,7 @@
 	padding: 0 10px;
 	cursor: pointer;
 	line-height: 32px;
+	font-size: 13px;
 }
 
 .el-select-dropdown__item:hover {

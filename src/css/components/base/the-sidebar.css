@@ -6,6 +6,7 @@
 .m-sidebar .m-sidebar-list {
 	display: flex;
 	flex-direction: column;
+	padding-top: 14px;
 }
 
 .m-sidebar .m-sidebar-list .m-sidebar-link {

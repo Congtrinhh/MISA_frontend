@@ -5,7 +5,7 @@
 			<section class="m-top">
 				<div class="m-sub-header">Nhân viên</div>
 				<div class="m-top-btns">
-					<button class="m-button m-button-secondary" id="btnImportExcel">Nhập từ Excel</button>
+					<button style="display: none" class="m-button m-button-secondary" id="btnImportExcel">Nhập từ Excel</button>
 					<button @click="$emit('onFormModeAdd')" class="m-button" id="btnNewEmployee">Thêm mới nhân viên</button>
 				</div>
 			</section>
@@ -51,7 +51,7 @@
 						</div>
 
 						<div class="m-body-top-right-excel m-button-utility-wrapper">
-							<button class="m-button-excel mi-24" id="btnExcel"></button>
+							<button class="m-button-excel mi-24" id="btnExcel" @click="handleBtnExportExcelClick"></button>
 						</div>
 					</div>
 				</div>
@@ -82,8 +82,7 @@
 									<th class="emp-organization-name">TÊN ĐƠN VỊ</th>
 									<th class="emp-credit-card-number">SỐ TÀI KHOẢN</th>
 									<th class="emp-bank-name">TÊN NGÂN HÀNG</th>
-									<th class="emp-bank-status">TRẠNG THÁI</th>
-									<th class="emp-bank-branch">CHI NHÁNH</th>
+									<th class="emp-bank-branch">CHI NHÁNH TK NGÂN HÀNG</th>
 									<th class="emp-action">CHỨC NĂNG</th>
 								</thead>
 								<tbody>
@@ -114,7 +113,6 @@
 											<td>{{ emp.DepartmentName ? emp.DepartmentName : "" }}</td>
 											<td>{{ emp.BankAccountNumber ? emp.BankAccountNumber : "-" }}</td>
 											<td>{{ emp.BankName ? emp.BankName : "-" }}</td>
-											<td>{{ emp.WorkStatus ? emp.WorkStatus : "-" }}</td>
 											<td>{{ emp.BankBranchName ? emp.BankBranchName : "-" }}</td>
 											<td class="emp-action">
 												<div class="m-dropdown">
@@ -263,19 +261,55 @@ export default {
 
 	methods: {
 		/**
+		 * hàm xử lý khi nút xuất khẩu dữ liệu excel được click
+		 * author: Trinh Quy Cong 21/7/22
+		 */
+		handleBtnExportExcelClick() {
+			// gọi api lấy ra file excel chứa danh sách toàn bộ nhân viên
+			EmployeeService.getExcelFile()
+				.then((res) => {
+					// file excel dưới dạng blob
+					const blob = res.data;
+
+					// download file excel
+					if (window.navigator.msSaveOrOpenBlob) {
+						window.navigator.msSaveOrOpenBlob(blob, "Danh_sach_nhan_vien");
+					} else {
+						const a = document.createElement("a");
+						document.body.appendChild(a);
+						const url = window.URL.createObjectURL(blob);
+						a.href = url;
+						a.download = "Danh_sach_nhan_vien";
+						a.click();
+						setTimeout(() => {
+							window.URL.revokeObjectURL(url);
+							document.body.removeChild(a);
+						}, 0);
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+
+		/**
 		 * HÀM CON xử lý khi bỏ chọn checkbox chọn tất cả
 		 * author: Trinh Quy Cong 20/7/22
 		 */
 		removeAllSelectedEmployeesToDelete() {
-			// bỏ chọn checkbox chọn tất cả
-			this.$refs.checkBoxAllRows.checked = false;
-			// bỏ chọn tất cả checkbox item và background
-			this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
-				input.checked = false;
-				input.closest("tr").classList.remove("selected");
-			});
-			// xoá hết employee id trong mảng chứa
-			this.employeeIdsToDelete = [];
+			try {
+				// bỏ chọn checkbox chọn tất cả
+				this.$refs.checkBoxAllRows.checked = false;
+				// bỏ chọn tất cả checkbox item và background
+				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
+					input.checked = false;
+					input.closest("tr").classList.remove("selected");
+				});
+				// xoá hết employee id trong mảng chứa
+				this.employeeIdsToDelete = [];
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -283,19 +317,23 @@ export default {
 		 * author: Trinh Quy Cong 20/7/22
 		 */
 		addAllSelectedEmployeesToDelete() {
-			// tích chọn checkbox chọn tất cả
-			this.$refs.checkBoxAllRows.checked = true;
-			// chọn tất cả các checkbox item và background
-			this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
-				input.checked = true;
-				input.closest("tr").classList.add("selected");
-			});
+			try {
+				// tích chọn checkbox chọn tất cả
+				this.$refs.checkBoxAllRows.checked = true;
+				// chọn tất cả các checkbox item và background
+				this.$refs.mainTable.querySelectorAll("tbody tr input[type='checkbox'].checkbox-item").forEach((input) => {
+					input.checked = true;
+					input.closest("tr").classList.add("selected");
+				});
 
-			// thêm tất cả employee id của từng checkbox item vào mảng chứa
-			this.employeeIdsToDelete = [];
-			this.employees.forEach((employee) => {
-				this.employeeIdsToDelete.push(employee.EmployeeId);
-			});
+				// thêm tất cả employee id của từng checkbox item vào mảng chứa
+				this.employeeIdsToDelete = [];
+				this.employees.forEach((employee) => {
+					this.employeeIdsToDelete.push(employee.EmployeeId);
+				});
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -303,8 +341,12 @@ export default {
 		 * author: Trinh Quy Cong 20/7/22
 		 */
 		removeSelectedEmployeeToDelete(inputElement, employeeId) {
-			this.employeeIdsToDelete = this.employeeIdsToDelete.filter((id) => id !== employeeId);
-			inputElement.closest("tr").classList.remove("selected");
+			try {
+				this.employeeIdsToDelete = this.employeeIdsToDelete.filter((id) => id !== employeeId);
+				inputElement.closest("tr").classList.remove("selected");
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -312,8 +354,12 @@ export default {
 		 * author: Trinh Quy Cong 20/7/22
 		 */
 		addSelectedEmployeeToDelete(inputElement, employeeId) {
-			this.employeeIdsToDelete.push(employeeId);
-			inputElement.closest("tr").classList.add("selected");
+			try {
+				this.employeeIdsToDelete.push(employeeId);
+				inputElement.closest("tr").classList.add("selected");
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -361,10 +407,14 @@ export default {
 		 * author: Trinh Quy Cong 19/7/22
 		 */
 		handleShowConfirmDialog() {
-			this.confirmDialogConfig.body = `Bạn có chắc muốn xoá ${this.employeeIdsToDelete.length} bản ghi đã chọn?`;
-			this.confirmDialogConfig.cssIcon = cssInfoDialog.warning;
+			try {
+				this.confirmDialogConfig.body = `Bạn có thực sự muốn xoá những nhân viên đã chọn không?`;
+				this.confirmDialogConfig.cssIcon = cssInfoDialog.warning;
 
-			this.showConfirmDialog = true;
+				this.showConfirmDialog = true;
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**

@@ -52,7 +52,7 @@ body.sidebar-collapse .m-sidebar .m-sidebar-list .m-sidebar-link-text {
 	display: none;
 }
 
-body.sidebar-collapse .m-content {
+body.sidebar-collapse .m-main-content {
 	max-width: calc(100vw - 70px);
 	left: var(--sidebar-collapse-width);
 }

@@ -1,6 +1,7 @@
 :root {
 	--primary-color: #2ca01c;
-	--blue-color: #2489ca;
+	--primary-hover-color: #35bf22;
+	--blue-color: #0075c0;
 	--header-height: 48px;
 	--sidebar-width: 180px;
 	--input-height: 32px;

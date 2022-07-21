@@ -27,14 +27,12 @@
 	font-family: misa-semibold;
 }
 
-
-
 .m-button:hover {
-	background-color: #35bf22;
+	background-color: var(--primary-hover-color);
 }
 
 .m-button:active {
-	background-color: #35bf22;
+	background-color: var(--primary-hover-color);
 }
 
 /* button with icon */
@@ -92,7 +90,6 @@
 .m-button.m-button-secondary:active {
 	background-color: #d2d3d6;
 }
-
 
 .m-button[disabled] {
 	filter: brightness(80%);

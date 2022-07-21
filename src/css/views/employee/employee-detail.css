@@ -7,7 +7,6 @@
 	bottom: 0;
 	z-index: 99999;
 	background: rgba(0, 0, 0, 0.4);
-	/* display: none; */
 }
 
 .m-dialog .m-dialog-content {
@@ -28,7 +27,7 @@
 }
 
 .m-dialog .m-dialog-content .m-dialog-header h3 {
-	font-family: 'misa-bold';
+	font-family: "misa-bold";
 	font-size: 24px;
 	color: #111;
 	font-weight: 700;
@@ -74,7 +73,7 @@
 	flex-direction: row-reverse;
 
 	margin-top: 38px;
-	padding-top: 24px;
+	padding-top: 20px;
 	border-top: 1px solid #aaa;
 }
 

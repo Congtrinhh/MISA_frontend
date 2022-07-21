@@ -20,11 +20,16 @@ td {
 	padding-left: 10px;
 	padding-right: 10px;
 	height: 34px;
+	font-family: "misa-bold";
 }
 
 .m-table td {
+	/* height: var(--grid-body-line-height); */
+	height: 44px;
+	padding: 0 10px;
+	border-bottom: 1px solid #c7c7c7;
 	border-right: 1px dotted #c7c7c7;
-	border-bottom: 1px dotted #c7c7c7;
+	white-space: pre-wrap;
 }
 
 .m-table td.emp-dob {
@@ -32,27 +37,27 @@ td {
 }
 
 .m-table th.emp-id {
-	min-width: 210px;
+	min-width: 150px;
 }
 
 .m-table th.emp-name {
-	min-width: 220px;
+	min-width: 205px;
 }
 
 .m-table th.emp-role {
-	min-width: 200px;
+	min-width: 250px;
 }
 
 .m-table th.emp-organization-name {
-	min-width: 230px;
+	min-width: 250px;
 }
 
 .m-table th.emp-bank-name {
-	min-width: 230px;
+	min-width: 250px;
 }
 
 .m-table th.emp-dob {
-	min-width: 150px;
+	min-width: 139px;
 	text-align: center;
 }
 
@@ -65,7 +70,7 @@ td {
 }
 
 .m-table th.emp-cmnd {
-	min-width: 90px;
+	min-width: 139px;
 }
 
 .m-table th.emp-bank-status {
@@ -73,7 +78,7 @@ td {
 }
 
 .m-table th.emp-bank-branch {
-	min-width: 150px;
+	min-width: 250px;
 }
 
 .m-table tr:hover {
@@ -209,6 +214,8 @@ td.spacer.sticky {
 
 .m-dropdown .m-dropdown-button .m-small-wrapper {
 	outline: 1px solid transparent;
+	font-family: "misa-semibold";
+	font-weight: 600;
 }
 
 .m-dropdown .m-dropdown-button.m-dropdown-button-right {
@@ -232,7 +239,7 @@ td.spacer.sticky {
 
 /* hidden dropdown content */
 .m-dropdown-content {
-	width: 120px;
+	min-width: 100px;
 	z-index: 9999;
 	position: fixed;
 	display: none;

@@ -37,14 +37,13 @@
 </template>
 
 <script>
-import $ from "jquery";
-
 export default {
 	components: {},
 
 	methods: {
 		onToggleSidebarClick() {
-			$("body").toggleClass("sidebar-collapse");
+			// $("body").toggleClass("sidebar-collapse");
+			document.querySelector("body").classList.toggle("sidebar-collapse");
 		},
 	},
 };

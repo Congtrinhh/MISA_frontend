@@ -170,6 +170,8 @@
 
 .m-row.m-row-input .m-input-label {
 	margin: 0 0 4px 0;
+	font-size: 12px;
+	color: #111;
 }
 
 .m-checkbox + label {

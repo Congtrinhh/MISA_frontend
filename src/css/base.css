@@ -1,6 +1,7 @@
 @import url(./components/base/button.css);
 @import url(./components/base/input.css);
 @import url(./components/base/select.css);
+@import url(./components/base/tooltip.css);
 
 @font-face {
 	font-family: misa-regular;
@@ -27,6 +28,7 @@
 }
 
 body {
+	box-sizing: border-box;
 	font-size: 13px;
 	font-family: misa-regular;
 	margin: 0;
@@ -278,7 +280,7 @@ h6 {
 	position: relative;
 }
 
-.m-row-input > .m-input-error-label {
+.m-row-input .m-input-error-label {
 	position: absolute;
 	top: 100%;
 	left: 50%;
@@ -290,13 +292,6 @@ h6 {
 	white-space: nowrap;
 
 	display: none;
-}
-
-.m-row-input > input[invalid]:hover ~ .m-input-error-label,
-.m-row-input > select[invalid]:hover ~ .m-input-error-label,
-.m-row-input > textarea[invalid]:hover ~ .m-input-error-label,
-.m-row-input > .el-select[invalid]:hover ~ .m-input-error-label {
-	display: block;
 }
 
 .radio-wrapper {

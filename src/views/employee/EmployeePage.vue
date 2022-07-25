@@ -1,7 +1,13 @@
 <template>
 	<div>
 		<!-- Toast message -->
-		<ToastNotifier v-if="showToast" :text="toastText" :background="toastBackground" :icon="toastIcon" @onCloseToast="showToast = false" />
+		<ToastNotifier
+			v-if="showToast"
+			:text="toastText"
+			:background="toastBackground"
+			:icon="toastIcon"
+			@onCloseToast="showToast = false"
+		/>
 		<!-- end Toast message -->
 
 		<!-- employee list -->
@@ -15,11 +21,13 @@
 			@onFormModeUpdate="handleUpdateFormModeUpdate"
 			@onReloadPage="getEmployees"
 			@onSearchEmployees="searchEmployees"
-			@onShowConfirmDeleteDialog="showConfirmDeleteDialog = true"
+			@onShowConfirmDeleteDialog="handleShowConfirmDeleteDialog"
 			@onShowToast="handleShowToast"
 			@onPageIndexChange="handlePageIndexChange"
 			@onPageSizeChange="handlePageSizeChange"
 			@onDuplicateRecord="handleDuplicateRecord"
+			@onShowLoader="showLoader = true"
+			@onHideLoader="showLoader = false"
 		/>
 		<!-- end employee list -->
 
@@ -43,27 +51,23 @@
 		<InfoDialog
 			id="confirmDeleteDialog"
 			v-show="showConfirmDeleteDialog"
-			showBody
-			closeButtonText="Không"
-			showConfirmButton
-			confirmButtonText="Có"
-			:body="`Bạn có chắc muốn xoá nhân viên có mã ${selectedEmployee ? selectedEmployee.EmployeeCode : ''}?`"
 			@onCloseInfoDialog="showConfirmDeleteDialog = false"
 			@onConfirm="handleDeleteEmployee"
-			:cssIcon="cssInfoDialog.warning"
+			:config="infoDialogConfig"
 		/>
 		<!-- end confirm delete dialog -->
 	</div>
 </template>
 
 <script>
-import Employee from "../../models/Employee.model.js";
-import { FormModeEnum, genders, pagingConfig } from "../../utils.js";
+import Employee from "@/models/Employee.model.js";
+import { FormModeEnum, genders, pagingConfig } from "@/utils.js";
 import EmployeeList from "./EmployeeList.vue";
 import EmployeeDetail from "./EmployeeDetail.vue";
-import InfoDialog, { cssInfoDialog } from "../../components/base/InfoDialog.vue";
-import ToastNotifier, { toastModes } from "../../components/base/ToastNotifier.vue";
-import PageLoader from "../../components/base/PageLoader.vue";
+import InfoDialog, { cssInfoDialog } from "@/components/base/InfoDialog.vue";
+import ToastNotifier, { toastModes } from "@/components/base/ToastNotifier.vue";
+import PageLoader from "@/components/base/PageLoader.vue";
+import defaultMessages from "@/resources/employeePageMessage";
 
 // dùng để gọi API
 import ServiceFactory from "../../services/ServiceFactory.js";
@@ -119,8 +123,8 @@ export default {
 			// tổng số bản ghi
 			totalRecords: 0,
 
-			// css cho các info dialog (dialog lỗi, dialog xác nhận xoá)
-			cssInfoDialog: cssInfoDialog,
+			// cấu hình cho dialog thông báo
+			infoDialogConfig: {},
 		};
 	},
 
@@ -131,28 +135,94 @@ export default {
 
 	methods: {
 		/**
+		 * hiện dialog thông báo
+		 * author: Trinh Quy Cong 24/7/22
+		 */
+		handleShowConfirmDeleteDialog() {
+			try {
+				this.buildInfoDialogConfig();
+				this.infoDialogConfig.body =
+					'Bạn có thực sự muốn xoá Nhân viên "' +
+					(this.selectedEmployee ? this.selectedEmployee.EmployeeCode : "") +
+					'" không?';
+				this.showConfirmDeleteDialog = true;
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * cài đặt cấu hình cho dialog thông báo
+		 * author: Trinh Quy Cong 24/7/22
+		 */
+		buildInfoDialogConfig() {
+			try {
+				this.infoDialogConfig = {
+					showBody: true,
+					closeButtonText: defaultMessages.infoDialogConfig.closeButtonText,
+					showConfirmButton: true,
+					confirmButtonText: defaultMessages.infoDialogConfig.confirmButtonText,
+					cssIcon: cssInfoDialog.warning,
+				};
+			} catch (e) {
+				console.log(e);
+			}
+		},
+		/**
 		 * hàm xử lý ngay sau khi người dùng kích nút "nhân bản" trên 1 bản ghi nào đó
 		 * author: Trinh Quy Cong 14/7/22
 		 */
 		handleDuplicateRecord() {
 			try {
-				// lấy mã employee code mới
-				EmployeeService.getNewEmployeeCode()
+				// hiện loader
+				this.showLoader = true;
+				// lấy ra employee cần nhân bản từ api
+				EmployeeService.getById(this.selectedEmployee.EmployeeId)
 					.then((res) => {
-						// set new employee code cho data selected employee
-						this.selectedEmployee.EmployeeCode = res.data;
-						// set form mode
-						this.formMode = FormModeEnum.add;
-						// hiện main dialog
-						this.showMainDialog = true;
+						// ẩn loader
+						this.showLoader = false;
+
+						const employeeToDuplicate = res.data;
+						// set lại định dạng date
+						this.setDateForEmployee(employeeToDuplicate);
+
+						// lấy mã employee code mới
+						EmployeeService.getNewEmployeeCode()
+							.then((res) => {
+								// set new employee code cho data selected employee
+								employeeToDuplicate.EmployeeCode = res.data;
+
+								// set selected employee bằng employee từ api cùng với mã code mới
+								this.selectedEmployee = employeeToDuplicate;
+
+								// set form mode
+								this.formMode = FormModeEnum.add;
+								// hiện main dialog
+								this.showMainDialog = true;
+							})
+							.catch((res) => {
+								// hiển thị toast lỗi
+								this.handleShowToast(
+									res.response.data.userMsg,
+									toastModes.danger.backgroundColor,
+									toastModes.danger.icon
+								);
+							});
 					})
-					.catch((res) => {
+					.catch((error) => {
+						// ẩn loader
+						this.showLoader = false;
 						// hiển thị toast lỗi
-						this.handleShowToast(res.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+						let msg = error.response.data ? error.response.data.userMsg : "";
+						this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (e) {
 				// hiển thị toast lỗi
-				this.handleShowToast("Có lỗi xảy ra...", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 			}
 		},
 
@@ -161,10 +231,14 @@ export default {
 		 * author: Trinh Quy Cong 10/7/22
 		 */
 		handlePageSizeChange(pageSize, keyword) {
-			// cập nhật data page size
-			this.pageSize = pageSize;
-			// cập nhật ds nhân viên
-			this.getEmployees(keyword);
+			try {
+				// cập nhật data page size
+				this.pageSize = pageSize;
+				// cập nhật ds nhân viên
+				this.getEmployees(keyword);
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -172,11 +246,15 @@ export default {
 		 * author: Trinh Quy Cong 10/7/22
 		 */
 		handlePageIndexChange(pageNumber, keyword) {
-			// vì api quy định lấy theo pageIndex
-			// cập nhật data page index
-			this.pageIndex = pageNumber - 1;
-			// cập nhật ds nhân viên
-			this.getEmployees(keyword);
+			try {
+				// vì api quy định lấy theo pageIndex
+				// cập nhật data page index
+				this.pageIndex = pageNumber - 1;
+				// cập nhật ds nhân viên
+				this.getEmployees(keyword);
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -184,11 +262,15 @@ export default {
 		 * author: Trinh Quy Cong 7/7/22
 		 */
 		handleShowToast(text, backgroundColor, icon) {
-			// hiện toast kèm theo cấu hình
-			this.showToast = true;
-			this.toastText = text;
-			this.toastBackground = backgroundColor;
-			this.toastIcon = icon;
+			try {
+				// hiện toast kèm theo cấu hình
+				this.showToast = true;
+				this.toastText = text;
+				this.toastBackground = backgroundColor;
+				this.toastIcon = icon;
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
@@ -203,7 +285,11 @@ export default {
 						// nếu xoá thành công
 						if (res.data == 1) {
 							// hiển thị toast thành công
-							this.handleShowToast("Xoá nhân viên thành công", toastModes.success.backgroundColor, toastModes.success.icon);
+							this.handleShowToast(
+								defaultMessages.deleteSuccess,
+								toastModes.success.backgroundColor,
+								toastModes.success.icon
+							);
 						}
 
 						// load lại trang
@@ -214,12 +300,20 @@ export default {
 					})
 					.catch((error) => {
 						// hiển thị toast thất bại
-						this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+						this.handleShowToast(
+							error.response.data.userMsg,
+							toastModes.danger.backgroundColor,
+							toastModes.danger.icon
+						);
 						// ẩn dialog xác nhận xoá
 						this.showConfirmDeleteDialog = false;
 					});
 			} catch (error) {
-				this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 			}
 		},
 		/**
@@ -243,10 +337,17 @@ export default {
 				//chuyển form mode
 				this.formMode = FormModeEnum.add;
 
+				// hiện loader
+				this.showLoader = true;
+
 				// lấy ra mã employee code mới
 				EmployeeService.getNewEmployeeCode()
 					.then((res) => {
-						const employeeCode = res.data;
+						// ẩn loader
+						this.showLoader = false;
+
+						// const employeeCode = res.data;
+						const employeeCode = '';
 
 						// khởi tạo đối tượng employee và set các giá trị ban đầu
 						let employee = new Employee();
@@ -260,11 +361,19 @@ export default {
 						this.showMainDialog = true;
 					})
 					.catch((error) => {
+						// ẩn loader
+						this.showLoader = false;
+
 						// hiện toast báo lỗi
-						this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+						let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
+						this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (error) {
-				this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 			}
 		},
 
@@ -293,6 +402,25 @@ export default {
 		},
 
 		/**
+		 * set lại định dạng date cho các property của employee để có thể hiển thị trên input date control
+		 * author: Trinh Quy Cong 22/7/22
+		 */
+		setDateForEmployee(employee) {
+			try {
+				// chuyển đổi date để có thể hiển thị trên dialog
+				// 1967-11-16T00:00:00 -> 1967-11-16
+				if (employee.DateOfBirth) {
+					employee.DateOfBirth = employee.DateOfBirth.substring(0, 10);
+				}
+				if (employee.IdentityDate) {
+					employee.IdentityDate = employee.IdentityDate.substring(0, 10);
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
 		 * cập nhật selected employee
 		 * author: Trinh Quy Cong 28/6/22
 		 */
@@ -304,14 +432,8 @@ export default {
 						.then((res) => {
 							const employee = res.data;
 
-							// 1967-11-16T00:00:00
-							// chuyển đổi date để có thể hiển thị trên dialog
-							if (employee.DateOfBirth) {
-								employee.DateOfBirth = employee.DateOfBirth.substring(0, 10);
-							}
-							if (employee.IdentityDate) {
-								employee.IdentityDate = employee.IdentityDate.substring(0, 10);
-							}
+							// set lại định dạng date
+							this.setDateForEmployee(employee);
 
 							// gán employee
 							this.selectedEmployee = employee;
@@ -321,7 +443,11 @@ export default {
 						})
 						.catch((error) => {
 							// hiện toast báo lỗi
-							this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+							this.handleShowToast(
+								error.response.data.userMsg,
+								toastModes.danger.backgroundColor,
+								toastModes.danger.icon
+							);
 						});
 				}
 
@@ -340,7 +466,11 @@ export default {
 				}
 			} catch (e) {
 				// hiện toast báo lỗi
-				this.handleShowToast("Đã có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 			}
 		},
 
@@ -349,7 +479,7 @@ export default {
 		 * set keyword mặc định bằng chuỗi rỗng; set page index mặc định từ data page index nếu không được truyền vào
 		 * author: Trinh Quy Cong 30/6/22
 		 */
-		getEmployees(keyword = "", pageIndex=this.pageIndex) {
+		getEmployees(keyword = "", pageIndex = this.pageIndex) {
 			try {
 				// hiện loader
 				this.showLoader = true;
@@ -357,29 +487,41 @@ export default {
 				// call api
 				EmployeeService.getPaging(pageIndex, this.pageSize, keyword)
 					.then((res) => {
+						// ẩn loader
+						this.showLoader = false;
+
 						const { Data, TotalRecords } = res.data;
 						// set employee list
 						this.employees = Data;
 						// set total records
 						this.totalRecords = TotalRecords;
-						// ẩn loader
-						this.showLoader = false;
 					})
 					.catch((res) => {
-						// hiện toast báo lỗi
-						if (res.response.data){
-							this.handleShowToast(res.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
-
-						} else {
-							this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
-						}
-
 						// ẩn loader
 						this.showLoader = false;
+
+						// hiện toast báo lỗi
+						if (res.response.data) {
+							this.handleShowToast(
+								res.response.data.userMsg,
+								toastModes.danger.backgroundColor,
+								toastModes.danger.icon
+							);
+						} else {
+							this.handleShowToast(
+								defaultMessages.toastErrorMessage,
+								toastModes.danger.backgroundColor,
+								toastModes.danger.icon
+							);
+						}
 					});
 			} catch (e) {
 				// hiện toast báo lỗi
-				this.handleShowToast("Đã có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 				// ẩn loader
 				this.showLoader = false;
 			}
@@ -403,7 +545,11 @@ export default {
 				}, 500);
 			} catch (error) {
 				// hiện toast báo lỗi
-				this.handleShowToast("Có lỗi xảy ra", toastModes.danger.backgroundColor, toastModes.danger.icon);
+				this.handleShowToast(
+					defaultMessages.toastErrorMessage,
+					toastModes.danger.backgroundColor,
+					toastModes.danger.icon
+				);
 			}
 		},
 	},

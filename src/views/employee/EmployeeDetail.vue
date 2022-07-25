@@ -1,324 +1,372 @@
 <template>
 	<div>
-		<div ref="mainDialog" class="m-dialog m-main-dialog">
-			<div class="m-dialog-content">
-				<div class="m-dialog-close">
-					<button class="m-button-help"><div class="m-button-help-icon"></div></button>
-					<button class="m-button-cancel" @click="showWarningChangeDialogOrCloseMainDialog">
-						<div class="m-button-cancel-icon"></div>
-					</button>
-				</div>
-				<div class="m-dialog-header m-row">
-					<h3>Thông tin nhân viên</h3>
-					<div class="m-row">
-						<input type="checkbox" name="" id="" />
-						<label for="">Là khách hàng</label>
+		<form id="mainForm" novalidate="true" @submit="($event) => $event.preventDefault()">
+			<div ref="mainDialog" class="m-dialog m-main-dialog">
+				<div class="m-dialog-content">
+					<div class="m-dialog-close">
+						<button class="m-button-help"><div class="m-button-help-icon"></div></button>
+						<button class="m-button-cancel" @click="showWarningChangeDialogOrCloseMainDialog">
+							<div class="m-button-cancel-icon"></div>
+						</button>
 					</div>
-					<div class="m-row">
-						<input type="checkbox" name="" id="" />
-						<label for="">Là nhà cung cấp</label>
+					<div class="m-dialog-header m-row">
+						<h3>Thông tin nhân viên</h3>
+						<div class="m-row">
+							<input type="checkbox" id="customerCheckbox" />
+							<label for="customerCheckbox">Là khách hàng</label>
+						</div>
+						<div class="m-row">
+							<input type="checkbox" id="vendorCheckbox" />
+							<label for="vendorCheckbox">Là nhà cung cấp</label>
+						</div>
 					</div>
-				</div>
-				<div class="m-dialog-body">
-					<!-- section 1 -->
-					<section class="m-dialog-body-section section-1">
-						<div class="m-row">
-							<div class="m-row m-row-input m-row-input-emp-id">
-								<p class="m-input-label">Mã <b class="asterisk">*</b></p>
-								<input
-									ref="inputEmployeeCode"
-									type="text"
-									class="m-input"
-									name="emp-id"
-									required
-									v-model.trim="employee.EmployeeCode"
-									@blur="validateOnBlur($event)"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-							<div class="m-row m-row-input m-row-input-emp-name">
-								<p class="m-input-label">Tên <b class="asterisk">*</b></p>
-								<input
-									ref="inputFullName"
-									type="text"
-									class="m-input"
-									name="emp-name"
-									v-model.trim="employee.FullName"
-									required
-									placeholder="Tên nhân viên"
-									@blur="validateOnBlur($event)"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-						</div>
-
-						<div class="m-row m-row-input">
-							<p class="m-input-label">Đơn vị <b class="asterisk">*</b></p>
-							<el-select
-								v-model="employee.DepartmentId"
-								filterable
-								placeholder=""
-								name="emp-organization"
-								ref="inputDepartmentId"
-								@blur="validateOnBlur($event)"
-								class="select-organization"
-								popper-class="select-dropdown-organization"
-								required
-							>
-								<el-option v-for="dep in departments" :key="dep.DepartmentId" :label="dep.DepartmentName" :value="dep.DepartmentId">
-								</el-option>
-							</el-select>
-							<div class="m-input-error-label"></div>
-						</div>
-
-						<div class="m-row m-row-input">
-							<p class="m-input-label">Chức danh</p>
-							<input
-								ref="inputPosition"
-								type="text"
-								class="m-input"
-								name="emp-position"
-								v-model="employee.PositionName"
-							/>
-							<div class="m-input-error-label"></div>
-						</div>
-					</section>
-					<!-- end section 1 -->
-
-					<!-- section 2 -->
-					<section class="m-dialog-body-section section-2">
-						<div class="m-row">
-							<div class="m-row m-row-input m-row-input-emp-dob">
-								<p class="m-input-label">Ngày sinh</p>
-								<input
-									ref="inputDateOfBirth"
-									type="date"
-									placeholder="dd-mm-yyyy"
-									min="1960-01-01"
-									max="2050-12-31"
-									class="m-input input-date"
-									name="emp-dob"
-									propName="DateOfBirth"
-									v-model="employee.DateOfBirth"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-
-							<div class="m-row m-row-input">
-								<p class="m-input-label">Giới tính</p>
-								<div class="m-row-checkbox-emp-gender">
-									<div class="radio-wrapper">
-										<input
-											type="radio"
-											v-model.number="employee.Gender"
-											name="emp-gender"
-											:value="genderOptions.male.value"
-											checked
-											class="m-checkbox"
-											id="empGenderMale"
-										/>
-										<label for="empGenderMale">Nam</label>
-									</div>
-									<div class="radio-wrapper">
-										<input
-											type="radio"
-											v-model.number="employee.Gender"
-											name="emp-gender"
-											:value="genderOptions.female.value"
-											class="m-checkbox"
-											id="empGenderFemale"
-										/>
-										<label for="empGenderFemale">Nữ</label>
-									</div>
-									<div class="radio-wrapper">
-										<input
-											type="radio"
-											v-model.number="employee.Gender"
-											name="emp-gender"
-											:value="genderOptions.other.value"
-											class="m-checkbox"
-											id="empGenderOther"
-										/>
-										<label for="empGenderOther">Khác</label>
+					<div class="m-dialog-body">
+						<!-- section 1 -->
+						<section class="m-dialog-body-section section-1">
+							<div class="m-row">
+								<div class="m-row m-row-input m-row-input-emp-id">
+									<p class="m-input-label">Mã <b class="asterisk">*</b></p>
+									<input
+										type="text"
+										ref="inputEmployeeCode"
+										v-model="employee.EmployeeCode"
+										placeholder="Mã nhân viên"
+										class="m-input"
+										cName="employeeCode"
+										:class="{ invalid: errors.employeeCode }"
+										required
+										cMessageRequired="Mã nhân viên không được để trống."
+										@input="validateControl($event)"
+										@blur="validateControl($event)"
+									/>
+									<div
+										v-if="errors.employeeCode"
+										class="m-input-error-label"
+										:class="{ invalid: errors.employeeCode }"
+									>
+										{{ errors.employeeCode[0] }}
 									</div>
 								</div>
-								<div class="m-input-error-label"></div>
+								<div class="m-row m-row-input m-row-input-emp-name">
+									<p class="m-input-label">Tên <b class="asterisk">*</b></p>
+									<input
+										type="text"
+										v-model="employee.FullName"
+										placeholder="Tên nhân viên"
+										class="m-input"
+										:class="{ invalid: errors.fullName }"
+										cName="fullName"
+										required
+										cMessageRequired="Tên không được để trống."
+										@blur="validateControl($event)"
+										@input="validateControl($event)"
+									/>
+									<div
+										v-if="errors.fullName"
+										class="m-input-error-label"
+										:class="{ invalid: errors.fullName }"
+									>
+										{{ errors.fullName[0] }}
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<div class="m-row">
-							<div class="m-row m-row-input m-row-input-emp-identification-number">
-								<p class="m-input-label">Số CMND</p>
+							<div class="m-row m-row-input">
+								<p class="m-input-label">Đơn vị <b class="asterisk">*</b></p>
+								<MSelect
+									:options="departments"
+									v-model="employee.DepartmentId"
+									name="emp-organization"
+									cName="departmentId"
+									cMessageRequired="Phòng ban không được để trống."
+									required
+									class="select-organization m-select-wrapper"
+									:class="{ invalid: errors.departmentId }"
+									@change="validateControl($event)"
+								/>
+								<div
+									v-if="errors.departmentId"
+									class="m-input-error-label"
+									:class="{ invalid: errors.departmentId }"
+								>
+									{{ errors.departmentId[0] }}
+								</div>
+							</div>
+
+							<div class="m-row m-row-input">
+								<p class="m-input-label">Chức danh</p>
 								<input
-									ref="inputIdentityNumber"
+									ref="inputPosition"
 									type="text"
 									class="m-input"
-									name="emp-identification-number"
-									propName="IdentityNumber"
-									v-model="employee.IdentityNumber"
+									name="emp-position"
+									v-model="employee.PositionName"
+								/>
+								<div class="m-input-error-label"></div>
+							</div>
+						</section>
+						<!-- end section 1 -->
+
+						<!-- section 2 -->
+						<section class="m-dialog-body-section section-2">
+							<div class="m-row">
+								<div class="m-row m-row-input m-row-input-emp-dob">
+									<p class="m-input-label">Ngày sinh</p>
+									<input
+										ref="inputDateOfBirth"
+										type="date"
+										placeholder="dd-mm-yyyy"
+										min="1960-01-01"
+										max="2050-12-31"
+										class="m-input input-date"
+										name="emp-dob"
+										propName="DateOfBirth"
+										v-model="employee.DateOfBirth"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+
+								<div class="m-row m-row-input">
+									<p class="m-input-label">Giới tính</p>
+									<div class="m-row-checkbox-emp-gender">
+										<div class="radio-wrapper">
+											<input
+												type="radio"
+												v-model.number="employee.Gender"
+												name="emp-gender"
+												:value="genderOptions.male.value"
+												checked
+												class="m-checkbox"
+												id="empGenderMale"
+											/>
+											<label for="empGenderMale">Nam</label>
+										</div>
+										<div class="radio-wrapper">
+											<input
+												type="radio"
+												v-model.number="employee.Gender"
+												name="emp-gender"
+												:value="genderOptions.female.value"
+												class="m-checkbox"
+												id="empGenderFemale"
+											/>
+											<label for="empGenderFemale">Nữ</label>
+										</div>
+										<div class="radio-wrapper">
+											<input
+												type="radio"
+												v-model.number="employee.Gender"
+												name="emp-gender"
+												:value="genderOptions.other.value"
+												class="m-checkbox"
+												id="empGenderOther"
+											/>
+											<label for="empGenderOther">Khác</label>
+										</div>
+									</div>
+									<div class="m-input-error-label"></div>
+								</div>
+							</div>
+
+							<div class="m-row">
+								<div class="m-row m-row-input m-row-input-emp-identification-number">
+									<div class="m-input-label tooltip-parent">
+										Số CMND
+										<div class="tooltip">Số chứng minh nhân dân</div>
+									</div>
+									<input
+										ref="inputIdentityNumber"
+										type="text"
+										class="m-input"
+										name="emp-identification-number"
+										propName="IdentityNumber"
+										v-model="employee.IdentityNumber"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+
+								<div class="m-row m-row-input m-row-input-emp-identification-number-release-date">
+									<p class="m-input-label">Ngày cấp</p>
+									<input
+										ref="inputIdentityDate"
+										type="date"
+										placeholder="DD-MM-YYYY"
+										class="m-input"
+										name="emp-identification-number-release-date"
+										propName="IdentityDate"
+										v-model="employee.IdentityDate"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+							</div>
+
+							<div class="m-row m-row-input m-row-input-emp-identification-number-release-place">
+								<p class="m-input-label">Nơi cấp</p>
+								<input
+									ref="inputIdentityPlace"
+									type="text"
+									class="m-input"
+									name="emp-identification-number-release-place"
+									propName="IdentityPlace"
+									v-model="employee.IdentityPlace"
+								/>
+								<div class="m-input-error-label"></div>
+							</div>
+						</section>
+						<!-- end section 2 -->
+
+						<!-- section 3 -->
+						<section class="m-dialog-body-section section-3">
+							<div class="m-row m-row-input">
+								<p class="m-input-label">Địa chỉ</p>
+								<input
+									ref="inputAddress"
+									type="text"
+									class="m-input"
+									name="emp-address"
+									propName="Address"
+									v-model="employee.Address"
 								/>
 								<div class="m-input-error-label"></div>
 							</div>
 
-							<div class="m-row m-row-input m-row-input-emp-identification-number-release-date">
-								<p class="m-input-label">Ngày cấp</p>
-								<input
-									ref="inputIdentityDate"
-									type="date"
-									placeholder="DD-MM-YYYY"
-									class="m-input"
-									name="emp-identification-number-release-date"
-									propName="IdentityDate"
-									v-model="employee.IdentityDate"
-								/>
-								<div class="m-input-error-label"></div>
+							<div class="m-row m-row-phone-and-email">
+								<div class="m-row m-row-input">
+									<p class="m-input-label">ĐT di động</p>
+									<input
+										ref="inputMobilePhoneNumber"
+										type="text"
+										class="m-input"
+										name="emp-mobile-phone-number"
+										propName="PhoneNumber"
+										v-model="employee.PhoneNumber"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+								<div class="m-row m-row-input">
+									<p class="m-input-label">ĐT cố định</p>
+									<input
+										ref="inputStablePhoneNumber"
+										type="text"
+										class="m-input"
+										name="emp-stable-phone-number"
+										propName="PhoneNumber"
+										v-model="employee.PhoneNumber"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+								<div class="m-row m-row-input">
+									<p class="m-input-label">Email</p>
+									<input
+										ref="inputEmail"
+										type="text"
+										propName="Email"
+										v-model="employee.Email"
+										name="emp-email"
+										class="m-input"
+										cName="employeeEmail"
+										email
+										cMessageEmail="Email phải đúng định dạng."
+										:class="{ invalid: errors.employeeEmail }"
+										@input="validateControl($event)"
+									/>
+									<div
+										v-if="errors.employeeEmail"
+										class="m-input-error-label"
+										:class="{ invalid: errors.employeeEmail }"
+									>
+										{{ errors.employeeEmail[0] }}
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<div class="m-row m-row-input m-row-input-emp-identification-number-release-place">
-							<p class="m-input-label">Nơi cấp</p>
-							<input
-								ref="inputIdentityPlace"
-								type="text"
-								class="m-input"
-								name="emp-identification-number-release-place"
-								propName="IdentityPlace"
-								v-model="employee.IdentityPlace"
-							/>
-							<div class="m-input-error-label"></div>
+							<div class="m-row m-row-bank-info">
+								<div class="m-row m-row-input">
+									<p class="m-input-label">Tài khoản ngân hàng</p>
+									<input
+										ref="inputBankNumber"
+										type="text"
+										class="m-input"
+										name="emp-bank-number"
+										propName="BankAccountNumber"
+										v-model="employee.BankAccountNumber"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+								<div class="m-row m-row-input">
+									<p class="m-input-label">Tên ngân hàng</p>
+									<input
+										ref="inputBankName"
+										type="text"
+										class="m-input"
+										name="emp-bank-name"
+										propName="BankName"
+										v-model="employee.BankName"
+									/>
+								</div>
+								<div class="m-row m-row-input">
+									<p class="m-input-label">Chi nhánh</p>
+									<input
+										ref="inputBankBranchName"
+										type="text"
+										class="m-input"
+										name="emp-bank-branch"
+										propName="BankBranchName"
+										v-model="employee.BankBranchName"
+									/>
+									<div class="m-input-error-label"></div>
+								</div>
+							</div>
+						</section>
+						<!-- end section 3 -->
+					</div>
+					<div class="m-dialog-footer m-row">
+						<div class="m-button-group">
+							<button
+								class="m-button m-button-primary"
+								id="btnSaveAndAdd"
+								@click="addOrUpdateEmployee(mainDiaglogSaveMode.saveAndNew, 'mainForm')"
+							>
+								Cất và Thêm
+							</button>
+							<button
+								ref="btnMainDialogSave"
+								class="m-button m-button-secondary"
+								id="btnSave"
+								@click="addOrUpdateEmployee(mainDiaglogSaveMode.saveOnly, 'mainForm')"
+							>
+								Cất
+							</button>
 						</div>
-					</section>
-					<!-- end section 2 -->
-
-					<!-- section 3 -->
-					<section class="m-dialog-body-section section-3">
-						<div class="m-row m-row-input">
-							<p class="m-input-label">Địa chỉ</p>
-							<input ref="inputAddress" type="text" class="m-input" name="emp-address" propName="Address" v-model="employee.Address" />
-							<div class="m-input-error-label"></div>
-						</div>
-
-						<div class="m-row m-row-phone-and-email">
-							<div class="m-row m-row-input">
-								<p class="m-input-label">ĐT di động</p>
-								<input
-									ref="inputMobilePhoneNumber"
-									type="text"
-									class="m-input"
-									name="emp-mobile-phone-number"
-									propName="PhoneNumber"
-									v-model="employee.PhoneNumber"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-							<div class="m-row m-row-input">
-								<p class="m-input-label">ĐT cố định</p>
-								<input
-									ref="inputStablePhoneNumber"
-									type="text"
-									class="m-input"
-									name="emp-stable-phone-number"
-									propName="PhoneNumber"
-									v-model="employee.PhoneNumber"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-							<div class="m-row m-row-input">
-								<p class="m-input-label">Email</p>
-								<input
-									ref="inputEmail"
-									type="text"
-									class="m-input"
-									name="emp-email"
-									propName="Email"
-									v-model="employee.Email"
-									email
-									@blur="validateOnBlur($event)"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-						</div>
-
-						<div class="m-row m-row-bank-info">
-							<div class="m-row m-row-input">
-								<p class="m-input-label">Tài khoản ngân hàng</p>
-								<input
-									ref="inputBankNumber"
-									type="text"
-									class="m-input"
-									name="emp-bank-number"
-									propName="BankAccountNumber"
-									v-model="employee.BankAccountNumber"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-							<div class="m-row m-row-input">
-								<p class="m-input-label">Tên ngân hàng</p>
-								<input ref="inputBankName" type="text" class="m-input" name="emp-bank-name" propName="BankName" v-model="employee.BankName" />
-							</div>
-							<div class="m-row m-row-input">
-								<p class="m-input-label">Chi nhánh</p>
-								<input
-									ref="inputBankBranchName"
-									type="text"
-									class="m-input"
-									name="emp-bank-branch"
-									propName="BankBranchName"
-									v-model="employee.BankBranchName"
-								/>
-								<div class="m-input-error-label"></div>
-							</div>
-						</div>
-					</section>
-					<!-- end section 3 -->
-				</div>
-				<div class="m-dialog-footer m-row">
-					<div class="m-button-group">
-						<button class="m-button m-button-primary" id="btnSaveAndAdd" @click="handleSaveAndOrAdd(mainDiaglogSaveMode.saveAndNew)">
-							Cất và Thêm
-						</button>
 						<button
-							ref="btnMainDialogSave"
-							class="m-button m-button-secondary"
-							id="btnSave"
-							@click="handleSaveAndOrAdd(mainDiaglogSaveMode.saveOnly)"
+							class="m-button-cancel m-button m-button-secondary"
+							@click="showWarningChangeDialogOrCloseMainDialog"
 						>
-							Cất
+							Huỷ
 						</button>
 					</div>
-					<button class="m-button-cancel m-button m-button-secondary" @click="showWarningChangeDialogOrCloseMainDialog">Huỷ</button>
 				</div>
 			</div>
-		</div>
+		</form>
 
 		<!-- warning change dialog -->
 		<InfoDialog
 			id="warningChangeDialog"
 			v-show="showWarningChangeDialog"
-			showDenyButton
-			showConfirmButton
-			showBody
-			confirmButtonText="Có"
-			closeButtonText="Huỷ"
-			body="Dữ liệu đã bị thay đổi, bạn có muốn cất không?"
-			:cssIcon="cssInfoDialog.info"
+			:config="infoDialogConfig"
 			@onCloseInfoDialog="handleCloseWarningChangeDialog"
 			@onConfirm="$refs.btnMainDialogSave.click()"
 		/>
 		<!-- end warning change dialog -->
 
-		<!-- error message dialog -->
+		<!-- info dialog -->
 		<InfoDialog
 			id="errorMessageDialog"
 			v-show="showErrorMessageDialog"
-			showBody
-			closeButtonPrimary
-			closeButtonText="Đóng"
-			:body="errors"
-			:cssIcon="cssInfoDialog.danger"
+			:config="infoDialogConfig"
 			@onCloseInfoDialog="handleCloseErrorMessageDialog"
 		/>
-		<!-- end error message dialog -->
+		<!-- end info dialog -->
 
 		<!-- loader -->
 		<PageLoader v-show="showLoader" />
@@ -328,10 +376,12 @@
 
 <script>
 import Employee from "../../models/Employee.model.js";
-import { FormModeEnum, errorValidationMessageEmployee, genders, mainDiaglogSaveMode } from "../../utils.js";
+import { FormModeEnum, genders, mainDiaglogSaveMode } from "../../utils.js";
 import InfoDialog, { closeInfoDialogMode, cssInfoDialog } from "../../components/base/InfoDialog.vue";
 import { toastModes } from "../../components/base/ToastNotifier.vue";
 import PageLoader from "../../components/base/PageLoader.vue";
+import MSelect from "@/components/base/MSelect.vue";
+import defaultMessages from "@/resources/employeeDetailMessage";
 
 // dùng để gọi API
 import ServiceFactory from "../../services/ServiceFactory.js";
@@ -339,13 +389,34 @@ const EmployeeService = ServiceFactory.get("employees");
 const DepartmentService = ServiceFactory.get("departments");
 
 export default {
-	components: { InfoDialog, PageLoader },
+	components: { InfoDialog, PageLoader, MSelect },
 	props: {
 		// prop employee từ component cha
 		employeeProp: null,
 
 		// prop form mode từ component cha
 		formModeProp: null,
+	},
+
+	computed: {
+		/**
+		 * trả về thông báo lỗi đầu tiên của trường dữ liệu lỗi đầu tiền
+		 * của form
+		 * author: Trinh Quy Cong 24/7/22
+		 */
+		firstErrorMessage() {
+			const messagesEntries = Object.entries(this.errors);
+			if (messagesEntries.length > 0) {
+				// return message lỗi đầu tiên của key đầu tiên
+				const [key, value] = messagesEntries[0];
+				// key chính là giá trị của attribute cName của control (input)
+				// value là 1 mảng các message lỗi của key đó. ví dụ: key fullName có value là 1 mảng message lỗi
+				if (value && value.length > 0) {
+					return value[0];
+				}
+			}
+			return null;
+		},
 	},
 
 	data() {
@@ -356,8 +427,8 @@ export default {
 			// form mode: add/update
 			formMode: this.formModeProp,
 
-			// mảng thông báo lỗi để hiện lên error message dialog
-			errors: [],
+			// đối tượng chứa các mảng thông báo lỗi cho từng trường input
+			errors: {},
 
 			// hiện error message dialog
 			showErrorMessageDialog: false,
@@ -383,11 +454,16 @@ export default {
 			// chứa các chế độ đóng info dialog
 			closeInfoDialogMode: closeInfoDialogMode,
 
-			// chứa style cho info dialog
-			cssInfoDialog: cssInfoDialog,
-
 			// chế độ "cất" hoặc "cất và thêm"
 			mainDiaglogSaveMode: mainDiaglogSaveMode,
+
+			// cấu hình cho info dialog
+			infoDialogConfig: {},
+
+			// vì data errors có lỗi (không nhận thay đổi) - lỗi này do Vue 2
+			// dùng timer mỗi khi cập nhật data errors và set giá trị mới cho
+			// timer này, sau đó dùng watch để cập nhật data errors.
+			timerWatch: null,
 		};
 	},
 
@@ -397,14 +473,64 @@ export default {
 		 * author: Trinh Quy Cong 2/7/22
 		 */
 		employee: {
-			handler(newValue, oldValue) {
+			handler() {
 				this.isModified = true;
 			},
 			deep: true,
 		},
+
+		/**
+		 * vì data errors có lỗi (không nhận thay đổi) - lỗi này do Vue 2
+		 * dùng timer mỗi khi cập nhật data errors và set giá trị mới cho
+		 * timer này, sau đó dùng watch để cập nhật data errors.
+		 * author: Trinh Quy Cong 26/7/22
+		 */
+		timerWatch() {
+			this.errors = { ...this.errors };
+		},
 	},
 
 	methods: {
+		/**
+		 * cài đặt cấu hình cho dialog cảnh báo thay đổi
+		 * author: Trinh Quy Cong 24/7/22
+		 */
+		buildWarningChangeDialogConfig() {
+			try {
+				this.infoDialogConfig = {
+					showBody: true,
+					body: "Dữ liệu đã bị thay đổi, bạn có muốn cất không?",
+					showDenyButton: true,
+					showConfirmButton: true,
+					confirmButtonText: "Có",
+					closeButtonText: "Huỷ",
+					cssIcon: cssInfoDialog.info,
+				};
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * cài đặt cấu hình cho dialog báo lỗi
+		 * author: Trinh Quy Cong 24/7/22
+		 */
+		buildErrorMessageDialogConfig() {
+			try {
+				this.infoDialogConfig = {
+					showBody: true,
+					body: this.firstErrorMessage,
+					closeButtonPrimary: true,
+					closeButtonText: "Đóng",
+					showDenyButton: false,
+					showConfirmButton: false,
+					showDialogClose: false,
+					cssIcon: cssInfoDialog.danger,
+				};
+			} catch (e) {
+				console.log(e);
+			}
+		},
 		/**
 		 * hiện dialog cảnh báo dữ liệu thay đổi (nếu cần) trước khi đóng main dialog
 		 * author: Trinh Quy Cong 12/7/22
@@ -413,6 +539,7 @@ export default {
 			try {
 				if (this.isModified) {
 					// hiện dialog cảnh báo
+					this.buildWarningChangeDialogConfig();
 					this.showWarningChangeDialog = true;
 				} else {
 					// raise sự kiện tắt main dialog
@@ -445,11 +572,181 @@ export default {
 		},
 
 		/**
+		 * thực hiện validate cho thẻ select custom (vì thẻ này có cấu trúc khác thẻ select bình thường)
+		 * trả về message lỗi nếu control invalid, ngược lại trả về null
+		 */
+		validateCustomSelect(element) {
+			try {
+				// trường hợp ngoại lệ - khi các control không như mặc định
+				// ví dụ trong trường hợp này: dùng Customized control
+				// đang hard code cho trường hợp department id
+				if (element.closest("[customizedControl]")) {
+					// parentElement chính là thẻ bao bên ngoài (coi như 1 control vì nó có các attribute cName, cMessage,..)
+					const parentElement = element.closest("[cName]");
+					const cName = parentElement.getAttribute("cName");
+					const required = parentElement.getAttribute("required");
+					let errorMessageDisplay = null;
+					if (required && !this.employee.DepartmentId) {
+						errorMessageDisplay =
+							parentElement.getAttribute("cMessageRequired") ||
+							defaultMessages.defaultValidationMessageRequired;
+
+						const customErrorMessage = parentElement.getAttribute("cMessageRequired");
+						this.errors[cName] = [];
+						this.timerWatch = Date.now(); // sẽ không bao giờ bị trùng, đảm bảo thay đổi để dùng watch
+						this.errors[cName].push(
+							customErrorMessage ? customErrorMessage : defaultMessages.defaultValidationMessageRequired
+						);
+					} else {
+						errorMessageDisplay = null;
+						delete this.errors[cName];
+					}
+					return errorMessageDisplay;
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * HÀM CON thực hiện validate control
+		 * nếu control invalid, thêm trường message lỗi cho
+		 * control đó trong object messages và đẩy thông báo lỗi vào
+		 * author: TQCONG 22/7/22
+		 */
+		validateEachControl(control) {
+			try {
+				// name của element thông qua cName attribute (attribute này là bắt buộc)
+				let elName = control.getAttribute("cName");
+				// custom message (nếu có)
+				let customErrorMessage = null;
+
+				// trường hợp ngoại lệ cho thẻ custom select
+				if (this.validateCustomSelect(control)) {
+					return;
+				}
+
+				const tagName = control.tagName.toLowerCase();
+				if (tagName == "input") {
+					switch (control.type) {
+						case "text":
+						case "password":
+						case "email":
+							// kiểm tra required
+							if (control.hasAttribute("required") && !control.value) {
+								customErrorMessage = control.getAttribute("cMessageRequired");
+								this.errors[elName] = [];
+								// do lỗi vue2 không bắt được thay đổi của kiểu dữ liệu reference, phải dùng watch
+								this.timerWatch = Date.now(); // sẽ không bao giờ bị trùng, đảm bảo thay đổi để dùng watch
+								this.errors[elName].push(
+									customErrorMessage
+										? customErrorMessage
+										: defaultMessages.defaultValidationMessageRequired
+								);
+							} else {
+								delete this.errors[elName];
+							}
+							// kiểm tra email đúng định dạng
+							if (control.hasAttribute("email") && control.value && !this.isEmailValid(control.value)) {
+								customErrorMessage = control.getAttribute("cMessageEmail");
+								if (!this.errors[elName]) {
+									this.errors[elName] = [];
+								}
+								this.timerWatch = Date.now(); // sẽ không bao giờ bị trùng, đảm bảo thay đổi để dùng watch
+
+								this.errors[elName].push(
+									customErrorMessage
+										? customErrorMessage
+										: defaultMessages.defaultValidationMessageEmail
+								);
+							} else if (
+								control.hasAttribute("email") &&
+								control.value &&
+								this.isEmailValid(control.value)
+							) {
+								delete this.errors[elName];
+							}
+							break;
+						case "checkbox":
+							break;
+						case "radio":
+							break;
+					}
+				} else if (tagName == "select") {
+					//
+				} else {
+					//
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * validate dữ liệu của form ngay sau khi bấm nút submit
+		 * validate qua tất cả các control trong form
+		 * trả về null nếu form valid, ngược lại, trả về message lỗi đầu tiên được tìm thấy
+		 * author: Trinh Quy Cong 22/7/22
+		 */
+		validateOnSubmit(formElementId) {
+			try {
+				// clear mảng error, coi như mọi trường control hợp lệ
+				// chỉ khi control invalid thì mới đánh dấu control là invalid (có border đỏ kèm message lỗi)
+				this.errors = [];
+
+				// thẻ form bao lấy tất cả các control và các nút submit
+				const formEl = document.getElementById(formElementId);
+				// lấy ra các control cần validate
+				const controls = formEl.querySelectorAll("[cName]");
+
+				// validate từng control
+				for (let i = 0; i < controls.length; i++) {
+					// element hiện tại
+					const el = controls[i];
+					this.validateEachControl(el);
+				}
+
+				// hiện message lỗi đầu tiên (nhớ là đây là mesage của form) - dù có bao nhiêu lỗi của bao nhiêu
+				// element cũng chỉ lẩy lỗi đầu tiên của element lỗi đầu tiên
+				// ta sẽ cứ get hết message lỗi - nhưng khi hiện info dialog sẽ chỉ lấy cái đầu tiên
+				const messagesEntries = Object.entries(this.errors);
+				if (messagesEntries.length > 0) {
+					// return message lỗi đầu tiên của key đầu tiên
+					const [key, value] = messagesEntries[0];
+					// key chính là giá trị của attribute cName của control (input)
+					// value là 1 mảng các message lỗi của key đó. ví dụ: key fullName có value là 1 mảng message lỗi
+					if (value && value.length > 0) {
+						this.elementToFocus = formEl.querySelector(`[cName=${key}]`);
+						return value[0];
+					}
+				}
+				this.elementToFocus = null;
+				return null;
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * validate control (input) ở sự kiện onblur, onchange, oninput
+		 * author: Trinh Quy Cong 23/7/22
+		 */
+		validateControl($event) {
+			try {
+				const element = $event.currentTarget || $event.target;
+				// thực hiện validate
+				this.validateEachControl(element);
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
 		 * HÀM CON thực thi logic thêm hoặc sửa employee
 		 * param: mode là chế độ "cất" hoặc "cất và thêm"
 		 * author: Trinh Quy Cong 19/7/22
 		 */
-		addOrUpdateEmployee(mode) {
+		addOrUpdateEmployee(mode, formElementId) {
 			try {
 				let methodName = "";
 				if (this.formMode === FormModeEnum.add) {
@@ -459,8 +756,10 @@ export default {
 				}
 
 				// validate data
-				if (!this.validateOnSubmit()) {
+				const formErrorMessage = this.validateOnSubmit(formElementId);
+				if (formErrorMessage) {
 					// hiện error dialog
+					this.buildErrorMessageDialogConfig();
 					this.showErrorMessageDialog = true;
 					// focus vào element lỗi đầu tiên
 					this.elementToFocus.focus();
@@ -500,12 +799,18 @@ export default {
 										this.employee = employee;
 									})
 									.catch((error) => {
-										this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+										this.handleShowToast(
+											error.response.data.userMsg,
+											toastModes.danger.backgroundColor,
+											toastModes.danger.icon
+										);
 									});
 							}
 
-							let msg = this.formMode === FormModeEnum.add ? "Thêm" : this.formMode === FormModeEnum.update ? "Sửa" : "";
-							msg += " nhân viên thành công";
+							let msg =
+								this.formMode === FormModeEnum.add
+									? defaultMessages.saveSuccess
+									: defaultMessages.updateSuccess;
 							// hiện toast thành công
 							this.$emit("onShowToast", msg, toastModes.success.backgroundColor, toastModes.success.icon);
 						}
@@ -518,26 +823,21 @@ export default {
 						if (error.response.data.data) {
 							if (Array.isArray(error.response.data.data.errors)) {
 								// hiện error dialog
+								this.buildErrorMessageDialogConfig();
+								this.infoDialogConfig.cssIcon = cssInfoDialog.warning;
+								this.infoDialogConfig.body = error.response.data.data.errors;
 								this.showErrorMessageDialog = true;
-								// lấy ra errors từ api response và gán vào data errors
-								this.errors = error.response.data.data.errors;
 							}
 						}
 
 						// hiển thị toast message lỗi
-						this.$emit("onShowToast", error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+						this.$emit(
+							"onShowToast",
+							error.response.data.userMsg,
+							toastModes.danger.backgroundColor,
+							toastModes.danger.icon
+						);
 					});
-			} catch (e) {
-				console.log(e);
-			}
-		},
-		/**
-		 * cập nhật hoặc thêm employee
-		 * author: Trinh Quy Cong 29/6/22
-		 */
-		handleSaveAndOrAdd(mode) {
-			try {
-				this.addOrUpdateEmployee(mode);
 			} catch (e) {
 				console.log(e);
 			}
@@ -549,102 +849,13 @@ export default {
 		 */
 		handleCloseErrorMessageDialog(mode) {
 			try {
-				//reset error array
-				this.errors = [];
 				//hide dialog
 				this.showErrorMessageDialog = false;
 				// focus on the focus input
-				this.elementToFocus.focus();
-			} catch (e) {
-				console.log(e);
-			}
-		},
-
-		/**
-		 * validate form khi kích vào nút "cất" hoặc "cất và thêm"
-		 * trả về true nếu form valid, ngược lại trả về false
-		 * author: Trinh Quy Cong 30/6/22
-		 */
-		validateOnSubmit() {
-			try {
-				// biến lưu thông báo lỗi
-				let errorMsg = "";
-
-				// biến trạng thái form có valid hay không
-				let isValid = true;
-
-				// nếu trường employee code trống (check qua data employee được vì đã dùng v-model trong input control)
-				if (!this.employee.EmployeeCode) {
-					// cập nhật biến valid
-					isValid = false;
-					// cập nhật biến error
-					errorMsg = errorValidationMessageEmployee.employeeCode.required;
-					// element lỗi để focus vào sau khi đưa ra thông báo lỗi
+				if (!this.elementToFocus) {
 					this.elementToFocus = this.$refs.inputEmployeeCode;
-					// set thuộc tính invalid cho input lỗi
-					this.$refs.inputEmployeeCode.setAttribute("invalid", true);
-					// set dòng text thông báo lỗi cho tooltip hiển thị khi hover vào input lỗi
-					this.$refs.inputEmployeeCode.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-						errorValidationMessageEmployee.employeeCode.required;
-				} else {
-					// nếu employee code valid, bỏ thuộc tính invalid
-					this.$refs.inputEmployeeCode.removeAttribute("invalid");
-					// gán bằng null để những thằng input sau có thể được focus. Vì mặc định input employee code được set là focus element. Nếu không gán bằng null ở đây, các input không hợp lệ còn lại sẽ không được focus vào
-					this.elementToFocus = null;
 				}
-
-				// check trường full name
-				if (!this.employee.FullName) {
-					isValid = false;
-					errorMsg = errorMsg ? errorMsg : errorValidationMessageEmployee.fullName.required;
-					this.elementToFocus = this.elementToFocus ? this.elementToFocus : this.$refs.inputFullName;
-					this.$refs.inputFullName.setAttribute("invalid", true);
-					this.$refs.inputFullName.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-						errorValidationMessageEmployee.fullName.required;
-				} else {
-					this.$refs.inputFullName.removeAttribute("invalid");
-				}
-
-				// vì dùng element ui nên không thể set ref, nên element phải lấy trực tiếp từ DOM
-				// lấy ra thẻ input bên trong el-select element. Lưu ý: đây là thẻ input chứ không phải thẻ select
-				const selectDepartmentEl = document.querySelector('[name="emp-organization"]');
-				if (!this.employee.DepartmentId) {
-					isValid = false;
-
-					errorMsg = errorMsg ? errorMsg : errorValidationMessageEmployee.departmentId.required;
-					this.elementToFocus = this.elementToFocus ? this.elementToFocus : selectDepartmentEl;
-
-					// set thuộc tính invalid cho input control
-					selectDepartmentEl.setAttribute("invalid", true);
-					// set thuộc tính invalid cho thẻ select (cha của input)
-					selectDepartmentEl.closest(".el-select").setAttribute("invalid", true);
-					// set dòng text lỗi cho tooltip hiển thị khi hover vào input lỗi
-					selectDepartmentEl.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-						errorValidationMessageEmployee.departmentId.required;
-				} else {
-					// bỏ thuộc tính invalid ở cả cha và con (select và input)
-					selectDepartmentEl.removeAttribute("invalid");
-					selectDepartmentEl.closest(".el-select").removeAttribute("invalid");
-				}
-
-				// nếu trường email có dữ liệu nhưng không đúng định dạng
-				if (this.employee.Email && !this.isEmailValid(this.employee.Email)) {
-					isValid = false;
-					errorMsg = errorMsg ? errorMsg : errorValidationMessageEmployee.email.format;
-					this.elementToFocus = this.elementToFocus ? this.elementToFocus : this.$refs.inputEmail;
-					this.$refs.inputEmail.setAttribute("invalid", true);
-					this.$refs.inputEmail.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-						errorValidationMessageEmployee.email.format;
-				} else {
-					this.$refs.inputEmail.removeAttribute("invalid");
-				}
-
-				// reset data errors
-				this.errors = [];
-				// đẩy thông báo lỗi vào
-				this.errors.push(errorMsg);
-				// trả về trạng thái true/false
-				return isValid;
+				this.elementToFocus.focus();
 			} catch (e) {
 				console.log(e);
 			}
@@ -662,80 +873,26 @@ export default {
 				console.log(e);
 			}
 		},
-
-		/**
-		 * validate các input control khi blur
-		 * author: Trinh Quy Cong 8/7/22
-		 */
-		validateOnBlur($event) {
-			try {
-				// lấy ra target của sự kiện blur
-				const target = $event.currentTarget || $event.target;
-
-				// nếu là thẻ input bên trong thẻ select department, xử lý theo cách riêng
-				if (target.name == "emp-organization") {
-					// lấy ra thẻ cha của input
-					const selectEl = target.closest(".el-select");
-					// cần delay 0.1 giây vì sự kiện blur xảy ra trước khi giá trị của input được set (ta sẽ blur trước khi chọn được giá trị trong ô select). Sau delay thì giá trị input mới được nhận
-					setTimeout(function () {
-						if (selectEl && selectEl.hasAttribute("required") && !target.value) {
-							target.setAttribute("invalid", true);
-							selectEl.setAttribute("invalid", true);
-							target.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-								errorValidationMessageEmployee.departmentId.required;
-						} else if (selectEl) {
-							target.removeAttribute("invalid");
-							selectEl.removeAttribute("invalid");
-						}
-					}, 100);
-				}
-				// nếu là thẻ input thông thường
-				else {
-					// nếu input là bắt buộc mà lại không được nhập
-					if (target.hasAttribute("required") && !target.value) {
-						// gán thuộc tính cho input
-						target.setAttribute("invalid", true);
-						// dòng thông báo lỗi tuỳ vào tên của input
-						switch (target.name) {
-							case "emp-id":
-								target.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-									errorValidationMessageEmployee.employeeCode.required;
-								break;
-							case "emp-name":
-								target.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-									errorValidationMessageEmployee.fullName.required;
-								break;
-							case "emp-organization":
-								target.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-									errorValidationMessageEmployee.departmentId.required;
-								break;
-							default:
-								target.closest(".m-row-input").querySelector(".m-input-error-label").textContent =
-									errorValidationMessageEmployee.common.required;
-						}
-					} else {
-						// bỏ thuộc tính nếu hợp lệ
-						target.removeAttribute("invalid");
-					}
-
-					// nếu input là email đã được nhập nhưng không hợp lệ
-					if (target.hasAttribute("email") && target.value && !this.isEmailValid(target.value)) {
-						target.setAttribute("invalid", true);
-						target.closest(".m-row-input").querySelector(".m-input-error-label").textContent = errorValidationMessageEmployee.email.format;
-					}
-					// nếu input là email và hợp lệ
-					else if (target.hasAttribute("email") && this.isEmailValid(target.value)) {
-						target.removeAttribute("invalid");
-					}
-				}
-			} catch (e) {
-				console.log(e);
-			}
-		},
 	},
 
 	created() {
 		try {
+			// cấu hình mặc định cho dialog thông báo
+			this.infoDialogConfig = {
+				showDialogClose: false,
+				showDenyButton: false,
+				showBody: true,
+				body: null,
+				closeButtonText: "Close",
+				closeButtonPrimary: false,
+				showConfirmButton: false,
+				confirmButtonText: "Agree",
+				cssIcon: {
+					backgroundPositionX: 0,
+					backgroundPositionY: 0,
+				},
+			};
+
 			// lấy ra ds department để hiện thị lên form
 			DepartmentService.getAll()
 				.then((res) => {
@@ -743,7 +900,11 @@ export default {
 					this.departments = data;
 				})
 				.catch((error) => {
-					this.handleShowToast(error.response.data.userMsg, toastModes.danger.backgroundColor, toastModes.danger.icon);
+					this.handleShowToast(
+						error.response.data.userMsg,
+						toastModes.danger.backgroundColor,
+						toastModes.danger.icon
+					);
 				});
 		} catch (e) {
 			console.log(e);
@@ -763,8 +924,216 @@ export default {
 };
 </script>
 
+<style>
+/* cần đặt ở đây để child component có thể nhận */
+.m-row-input .m-select-wrapper.invalid input {
+	border: 1px solid red !important;
+}
+</style>
 <style scoped>
-@import url(../../css/views/employee/employee-detail.css);
+/* initial style */
+/* +, DIALOG */
+.m-dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99999;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.m-dialog .m-dialog-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	background: #fff;
+	padding: 20px 32px;
+
+	border-radius: 0;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header {
+	margin-bottom: 24px;
+	align-items: center;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header h3 {
+	font-family: "misa-bold";
+	font-size: 24px;
+	color: #111;
+	font-weight: 700;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header .m-row {
+	margin: 0 21px;
+	align-items: center;
+}
+
+.m-dialog .m-dialog-content .m-dialog-header .m-row input[type="checkbox"] {
+	margin-right: 10px;
+}
+
+.m-dialog .m-dialog-content .m-row-input {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.m-dialog .m-dialog-content .m-input-label {
+	font-weight: bold;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	background: transparent;
+	font-size: 1.5rem;
+}
+
+.m-dialog .m-dialog-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+
+	margin-top: 38px;
+	padding-top: 20px;
+	border-top: 1px solid #aaa;
+}
+
+.m-dialog .m-dialog-footer .m-button-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+
+.m-dialog .m-dialog-footer .m-button-group .m-button-secondary {
+	margin-right: 10px;
+}
+
+.asterisk {
+	color: red;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: repeat(2, auto);
+	grid-template-areas:
+		"section1 section2"
+		"section3 section3";
+	column-gap: 30px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-1 {
+	grid-area: section1;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-2 {
+	grid-area: section2;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section.section-3 {
+	grid-area: section3;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-id {
+	width: 40%;
+	margin-right: 6px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-name {
+	flex-grow: 1;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section select[name="emp-organization"] {
+	width: 100%;
+	height: var(--input-height);
+	border: 1px solid #babec5;
+	outline: none;
+	border-radius: 2px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section select[name="emp-organization"]:focus {
+	border-color: var(--primary-color);
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-dob {
+	width: 40%;
+	margin-right: 6px;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-checkbox-emp-gender {
+	width: 100%;
+	height: var(--input-height);
+	display: flex;
+	align-items: center;
+}
+
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-identification-number {
+	flex-grow: 1;
+}
+.m-dialog.m-main-dialog .m-dialog-body .m-dialog-body-section .m-row-input-emp-identification-number-release-date {
+	margin-left: 6px;
+	width: 40%;
+}
+
+.m-row-phone-and-email,
+.m-row-bank-info {
+	column-gap: 6px;
+}
+.m-row-phone-and-email .m-row-input,
+.m-row-bank-info .m-row-input {
+	flex-grow: 1;
+}
+
+.m-row.m-row-input {
+	margin-bottom: 12px;
+}
+
+.m-row.m-row-input .m-input-label {
+	margin: 0 0 4px 0;
+	font-size: 12px;
+	color: #111;
+}
+
+.m-checkbox + label {
+	margin-right: 20px;
+	margin-left: 10px;
+}
+
+/* main dialog additional styles  (maybe need or not) */
+.m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon,
+.m-dialog .m-dialog-content .m-dialog-close .m-button-cancel-icon {
+	background-image: url(../../assets/img/Sprites.64af8f61.svg);
+	background-repeat: no-repeat;
+	background-position: -592px -456px;
+	width: 24px;
+	height: 24px;
+	min-width: 24px;
+	min-height: 24px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon {
+	background-position: -89px -144px;
+}
+
+.m-dialog .m-dialog-content .m-dialog-close .m-button-cancel-icon {
+	background-position: -144px -144px;
+}
+
+/* end of initial style */
 
 .m-dialog.m-main-dialog .m-dialog-footer {
 	justify-content: space-between;
@@ -779,5 +1148,23 @@ export default {
 	min-width: 900px;
 	max-width: 900px;
 	width: 900px;
+}
+
+.m-select-wrapper {
+	width: 100%;
+}
+
+.m-row-input input.invalid,
+.m-row-input select.invalid,
+.m-row-input textarea.invalid,
+.m-row-input .m-select-wrapper.invalid input {
+	border: 1px solid red !important;
+}
+
+.m-row-input input:hover ~ .m-input-error-label.invalid,
+.m-row-input select:hover ~ .m-input-error-label.invalid,
+.m-row-input textarea:hover ~ .m-input-error-label.invalid,
+.m-row-input .m-select-wrapper:hover ~ .m-input-error-label.invalid {
+	display: block;
 }
 </style>

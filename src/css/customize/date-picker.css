@@ -1,0 +1,36 @@
+.mx-datepicker-popup {
+    z-index: 9999999 !important;
+}
+
+.mx-datepicker.m-input {
+    padding: 0;
+    border:none;
+}
+
+.mx-input {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px 30px;
+    padding-left: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #111;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: unset;
+
+    height: 100%;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+ .mx-input:focus {
+    border-color: var(--primary-color);
+}
+
+.mx-input:hover {
+    border-color: var(--input-border-color);
+}

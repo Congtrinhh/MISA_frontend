@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- main form -->
 		<form id="mainForm" novalidate="true" @submit="($event) => $event.preventDefault()">
 			<div ref="mainDialog" class="m-dialog m-main-dialog">
 				<div class="m-dialog-content">
@@ -120,7 +121,6 @@
 										max="2050-12-31"
 										class="m-input input-date"
 										name="emp-dob"
-										propName="DateOfBirth"
 										v-model="employee.DateOfBirth"
 									/>
 									<div class="m-input-error-label"></div>
@@ -325,7 +325,7 @@
 							<button
 								class="m-button m-button-primary"
 								id="btnSaveAndAdd"
-								@click="addOrUpdateEmployee(mainDiaglogSaveMode.saveAndNew, 'mainForm')"
+								@click="addOrUpdateEmployee(mainDialogSaveMode.saveAndNew, 'mainForm')"
 							>
 								Cất và Thêm
 							</button>
@@ -333,7 +333,7 @@
 								ref="btnMainDialogSave"
 								class="m-button m-button-secondary"
 								id="btnSave"
-								@click="addOrUpdateEmployee(mainDiaglogSaveMode.saveOnly, 'mainForm')"
+								@click="addOrUpdateEmployee(mainDialogSaveMode.saveOnly, 'mainForm')"
 							>
 								Cất
 							</button>
@@ -348,6 +348,7 @@
 				</div>
 			</div>
 		</form>
+		<!-- end main form -->
 
 		<!-- warning change dialog -->
 		<InfoDialog
@@ -376,7 +377,7 @@
 
 <script>
 import Employee from "../../models/Employee.model.js";
-import { FormModeEnum, genders, mainDiaglogSaveMode } from "../../utils.js";
+import { FormModeEnum, genders, mainDialogSaveMode } from "../../utils.js";
 import InfoDialog, { closeInfoDialogMode, cssInfoDialog } from "../../components/base/InfoDialog.vue";
 import { toastModes } from "../../components/base/ToastNotifier.vue";
 import PageLoader from "../../components/base/PageLoader.vue";
@@ -402,20 +403,25 @@ export default {
 		/**
 		 * trả về thông báo lỗi đầu tiên của trường dữ liệu lỗi đầu tiền
 		 * của form
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		firstErrorMessage() {
-			const messagesEntries = Object.entries(this.errors);
-			if (messagesEntries.length > 0) {
-				// return message lỗi đầu tiên của key đầu tiên
-				const [key, value] = messagesEntries[0];
-				// key chính là giá trị của attribute cName của control (input)
-				// value là 1 mảng các message lỗi của key đó. ví dụ: key fullName có value là 1 mảng message lỗi
-				if (value && value.length > 0) {
-					return value[0];
+			try {
+				const messagesEntries = Object.entries(this.errors);
+				if (messagesEntries.length > 0) {
+					// return message lỗi đầu tiên của key đầu tiên
+					const [key, value] = messagesEntries[0];
+					// key chính là giá trị của attribute cName của control (input)
+					// value là 1 mảng các message lỗi của key đó. ví dụ: key fullName có value là 1 mảng message lỗi
+					if (value && value.length > 0) {
+						return value[0];
+					}
 				}
+				return null;
+			} catch (e) {
+				console.log(e);
+				return null;
 			}
-			return null;
 		},
 	},
 
@@ -455,7 +461,7 @@ export default {
 			closeInfoDialogMode: closeInfoDialogMode,
 
 			// chế độ "cất" hoặc "cất và thêm"
-			mainDiaglogSaveMode: mainDiaglogSaveMode,
+			mainDialogSaveMode: mainDialogSaveMode,
 
 			// cấu hình cho info dialog
 			infoDialogConfig: {},
@@ -470,11 +476,15 @@ export default {
 	watch: {
 		/**
 		 * khi form có bất kì thay đổi nào, data isModified được gán true
-		 * author: Trinh Quy Cong 2/7/22
+		 * author: TQCONG 2/7/22
 		 */
 		employee: {
 			handler() {
-				this.isModified = true;
+				try {
+					this.isModified = true;
+				} catch (e) {
+					console.log(e);
+				}
 			},
 			deep: true,
 		},
@@ -483,17 +493,27 @@ export default {
 		 * vì data errors có lỗi (không nhận thay đổi) - lỗi này do Vue 2
 		 * dùng timer mỗi khi cập nhật data errors và set giá trị mới cho
 		 * timer này, sau đó dùng watch để cập nhật data errors.
-		 * author: Trinh Quy Cong 26/7/22
+		 * author: TQCONG 26/7/22
 		 */
 		timerWatch() {
-			this.errors = { ...this.errors };
+			try {
+				this.errors = { ...this.errors };
+			} catch (e) {
+				console.log(e);
+			}
 		},
 	},
 
 	methods: {
 		/**
+		 * xử lý khi input date thay đổi - thư viện date picker vue2
+		 * author: TQCONG 26/7/22
+		 */
+		handleInputDateChange(newVal) {},
+
+		/**
 		 * cài đặt cấu hình cho dialog cảnh báo thay đổi
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		buildWarningChangeDialogConfig() {
 			try {
@@ -513,7 +533,7 @@ export default {
 
 		/**
 		 * cài đặt cấu hình cho dialog báo lỗi
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		buildErrorMessageDialogConfig() {
 			try {
@@ -531,9 +551,10 @@ export default {
 				console.log(e);
 			}
 		},
+
 		/**
 		 * hiện dialog cảnh báo dữ liệu thay đổi (nếu cần) trước khi đóng main dialog
-		 * author: Trinh Quy Cong 12/7/22
+		 * author: TQCONG 12/7/22
 		 */
 		showWarningChangeDialogOrCloseMainDialog() {
 			try {
@@ -552,7 +573,7 @@ export default {
 
 		/**
 		 * thực hiện ẩn dialog cảnh báo thay đổi
-		 * author: Trinh Quy Cong 12/7/22
+		 * author: TQCONG 12/7/22
 		 */
 		handleCloseWarningChangeDialog(mode) {
 			try {
@@ -574,6 +595,7 @@ export default {
 		/**
 		 * thực hiện validate cho thẻ select custom (vì thẻ này có cấu trúc khác thẻ select bình thường)
 		 * trả về message lỗi nếu control invalid, ngược lại trả về null
+		 * author: TQCONG 12/7/22
 		 */
 		validateCustomSelect(element) {
 			try {
@@ -673,9 +695,9 @@ export default {
 							break;
 					}
 				} else if (tagName == "select") {
-					//
+					// code xử lý nếu cần
 				} else {
-					//
+					// code xử lý nếu cần
 				}
 			} catch (e) {
 				console.log(e);
@@ -686,7 +708,7 @@ export default {
 		 * validate dữ liệu của form ngay sau khi bấm nút submit
 		 * validate qua tất cả các control trong form
 		 * trả về null nếu form valid, ngược lại, trả về message lỗi đầu tiên được tìm thấy
-		 * author: Trinh Quy Cong 22/7/22
+		 * author: TQCONG 22/7/22
 		 */
 		validateOnSubmit(formElementId) {
 			try {
@@ -729,7 +751,7 @@ export default {
 
 		/**
 		 * validate control (input) ở sự kiện onblur, onchange, oninput
-		 * author: Trinh Quy Cong 23/7/22
+		 * author: TQCONG 23/7/22
 		 */
 		validateControl($event) {
 			try {
@@ -744,7 +766,7 @@ export default {
 		/**
 		 * HÀM CON thực thi logic thêm hoặc sửa employee
 		 * param: mode là chế độ "cất" hoặc "cất và thêm"
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		addOrUpdateEmployee(mode, formElementId) {
 			try {
@@ -783,13 +805,13 @@ export default {
 							this.$emit("onReloadEmployeeList");
 
 							//nếu chế độ thêm là "cất"
-							if (mode == this.mainDiaglogSaveMode.saveOnly) {
+							if (mode == this.mainDialogSaveMode.saveOnly) {
 								// raise sự kiện ẩn main dialog
 								this.$emit("onCloseMainDialog");
 							}
 							// nếu chế độ thêm là "cất và thêm"
 							// gọi API lấy mã employee code mới
-							else if (mode == this.mainDiaglogSaveMode.saveAndNew) {
+							else if (mode == this.mainDialogSaveMode.saveAndNew) {
 								EmployeeService.getNewEmployeeCode()
 									.then((data) => {
 										const employeeCode = data.data;
@@ -799,8 +821,11 @@ export default {
 										this.employee = employee;
 									})
 									.catch((error) => {
+										let msg = error.response.data
+											? error.response.data.userMsg
+											: defaultMessages.toastErrorMessage;
 										this.handleShowToast(
-											error.response.data.userMsg,
+											msg,
 											toastModes.danger.backgroundColor,
 											toastModes.danger.icon
 										);
@@ -831,21 +856,18 @@ export default {
 						}
 
 						// hiển thị toast message lỗi
-						this.$emit(
-							"onShowToast",
-							error.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
+						this.$emit("onShowToast", msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (e) {
 				console.log(e);
 			}
+			console.log("bên ngoài api");
 		},
 
 		/**
 		 * thực hiện ẩn error message dialog
-		 * author: Trinh Quy Cong 30/6/22
+		 * author: TQCONG 30/6/22
 		 */
 		handleCloseErrorMessageDialog(mode) {
 			try {
@@ -863,12 +885,29 @@ export default {
 
 		/**
 		 * check email hợp lệ
-		 * author: Trinh Quy Cong 30/6/22
+		 * trả về true nếu hợp lệ; ngược lại, trả về false
+		 * author: TQCONG 30/6/22
 		 */
 		isEmailValid(email) {
 			try {
 				const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 				return String(email).toLowerCase().match(regex);
+			} catch (e) {
+				console.log(e);
+			}
+		},
+
+		/**
+		 * hiển thị toast
+		 * author: TQCONG 7/7/22
+		 */
+		handleShowToast(text, backgroundColor, icon) {
+			try {
+				// hiện toast kèm theo cấu hình
+				this.showToast = true;
+				this.toastText = text;
+				this.toastBackground = backgroundColor;
+				this.toastIcon = icon;
 			} catch (e) {
 				console.log(e);
 			}
@@ -900,11 +939,8 @@ export default {
 					this.departments = data;
 				})
 				.catch((error) => {
-					this.handleShowToast(
-						error.response.data.userMsg,
-						toastModes.danger.backgroundColor,
-						toastModes.danger.icon
-					);
+					let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
+					this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 				});
 		} catch (e) {
 			console.log(e);
@@ -925,7 +961,7 @@ export default {
 </script>
 
 <style>
-/* cần đặt ở đây để child component có thể nhận */
+/* cần đặt ở đây (global scope) để child component có thể nhận */
 .m-row-input .m-select-wrapper.invalid input {
 	border: 1px solid red !important;
 }
@@ -1113,7 +1149,7 @@ export default {
 	margin-left: 10px;
 }
 
-/* main dialog additional styles  (maybe need or not) */
+/* main dialog additional styles  (need or not) */
 .m-dialog .m-dialog-content .m-dialog-close .m-button-help-icon,
 .m-dialog .m-dialog-content .m-dialog-close .m-button-cancel-icon {
 	background-image: url(../../assets/img/Sprites.64af8f61.svg);

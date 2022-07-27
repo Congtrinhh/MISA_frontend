@@ -1,3 +1,4 @@
+/* CHỨA CÁC BIẾN DÙNG CHUNG CHO TOÀN TRANG - author: TQCONG */
 :root {
 	--primary-color: #2ca01c;
 	--primary-hover-color: #35bf22;
@@ -8,4 +9,5 @@
 	--sidebar-collapse-width: 52px;
 	--sidebar-bg-color: #393a3d;
 	--text-color: #111;
+	--input-border-color: #babec5;
 }

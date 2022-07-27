@@ -42,11 +42,13 @@
 export default {
 	data() {
 		return {
+			// chế độ đóng của dialog
 			closeInfoDialogMode: closeInfoDialogMode,
 		};
 	},
 
 	props: {
+		// cấu hình cho dialog
 		config: {
 			type: Object,
 			default: function () {
@@ -79,12 +81,17 @@ export default {
 	computed: {
 		/**
 		 * class cho dialog footer: justify content: center/space between/..
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		footerAlign() {
-			if (this.config.showDenyButton == false && this.config.showConfirmButton == false) {
-				return "center";
-			} else {
+			try {
+				if (this.config.showDenyButton == false && this.config.showConfirmButton == false) {
+					return "center";
+				} else {
+					return "space-between";
+				}
+			} catch (e) {
+				console.log(e);
 				return "space-between";
 			}
 		},
@@ -92,13 +99,18 @@ export default {
 		/**
 		 * nếu body là mảng thông báo lỗi thì hiển thị lên từng dòng
 		 * nếu là không phải mảng, hiển thị bình thường
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		bodyOfDialog() {
-			if (Array.isArray(this.config.body) && this.config.body.length > 0) {
-				return this.config.body.join("</p><br><p>");
+			try {
+				if (Array.isArray(this.config.body) && this.config.body.length > 0) {
+					return this.config.body.join("</p><br><p>");
+				}
+				return this.config.body;
+			} catch (e) {
+				console.log(e);
+				return null;
 			}
-			return this.config.body;
 		},
 	},
 };

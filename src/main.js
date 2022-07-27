@@ -16,6 +16,7 @@ import "./css/layout.css";
 // customized css
 import "./css/customize/pagination.css";
 import "./css/customize/select.css";
+import "./css/customize/date-picker.css";
 
 // dùng element ui kèm config
 Vue.use(ElementUI, { locale });

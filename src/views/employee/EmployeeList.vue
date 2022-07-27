@@ -55,8 +55,9 @@
 								class="m-button-reload mi-24"
 								id="btnReload"
 								@click="
-								removeAllSelectedEmployeesToDelete();
-								$emit('onReloadPage', employeeKeyword)"
+									removeAllSelectedEmployeesToDelete();
+									$emit('onReloadPage', employeeKeyword);
+								"
 							></button>
 							<div class="tooltip">Lấy lại dữ liệu</div>
 						</div>
@@ -173,7 +174,7 @@
 								Tổng số: <b>{{ totalRecords }}</b> bản ghi
 							</div>
 							<div class="m-paging">
-								<el-pagination
+								<ElPagination
 									@size-change="raisePageSizeChangeEvent"
 									@current-change="raisePageIndexChangeEvent"
 									:page-size="pageSize"
@@ -183,9 +184,7 @@
 									layout="sizes, prev, pager, next"
 									prev-text="Trước"
 									next-text="Sau"
-								>
-									<template #pagination> Item tren trang </template>
-								</el-pagination>
+								/>
 							</div>
 						</div>
 					</div>
@@ -271,14 +270,14 @@ export default {
 		employees: { type: Array },
 		// số bản ghi trên 1 trang
 		pageSize: { type: Number },
-		// tổng bản ghi
+		// tổng số bản ghi
 		totalRecords: { type: Number },
 	},
 
 	methods: {
 		/**
 		 * cài đặt cấu hình cho dialog thông báo
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		buildInfoDialogConfig() {
 			try {
@@ -296,7 +295,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi nút xuất khẩu dữ liệu excel được click
-		 * author: Trinh Quy Cong 21/7/22
+		 * author: TQCONG 21/7/22
 		 */
 		handleBtnExportExcelClick() {
 			try {
@@ -335,7 +334,7 @@ export default {
 
 		/**
 		 * HÀM CON xử lý khi bỏ chọn checkbox chọn tất cả
-		 * author: Trinh Quy Cong 20/7/22
+		 * author: TQCONG 20/7/22
 		 */
 		removeAllSelectedEmployeesToDelete() {
 			try {
@@ -357,7 +356,7 @@ export default {
 
 		/**
 		 * HÀM CON xử lý khi tích chọn checkbox chọn tất cả
-		 * author: Trinh Quy Cong 20/7/22
+		 * author: TQCONG 20/7/22
 		 */
 		addAllSelectedEmployeesToDelete() {
 			try {
@@ -383,7 +382,7 @@ export default {
 
 		/**
 		 * HÀM CON xử lý khi bỏ chọn input checkbox của 1 bản ghi
-		 * author: Trinh Quy Cong 20/7/22
+		 * author: TQCONG 20/7/22
 		 */
 		removeSelectedEmployeeToDelete(inputElement, employeeId) {
 			try {
@@ -398,7 +397,7 @@ export default {
 
 		/**
 		 * HÀM CON xử lý khi tích chọn input checkbox của 1 bản ghi
-		 * author: Trinh Quy Cong 20/7/22
+		 * author: TQCONG 20/7/22
 		 */
 		addSelectedEmployeeToDelete(inputElement, employeeId) {
 			try {
@@ -411,7 +410,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi bấm ra ngoài khu vực dropdown thực hiện hàng loạt
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		handleDropdownDoManyFocusOut() {
 			try {
@@ -423,7 +422,7 @@ export default {
 
 		/**
 		 * ẩn dropdown thực hiện hàng loạt
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		closeDropdownDoMany() {
 			try {
@@ -438,7 +437,7 @@ export default {
 
 		/**
 		 * xử lý khi nút chọn tất cả được click
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		checkBoxAllRowsClick(target) {
 			try {
@@ -455,7 +454,7 @@ export default {
 
 		/**
 		 * hiện dialog xác nhận (dialog thông báo) cùng với set up
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		handleShowConfirmDialog() {
 			try {
@@ -470,7 +469,7 @@ export default {
 
 		/**
 		 * thực hiện xoá nhiều employees
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		handleDeleteManyEmployees() {
 			try {
@@ -493,12 +492,8 @@ export default {
 					})
 					.catch((error) => {
 						// hiện thông báo lỗi
-						this.$emit(
-							"onShowToast",
-							error.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
+						this.$emit("onShowToast", msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 						// close dialog
 						this.showConfirmDialog = false;
 					});
@@ -509,7 +504,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi nút "Thực hiện hàng loạt" được click
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		handleBtnDoManyClick() {
 			try {
@@ -547,7 +542,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi  nút checkbox xoá ở từng thẻ tr được click vào
-		 * author: Trinh Quy Cong 19/7/22
+		 * author: TQCONG 19/7/22
 		 */
 		handleCheckboxDeleteClick($event, employeeId) {
 			try {
@@ -568,7 +563,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi  bấm ra ngoài dropdown xoá employee
-		 * author: Trinh Quy Cong 10/7/22
+		 * author: TQCONG 10/7/22
 		 */
 		handleDropdownFunctionalityFocusOut() {
 			try {
@@ -580,7 +575,7 @@ export default {
 
 		/**
 		 * close dropdown functionality
-		 * author: Trinh Quy Cong 7/7/22
+		 * author: TQCONG 7/7/22
 		 */
 		closeDropdownFunctionality() {
 			try {
@@ -595,7 +590,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi page index thay đổi
-		 * author: Trinh Quy Cong 10/7/22
+		 * author: TQCONG 10/7/22
 		 */
 		raisePageSizeChangeEvent(pageSize) {
 			try {
@@ -610,7 +605,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi page index thay đổi
-		 * author: Trinh Quy Cong 10/7/22
+		 * author: TQCONG 10/7/22
 		 */
 		raisePageIndexChangeEvent(pageNumber) {
 			try {
@@ -625,7 +620,7 @@ export default {
 
 		/**
 		 * return date format dd/mm/yyyy
-		 * author: Trinh Quy Cong 2/7/22
+		 * author: TQCONG 2/7/22
 		 */
 		showDropdownFunctionality($event) {
 			try {
@@ -658,8 +653,8 @@ export default {
 		},
 
 		/**
-		 * return date format dd/mm/yyyy
-		 * author: Trinh Quy Cong 10/6/22
+		 * trả về ngày có định dạng dd/mm/yyyy
+		 * author: TQCONG 10/6/22
 		 */
 		formatDate(date) {
 			try {
@@ -676,16 +671,28 @@ export default {
 				console.log(e);
 			}
 		},
+
+		/**
+		 * hiển thị toast
+		 * author: TQCONG 7/7/22
+		 */
+		handleShowToast(text, backgroundColor, icon) {
+			try {
+				// hiện toast kèm theo cấu hình
+				this.showToast = true;
+				this.toastText = text;
+				this.toastBackground = backgroundColor;
+				this.toastIcon = icon;
+			} catch (e) {
+				console.log(e);
+			}
+		},
 	},
 };
 </script>
 
 <style scoped>
-/* @import url(../../css/views/employee/employee-list.css); */
 /* table area */
-.m-table {
-}
-
 .m-table th,
 td {
 	padding: 6px 10px;
@@ -957,12 +964,6 @@ td.spacer.sticky {
 .m-select.active,
 .m-select:focus {
 	border: 1px solid var(--primary-color);
-}
-
-.m-select-input {
-}
-
-.m-select-input:focus {
 }
 
 .m-select-button {

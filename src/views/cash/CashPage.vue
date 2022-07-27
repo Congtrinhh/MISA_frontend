@@ -1,7 +1,5 @@
 <template>
-	<div>Tiền mặt
-		<input type="date" name="" id="">
-	</div>
+	<div>Tiền mặt</div>
 </template>
 
 <script>

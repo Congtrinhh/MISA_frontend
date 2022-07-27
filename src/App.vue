@@ -18,9 +18,5 @@ export default {
 		TheHeader,
 		TheContent,
 	},
-
-	data: () => ({
-		//
-	}),
 };
 </script>

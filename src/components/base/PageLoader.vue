@@ -9,5 +9,27 @@ export default {};
 </script>
 
 <style scoped>
-@import url(../../css/components/base/page-loader.css);
+.loader-wrapper {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 99999;
+	background: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.loader-wrapper img {
+	animation: rotate 1.5s linear infinite;
+}
+
+/* ENDLESS ROTATE */
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}
 </style>

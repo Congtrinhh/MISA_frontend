@@ -3,89 +3,89 @@ const resource = "/Employees";
 
 export default {
 	/**
-	 * lấy ra danh sách employee kèm theo thông tin phân trang
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Lấy ra danh sách employee kèm theo thông tin phân trang
 	 * @param {chỉ số trang (bắt đầu từ 0)} pageIndex
 	 * @param {số item/trang} pageSize
 	 * @param {từ khoá tìm kiếm} keyword
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	getPaging: function (pageIndex, pageSize, keyword) {
 		return Repository.get(`${resource}?pageIndex=${pageIndex}&size=${pageSize}&keyword=${keyword}`);
 	},
 
 	/**
-	 * lấy ra employee dựa vào id
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Lấy ra employee dựa vào id
 	 * @param {id của employee} id
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	getById: function (id) {
 		return Repository.get(`${resource}/${id}`);
 	},
 
 	/**
-	 * lấy ra mã employee code mới
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Lấy ra mã employee code mới
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	getNewEmployeeCode: function () {
 		return Repository.get(`${resource}/newEmployeeCode`);
 	},
 
 	/**
-	 * lấy ra tất cả employee
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Lấy ra tất cả employee
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	getAll: function () {
 		return Repository.get(`${resource}`);
 	},
 
 	/**
-	 * tạo employee
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Tạo employee
 	 * @param {employee cần tạo} employee
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	createEmployee: function (employee) {
 		return Repository.post(`${resource}`, employee);
 	},
 
 	/**
-	 * update employee
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Update employee
 	 * @param {employee cần update} employee
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	updateEmployee: function (employee) {
 		return Repository.put(`${resource}`, employee);
 	},
 
 	/**
-	 * xoá employee
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Xoá employee
 	 * @param {id của employee} id
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	deleteEmployee: function (id) {
 		return Repository.delete(`${resource}/${id}`);
 	},
 
 	/**
-	 * xoá nhiều employee
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Xoá nhiều employee
 	 * @param {mảng các employee id} listOfIds
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	deleteEmployees: function (listOfIds) {
 		return Repository.delete(`${resource}`, { data: listOfIds });
 	},
 
 	/**
-	 * lấy ra 1 file excel chứa tất cả các bản ghi employee từ database
-	 * author: Trinh Quy Cong - 21/7/22
+	 * Lấy ra 1 file excel chứa tất cả các bản ghi employee từ database
 	 * @returns Promise chứa data để tiếp tục xử lý
+	 * Author: TQCONG - 21/7/22
 	 */
 	getExcelFile: function () {
 		return Repository.get(`${resource}/export-excel`, {

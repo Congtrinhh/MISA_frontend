@@ -40,6 +40,7 @@ export default {
 
 	created() {
 		const me = this;
+		// ẩn toast sau 1 khoảng thời gian xuất hiện
 		setTimeout(() => {
 			me.$refs.toastContainer.style.opacity = 0;
 			setTimeout(() => {

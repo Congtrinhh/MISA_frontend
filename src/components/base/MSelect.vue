@@ -14,7 +14,7 @@
 
 			<div class="m-select-items" :class="{ selectHide: !open }">
 				<div class="m-select-items-header">
-					<div class="m-select-items-header-title">Mã đơn vị</div>
+					<!-- <div class="m-select-items-header-title">Mã đơn vị</div> -->
 					<div class="m-select-items-header-title">Tên đơn vị</div>
 				</div>
 				<div class="m-select-items-wrapper">
@@ -25,7 +25,7 @@
 							class="m-select-item"
 							:class="{ selectedItem: currentIndex == i }"
 						>
-							<div class="m-select-item-title">{{ item.DepartmentId }}</div>
+							<!-- <div class="m-select-item-title">{{ item.DepartmentId }}</div> -->
 							<div class="m-select-item-title">{{ item.DepartmentName }}</div>
 						</div>
 					</template>
@@ -83,21 +83,25 @@ export default {
 
 	watch: {
 		/**
-		 *  bắt sự kiện ngay sau khi bấm "cất và thêm" hoàn tất, reset tất cả dữ liệu để thêm 1 bản ghi mới,
+		 * bắt sự kiện ngay sau khi bấm "cất và thêm" hoàn tất, reset tất cả dữ liệu để thêm 1 bản ghi mới,
 		 * nên cần reset thẻ select
-		 * author: Trinh Quy Cong 25/7/22
+		 * author: TQCONG 25/7/22
 		 */
 		value(newVal) {
-			// bắt sự kiện ngay sau khi bấm "cất và thêm" hoàn tất, reset tất cả dữ liệu để thêm 1 bản ghi mới,
-			// nên cần reset thẻ select
-			if (!newVal) {
-				// hiện tất cả option
-				this.filterArray("");
-				// reset keyword về rỗng để ô input hiện text trắng
-				this.keyword = "";
-				this.selectedItem = null;
-				this.currentIndex = 0;
-				this.open=false;
+			try {
+				// bắt sự kiện ngay sau khi bấm "cất và thêm" hoàn tất, reset tất cả dữ liệu để thêm 1 bản ghi mới,
+				// nên cần reset thẻ select
+				if (!newVal) {
+					// hiện tất cả option
+					this.filterArray("");
+					// reset keyword về rỗng để ô input hiện text trắng
+					this.keyword = "";
+					this.selectedItem = null;
+					this.currentIndex = 0;
+					this.open = false;
+				}
+			} catch (e) {
+				console.log(e);
 			}
 		},
 
@@ -105,94 +109,122 @@ export default {
 		 * ngay khi mảng options có giá trị (tức là vừa được lấy từ API về),
 		 * thực hiện lấy ra mảng result lần đầu để hiển thị
 		 * (hàm này chỉ chạy 1 lần - trừ khi prop từ component cha thay đổi)
-		 * author: Trinh Quy Cong 25/7/22
+		 * author: TQCONG 25/7/22
 		 */
 		options(newVal, oldVal) {
-			// nếu mảng options có bất kỳ sự thay đổi nào về số item
-			if (oldVal.length != newVal.length) {
-				// lấy ra danh sách tất cả options mà không cần search (nếu không có bước này thì danh sách ban đầu sẽ rỗng)
-				this.filterArray("");
-				// bind department name lên nếu có
-				if (this.value) {
-					for (let i = 0; i < this.options.length; i++) {
-						if (this.options[i].DepartmentId == this.value) {
-							this.keyword = this.options[i].DepartmentName;
-							this.selectedItem = this.options[i];
-							// selectedItem sẽ được sáng lên
-							this.currentIndex = i;
-							break;
+			try {
+				// nếu mảng options có bất kỳ sự thay đổi nào về số item
+				if (oldVal.length != newVal.length) {
+					// lấy ra danh sách tất cả options mà không cần search (nếu không có bước này thì danh sách ban đầu sẽ rỗng)
+					this.filterArray("");
+					// bind department name lên nếu có
+					if (this.value) {
+						for (let i = 0; i < this.options.length; i++) {
+							if (this.options[i].DepartmentId == this.value) {
+								this.keyword = this.options[i].DepartmentName;
+								this.selectedItem = this.options[i];
+								// selectedItem sẽ được sáng lên
+								this.currentIndex = i;
+								break;
+							}
 						}
 					}
 				}
+			} catch (e) {
+				console.log(e);
 			}
 		},
 
 		/**
-		 * author: Trinh Quy Cong 25/7/22 (NEW)
+		 * theo dõi sự thay đổi của mảng được lọc và thay đổi currentIndex tương ứng theo
+		 * author: TQCONG 25/7/22
 		 */
 		filtered(newVal) {
-			// index của item được chọn trong mảng đã được lọc
-			const index = newVal.indexOf(this.selectedItem);
-			// nếu item trong mảng này, update currentIndex ddeer highlight item này
-			if (index !== -1) {
-				this.currentIndex = index;
-			}
-			// nế index lớn hơn độ lớn mảng mới lọc, gán index về 0
-			if (this.currentIndex >= newVal.length) {
-				this.currentIndex = 0;
+			try {
+				// index của item được chọn trong mảng đã được lọc
+				const index = newVal.indexOf(this.selectedItem);
+				// nếu item trong mảng này, update currentIndex ddeer highlight item này
+				if (index !== -1) {
+					this.currentIndex = index;
+				}
+				// nế index lớn hơn độ lớn mảng mới lọc, gán index về 0
+				if (this.currentIndex >= newVal.length) {
+					this.currentIndex = 0;
+				}
+			} catch (e) {
+				console.log(e);
 			}
 		},
 
 		/**
-		 * author: Trinh Quy Cong 25/7/22 (NEW)
+		 * cập nhật mảng lọc và từ khoá khi item được chọn thay đổi
+		 * author: TQCONG 25/7/22
 		 */
 		selectedItem(newVal) {
-			// update mảng lọc
-			this.filterArray(newVal.DepartmentName);
-			// update keyword
-			this.keyword = newVal.DepartmentName;
+			try {
+				// update mảng lọc
+				if (newVal) {
+					this.filterArray(newVal.DepartmentName);
+					// update keyword
+					this.keyword = newVal.DepartmentName;
+				}
+			} catch (e) {
+				console.log(e);
+			}
 		},
 	},
 
 	methods: {
 		/**
-		 * lắng nghe từ khoá tìm kiếm thay đổi (NEW)
-		 * author: Trinh Quy Cong 25/7/22
+		 * lắng nghe từ khoá tìm kiếm thay đổi
+		 * author: TQCONG 25/7/22
 		 */
 		handleOnInput($event) {
-			this.keyword = $event.target.value;
+			try {
+				this.keyword = $event.target.value;
 
-			this.filterArray(this.keyword);
-			this.open = true;
+				this.filterArray(this.keyword);
+				this.open = true;
+			} catch (e) {
+				console.log(e);
+			}
 		},
 		/**
 		 * xử lý khi bấm vào một item trong list các option của dropdown
-		 * author: Trinh Quy Cong 25/7/22 (NEW)
+		 * author: TQCONG 25/7/22
 		 */
 		handleListItemClick($event, item) {
-			this.open = false;
-			this.selectedItem = item;
-			this.$emit("input", item.DepartmentId);
-			this.keyword = item.DepartmentName;
+			try {
+				this.open = false;
+				this.selectedItem = item;
+				this.$emit("input", item.DepartmentId);
+				this.keyword = item.DepartmentName;
 
-			this.$emit("change", $event);
+				this.$emit("change", $event);
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
 		 * xử lý khi input control được bấm vào hoặc tab vào bằng phím tab trên bàn phím
-		 * author: Trinh Quy Cong 24/7/22 (NEW)
+		 * author: TQCONG 24/7/22
 		 */
 		handleInputFocus($event) {
-			// // lọc mảng option theo keyword
-			// // kiểm tra, nếu đã có selected item -> return??
-			this.filterArray(this.keyword);
-			// // hiện dropdown
-			this.open = true;
+			try {
+				// // lọc mảng option theo keyword
+				// // kiểm tra, nếu đã có selected item -> return??
+				this.filterArray(this.keyword);
+				// // hiện dropdown
+				this.open = true;
+			} catch (e) {
+				console.log(e);
+			}
 		},
 
 		/**
 		 * lọc ra mảng option theo keyword
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		filterArray(keyword) {
 			try {
@@ -208,59 +240,74 @@ export default {
 
 		/**
 		 * xử lý sự kiện khi bấm phím lên/xuống/enter để chọn dropdown option
-		 * author: Trinh Quy Cong 25/7/22
+		 * author: TQCONG 25/7/22
 		 */
 		handleKeydown($event) {
-			const key = $event.key;
+			try {
+				const key = $event.key;
 
-			const map = {
-				Enter: () => {
-					this.selectItem();
-				},
-				ArrowDown: () => {
-					const index = (this.currentIndex + 1) % this.filtered.length;
-					this.currentIndex = index;
-				},
-				ArrowUp: () => {
-					let index = this.currentIndex - 1;
-					index = index < 0 ? this.filtered.length - 1 : index;
-					this.currentIndex = index;
-				},
-				Escape: () => {
-					this.open = false;
+				const map = {
+					Enter: ($event) => {
+						this.selectItem();
+					},
+					ArrowDown: () => {
+						const index = (this.currentIndex + 1) % this.filtered.length;
+						this.currentIndex = index;
+					},
+					ArrowUp: () => {
+						let index = this.currentIndex - 1;
+						index = index < 0 ? this.filtered.length - 1 : index;
+						this.currentIndex = index;
+					},
+					Escape: () => {
+						this.open = false;
+					},
+				};
+
+				const func = map[key];
+				if (func) {
+					func();
 				}
-			};
 
-			const func = map[key];
-			if (func) {
-				func();
+				console.log(this.currentIndex);
+			} catch (e) {
+				console.log(e);
 			}
-
-			console.log(this.currentIndex);
 		},
 
 		/**
 		 * thực hiện việc chọn item các nghiệp vụ liên quan (đóng dropdown)
-		 * author: Trinh Quy Cong 25/7/22
+		 * author: TQCONG 25/7/22
 		 */
 		selectItem() {
-			const selectedItem = this.filtered[this.currentIndex];
-			if (selectedItem) {
-				this.open = false;
-				this.keyword = selectedItem.DepartmentName;
-				this.$emit("input", selectedItem.DepartmentId);
-				// this.$emit("change", $event);
+			try {
+				const selectedItem = this.filtered[this.currentIndex];
+				if (selectedItem) {
+					this.open = false;
+					this.keyword = selectedItem.DepartmentName;
+					this.$emit("input", selectedItem.DepartmentId);
+				}
+			} catch (e) {
+				console.log(e);
 			}
 		},
 	},
 
 	created() {
-		// đăng ký sự kiện cho toàn trang khi khởi tạo component
-		window.addEventListener("keydown", this.handleKeydown);
+		try {
+			// đăng ký sự kiện cho toàn trang khi khởi tạo component
+			window.addEventListener("keydown", this.handleKeydown);
+		} catch (e) {
+			console.log(e);
+		}
 	},
 	beforeDestroy() {
-		// huỷ sự kiện trước khi unmount component
-		window.removeEventListener("keydown", this.handleKeydown);
+		try {
+			// huỷ sự kiện trước khi unmount component
+			window.removeEventListener("keydown", this.handleKeydown);
+		} catch (e) {
+			console.log(e);
+		}
 	},
 };
 </script>

@@ -4,7 +4,7 @@
 	height: var(--input-height);
 	position: relative;
 	border-radius: 2px;
-	border: 1px solid #babec5;
+	border: 1px solid var(--input-border-color);
 	width: 100%;
     outline: none;
 }

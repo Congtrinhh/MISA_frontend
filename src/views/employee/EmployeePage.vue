@@ -136,15 +136,15 @@ export default {
 	methods: {
 		/**
 		 * hiện dialog thông báo
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		handleShowConfirmDeleteDialog() {
 			try {
 				this.buildInfoDialogConfig();
 				this.infoDialogConfig.body =
-					'Bạn có thực sự muốn xoá Nhân viên "' +
+					"Bạn có thực sự muốn xoá Nhân viên &lt;" +
 					(this.selectedEmployee ? this.selectedEmployee.EmployeeCode : "") +
-					'" không?';
+					"&gt; không?";
 				this.showConfirmDeleteDialog = true;
 			} catch (e) {
 				console.log(e);
@@ -153,7 +153,7 @@ export default {
 
 		/**
 		 * cài đặt cấu hình cho dialog thông báo
-		 * author: Trinh Quy Cong 24/7/22
+		 * author: TQCONG 24/7/22
 		 */
 		buildInfoDialogConfig() {
 			try {
@@ -168,9 +168,10 @@ export default {
 				console.log(e);
 			}
 		},
+
 		/**
 		 * hàm xử lý ngay sau khi người dùng kích nút "nhân bản" trên 1 bản ghi nào đó
-		 * author: Trinh Quy Cong 14/7/22
+		 * author: TQCONG 14/7/22
 		 */
 		handleDuplicateRecord() {
 			try {
@@ -202,18 +203,17 @@ export default {
 							})
 							.catch((res) => {
 								// hiển thị toast lỗi
-								this.handleShowToast(
-									res.response.data.userMsg,
-									toastModes.danger.backgroundColor,
-									toastModes.danger.icon
-								);
+								let msg = res.response.data
+									? res.response.data.userMsg
+									: defaultMessages.toastErrorMessage;
+								this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 							});
 					})
 					.catch((error) => {
 						// ẩn loader
 						this.showLoader = false;
 						// hiển thị toast lỗi
-						let msg = error.response.data ? error.response.data.userMsg : "";
+						let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
 						this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (e) {
@@ -228,7 +228,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi page size thay đổi
-		 * author: Trinh Quy Cong 10/7/22
+		 * author: TQCONG 10/7/22
 		 */
 		handlePageSizeChange(pageSize, keyword) {
 			try {
@@ -243,7 +243,7 @@ export default {
 
 		/**
 		 * hàm xử lý khi page index thay đổi
-		 * author: Trinh Quy Cong 10/7/22
+		 * author: TQCONG 10/7/22
 		 */
 		handlePageIndexChange(pageNumber, keyword) {
 			try {
@@ -259,7 +259,7 @@ export default {
 
 		/**
 		 * hiển thị toast
-		 * author: Trinh Quy Cong 7/7/22
+		 * author: TQCONG 7/7/22
 		 */
 		handleShowToast(text, backgroundColor, icon) {
 			try {
@@ -275,7 +275,7 @@ export default {
 
 		/**
 		 * xoá nhân viên
-		 * author: Trinh Quy Cong 2/7/22
+		 * author: TQCONG 2/7/22
 		 */
 		handleDeleteEmployee() {
 			try {
@@ -300,11 +300,8 @@ export default {
 					})
 					.catch((error) => {
 						// hiển thị toast thất bại
-						this.handleShowToast(
-							error.response.data.userMsg,
-							toastModes.danger.backgroundColor,
-							toastModes.danger.icon
-						);
+						let msg = error.response.data ? error.response.data.userMsg : defaultMessages.toastErrorMessage;
+						this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 						// ẩn dialog xác nhận xoá
 						this.showConfirmDeleteDialog = false;
 					});
@@ -316,9 +313,10 @@ export default {
 				);
 			}
 		},
+
 		/**
 		 * chuyển form mode thành update
-		 * author: Trinh Quy Cong 29/6/22
+		 * author: TQCONG 29/6/22
 		 */
 		handleUpdateFormModeUpdate() {
 			try {
@@ -330,7 +328,7 @@ export default {
 
 		/**
 		 * chuyển form mode thành thêm mới
-		 * author: Trinh Quy Cong 29/6/22
+		 * author: TQCONG 29/6/22
 		 */
 		handleUpdateFormModeAdd() {
 			try {
@@ -340,14 +338,13 @@ export default {
 				// hiện loader
 				this.showLoader = true;
 
-				// lấy ra mã employee code mới
+				//lấy ra mã employee code mới
 				EmployeeService.getNewEmployeeCode()
 					.then((res) => {
 						// ẩn loader
 						this.showLoader = false;
 
-						// const employeeCode = res.data;
-						const employeeCode = '';
+						const employeeCode = res.data;
 
 						// khởi tạo đối tượng employee và set các giá trị ban đầu
 						let employee = new Employee();
@@ -379,7 +376,7 @@ export default {
 
 		/**
 		 * hiện main dialog
-		 * author: Trinh Quy Cong 28/6/22
+		 * author: TQCONG 28/6/22
 		 */
 		handleOpenMainDialog() {
 			try {
@@ -391,7 +388,7 @@ export default {
 
 		/**
 		 * ẩn main dialog
-		 * author: Trinh Quy Cong 28/6/22
+		 * author: TQCONG 28/6/22
 		 */
 		handleCloseMainDialog() {
 			try {
@@ -403,7 +400,7 @@ export default {
 
 		/**
 		 * set lại định dạng date cho các property của employee để có thể hiển thị trên input date control
-		 * author: Trinh Quy Cong 22/7/22
+		 * author: TQCONG 22/7/22
 		 */
 		setDateForEmployee(employee) {
 			try {
@@ -422,7 +419,7 @@ export default {
 
 		/**
 		 * cập nhật selected employee
-		 * author: Trinh Quy Cong 28/6/22
+		 * author: TQCONG 28/6/22
 		 */
 		handleUpdateSelectedEmployee(newEmployee, mode) {
 			try {
@@ -443,11 +440,10 @@ export default {
 						})
 						.catch((error) => {
 							// hiện toast báo lỗi
-							this.handleShowToast(
-								error.response.data.userMsg,
-								toastModes.danger.backgroundColor,
-								toastModes.danger.icon
-							);
+							let msg = error.response.data
+								? error.response.data.userMsg
+								: defaultMessages.toastErrorMessage;
+							this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 						});
 				}
 
@@ -477,7 +473,7 @@ export default {
 		/**
 		 * lấy danh sách nhân viên từ API kèm phân trang
 		 * set keyword mặc định bằng chuỗi rỗng; set page index mặc định từ data page index nếu không được truyền vào
-		 * author: Trinh Quy Cong 30/6/22
+		 * author: TQCONG 30/6/22
 		 */
 		getEmployees(keyword = "", pageIndex = this.pageIndex) {
 			try {
@@ -501,19 +497,8 @@ export default {
 						this.showLoader = false;
 
 						// hiện toast báo lỗi
-						if (res.response.data) {
-							this.handleShowToast(
-								res.response.data.userMsg,
-								toastModes.danger.backgroundColor,
-								toastModes.danger.icon
-							);
-						} else {
-							this.handleShowToast(
-								defaultMessages.toastErrorMessage,
-								toastModes.danger.backgroundColor,
-								toastModes.danger.icon
-							);
-						}
+						let msg = res.response.data ? res.response.data.userMsg : defaultMessages.toastErrorMessage;
+						this.handleShowToast(msg, toastModes.danger.backgroundColor, toastModes.danger.icon);
 					});
 			} catch (e) {
 				// hiện toast báo lỗi
@@ -529,7 +514,7 @@ export default {
 
 		/**
 		 * tìm kiếm nhân viên
-		 * author: Trinh Quy Cong 1/7/22
+		 * author: TQCONG 1/7/22
 		 */
 		searchEmployees(keyword) {
 			try {
@@ -556,6 +541,4 @@ export default {
 };
 </script>
 
-<style scoped>
-@import url(../../css/views/employee/employee-page.css);
-</style>
+<style scoped></style>

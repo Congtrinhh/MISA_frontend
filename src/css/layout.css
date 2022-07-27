@@ -1,3 +1,5 @@
+/* CHỨA STYLE DÀN LAYOUT TRANG WEB THÀNH 3 PHẦN CHÍNH: HEADER - SIDEBAR - LAYOUT. author: TQCONG */
+
 /* --------------------------------- LAYOUT - COMMON --------------------------------- */
 body {
 	display: flex;

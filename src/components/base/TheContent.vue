@@ -10,6 +10,4 @@ export default {
 };
 </script>
 
-<style scoped>
-@import url(../../css/components/base/the-content.css);
-</style>
+<style scoped></style>

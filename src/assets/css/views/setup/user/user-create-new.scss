@@ -1,0 +1,196 @@
+#userCreateNewWrapper {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	background: rgba(0, 0, 0, 0.4);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.pop-up-content {
+		border: 1px solid #ddd;
+		background: #fff;
+
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.175);
+		color: $text-primary-color;
+
+		min-width: 200px;
+		min-height: 200px;
+		max-height: 100vh;
+		width: 94vw;
+		height: 90vh;
+
+		border-radius: 4px;
+
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+header.header {
+	padding: 24px 24px 20px 24px !important;
+
+	.header-title {
+		letter-spacing: 0.576px;
+		font-size: 20px;
+		font-weight: 700;
+		color: #212121;
+	}
+}
+
+main.main-content {
+	color: $text-primary-color;
+	flex-grow: 1;
+	padding: 0 24px 24px 24px !important;
+}
+
+.btn-icon-1 {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 36px !important;
+	height: 36px !important;
+	border-radius: 50% !important;
+	border: none !important;
+	outline: none !important;
+}
+.popup-show-enpand-table .popup-icon-close {
+	margin-right: -8px !important;
+}
+.mi-close,
+.mi-close-2 {
+	background-color: $icon-default-color !important;
+}
+.mi-close,
+.mi-close-2,
+.mi-close-grey {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-webkit-mask-position: -216px -24px;
+	-moz-mask-position: -216px -24px;
+	-ms-mask-position: -216px -24px;
+	-o-mask-position: -216px -24px;
+	mask-position: -216px -24px;
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+i {
+	display: block;
+}
+.mi-close-2 {
+	-webkit-mask-position: -153px -251px !important;
+	-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+}
+
+// main table
+.datagrid-wrapper {
+	table {
+		min-width: 100%;
+		border: 1px solid $border-color;
+		border-spacing: 0;
+		border-radius: 4px;
+
+		thead tr {
+			background-color: #f3f8ff;
+			height: 56px;
+			text-align: left;
+		}
+		th {
+			padding: 6px;
+			position: relative;
+			.table-header-content {
+				padding: 0 16px;
+			}
+		}
+		th::after {
+			content: "";
+			position: absolute;
+			top: 30%;
+			left: 0;
+			background-color: var(--border-color);
+			width: 1px;
+			height: 20px;
+			z-index: 1;
+		}
+		th:first-child::after {
+			display: none;
+		}
+
+		tbody {
+			td {
+				padding: 10px;
+				border-bottom: 1px solid $border-color;
+			}
+			tr:hover {
+				background: rgb(169, 205, 230);
+				cursor: pointer;
+			}
+			tr:last-child td {
+				border-color: transparent;
+			}
+		}
+
+		thead th:first-child,
+		tbody td:first-child {
+			text-align: center;
+		}
+
+        thead th:nth-of-type(7),
+		tbody td:nth-of-type(7) {
+			width: 220px;
+            max-height: 100px;
+		}
+	}
+}
+.required {
+	color: red;
+}
+// end of main table
+
+.btn-new-column {
+	font-weight: 500;
+	color: rgb(2, 163, 236);
+	cursor: pointer;
+	align-items: center;
+	margin-top: 16px;
+
+	.icon-plus-blue {
+		transform: scale(0.5);
+
+		width: 24px;
+		height: 24px;
+		-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+		-moz-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+		-ms-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+		-o-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+		mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+		-webkit-mask-position: -168px 0;
+		-moz-mask-position: -168px 0;
+		-ms-mask-position: -168px 0;
+		-o-mask-position: -168px 0;
+		mask-position: -168px 0;
+		-webkit-mask-repeat: no-repeat;
+		-moz-mask-repeat: no-repeat;
+		-ms-mask-repeat: no-repeat;
+		-o-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		background-color: #02a3ec !important;
+	}
+}
+
+[disabled] {
+	cursor: default;
+	background-color: rgba(255, 255, 255, 0.2);
+}

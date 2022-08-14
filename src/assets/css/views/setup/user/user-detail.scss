@@ -1,0 +1,170 @@
+#userDetailScreen {
+	.detail-preview-user {
+		position: fixed;
+		top: -2px;
+		right: 0;
+		height: 100%;
+		width: 40%;
+		background-color: #fff;
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+		z-index: 15;
+	}
+
+	.content-user {
+		padding: 24px;
+	}
+
+	.content-user .mi-close {
+		position: absolute;
+		top: 24px;
+		right: 24px;
+		cursor: pointer;
+	}
+
+	.section-1 {
+		display: flex;
+		width: 100%;
+		line-height: 35px;
+		text-indent: 0px;
+		padding: 0px;
+		margin-bottom: 16px;
+
+		.avatar-wrapper {
+			margin-left: 0%;
+			width: 16.6667%;
+            
+			.user-avatar {
+                border: 1px solid $border-color;
+                margin-top: 10px;
+				width: 64px;
+				height: 64px;
+			}
+		}
+
+		.basic-info-wrapper {
+			margin-left: 0%;
+			width: 75%;
+		}
+
+		.btn-update {
+			margin-right: 12px;
+		}
+		.btn-update,
+		.btn-delete {
+			width: auto !important;
+			height: 36px !important;
+			border-radius: 4px;
+			padding: 0px 16px;
+			min-width: 80px !important;
+		}
+	}
+
+	.body-preview {
+		height: 700px;
+		overflow: auto;
+
+		.body-header {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		.info-field-wrapper {
+			display: flex;
+			width: 100%;
+			line-height: 35px;
+			text-indent: 0px;
+			padding: 0px;
+			margin-bottom: 16px;
+
+			.field-name-wrapper {
+				margin-left: 0%;
+				width: 29.1667%;
+			}
+			.field-value-wrapper {
+				margin-left: 0%;
+				width: 50%;
+				> * {
+					border-bottom: 1px solid rgb(231, 232, 233);
+				}
+			}
+		}
+
+		.roles-wrapper {
+			.role-header {
+				height: 48px;
+				display: block;
+				padding: 0 16px;
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+			}
+
+			.role-item {
+				height: 48px;
+				display: block;
+				border-top: 1px solid $border-color;
+				padding: 0 16px;
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+
+				&:last-of-type {
+					border-bottom: 1px solid $border-color;
+				}
+
+				&:hover {
+					background-color: $blue-color;
+				}
+			}
+		}
+	}
+
+	.dot {
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		left: 0;
+		top: 13px;
+
+		background-color: rgb(102, 209, 129); // from user status
+	}
+
+	.active {
+		color: #66d181;
+	}
+}
+
+.mi-close,
+.mi-close-2 {
+	background-color: $icon-default-color !important;
+}
+.mi-close,
+.mi-close-2,
+.mi-close-grey {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+
+	-webkit-mask-position: -216px -24px;
+	-moz-mask-position: -216px -24px;
+	-ms-mask-position: -216px -24px;
+	-o-mask-position: -216px -24px;
+	mask-position: -216px -24px;
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+// button
+.ms-button.ms-button-filled.ms-button-waiting {
+	background-color: #fff;
+	color: #ff6333;
+	border: 1px solid #f90;
+}

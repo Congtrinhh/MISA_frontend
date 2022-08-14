@@ -1,0 +1,314 @@
+#setting-user {
+	.body-custom {
+		width: calc(100vw - 194px);
+		overflow: auto;
+
+		padding: 16px 24px;
+
+		.content-header {
+			.header-custom {
+				margin: 0;
+
+				button {
+					width: auto !important;
+					height: 36px !important;
+					border-radius: 4px;
+					padding: 0px 16px 0px 12px;
+					min-width: 80px !important;
+
+					.ms-icon-default {
+						display: flex;
+						position: relative;
+						font-size: 20px;
+
+						order: 0;
+						margin-right: 4px;
+						margin-left: 0px;
+
+						.mi-plus-green,
+						.mi-plus-white {
+							width: 24px;
+							height: 24px;
+							-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+							-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+							-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+							-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+							mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+							-webkit-mask-position: -240px 0;
+							-moz-mask-position: -240px 0;
+							-ms-mask-position: -240px 0;
+							-o-mask-position: -240px 0;
+							mask-position: -240px 0;
+							-webkit-mask-repeat: no-repeat;
+							-moz-mask-repeat: no-repeat;
+							-ms-mask-repeat: no-repeat;
+							-o-mask-repeat: no-repeat;
+							mask-repeat: no-repeat;
+						}
+
+						.mi-plus-white {
+							background-color: #fff !important;
+						}
+					}
+				}
+			}
+		}
+
+		.content-main {
+			overflow-x: hidden;
+			overflow-y: auto;
+			width: 100%;
+			border-radius: 4px;
+			display: flex;
+			justify-content: space-between;
+
+			height: 100% !important;
+
+			background: rgb(255, 255, 255);
+			height: calc(100vh - 148px);
+		}
+	}
+}
+
+.su-filter {
+	margin-left: auto;
+
+	.mi-setting {
+		background-color: #606474 !important;
+	}
+	.mi-setting,
+	.mi-setting-active {
+		width: 24px;
+		height: 24px;
+		-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+		-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+		-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+		-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+		mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+		-webkit-mask-position: -264px -144px;
+		-moz-mask-position: -264px -144px;
+		-ms-mask-position: -264px -144px;
+		-o-mask-position: -264px -144px;
+		mask-position: -264px -144px;
+		-webkit-mask-repeat: no-repeat;
+		-moz-mask-repeat: no-repeat;
+		-ms-mask-repeat: no-repeat;
+		-o-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+	}
+}
+
+.ms-input {
+	height: 100%;
+	border: 1px solid $border-color;
+	border-radius: 3.5px;
+	background: #fff;
+	min-height: 36px;
+	align-items: center;
+	overflow: hidden;
+
+	&:hover {
+		border: 1px solid $input-hover-border-color;
+	}
+
+	.ms-icon-default {
+		.mi-search {
+			-webkit-mask-position: -192px 0;
+			-moz-mask-position: -192px 0;
+			-ms-mask-position: -192px 0;
+			-o-mask-position: -192px 0;
+			mask-position: -192px 0;
+			background-color: #9fa4b4 !important;
+		}
+
+		.mi-search,
+		.mi-threedot {
+			width: 24px;
+			height: 24px;
+			-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+			-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+			-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+			-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+			mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+			-webkit-mask-repeat: no-repeat;
+			-moz-mask-repeat: no-repeat;
+			-ms-mask-repeat: no-repeat;
+			-o-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+		}
+	}
+
+	.ms-input-item {
+		height: 100%;
+		border: none;
+		width: 100%;
+		padding: 0 12px;
+	}
+}
+
+#setting-user {
+	.paging {
+		border-top: none;
+		padding: 10px 0 !important;
+		height: 56px;
+		z-index: 8;
+		position: relative;
+		margin: 0 10px 8px 10px;
+		background-color: #f9fafc !important;
+
+		.grid-navigation {
+			display: flex;
+			color: $text-primary-color;
+
+			.page-total {
+				flex: 1;
+				line-height: 40px;
+				margin-left: 16px;
+			}
+
+			.page-size-selector {
+				display: flex;
+			}
+
+			.page-next-preview {
+				width: 70px;
+				height: 40px;
+				display: flex;
+				margin-right: 16px;
+			}
+		}
+	}
+}
+
+// ---------------------------- thông tin trang và dropdown chọn số item/trang -------------------------
+.page-size-selector {
+	display: flex;
+}
+.page-info {
+	height: 40px;
+	line-height: 40px;
+	padding: 0 24px;
+}
+// ---------------------------- end of thông tin trang và dropdown chọn số item/trang -------------------------
+
+// ---------------------------- nút chuyển trang -------------------------
+.page-next-preview {
+	width: 70px;
+	height: 40px;
+	display: flex;
+	margin-right: 16px;
+}
+
+.page-next-preview > div {
+	margin: 0;
+
+	justify-content: center;
+	display: flex;
+	width: 100%;
+	line-height: 35px;
+	text-indent: 0px;
+	padding: 0px;
+	margin-bottom: 16px;
+}
+
+.ms-pagination--mb {
+	margin: 0;
+
+	justify-content: flex-end;
+	display: flex;
+	align-items: center;
+	margin-left: 0%;
+	width: 100%;
+}
+
+.con-ms-pagination {
+	--color-pagination: #f0f0f0;
+	--color-pagination-alpha: hsla(0, 0%, 94.1%, 0.5);
+
+	height: 40px;
+}
+
+.ms-pagination--nav {
+	display: flex;
+	align-items: center;
+}
+
+.ms-bottom-nav {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	height: 24px;
+}
+
+.disabled {
+	opacity: 0.5;
+}
+
+.btn-icon-1 {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 36px !important;
+	height: 36px !important;
+	border-radius: 50% !important;
+	border: none !important;
+	outline: none !important;
+}
+.btn-icon-1:hover {
+	background-color: #eff1f6 !important;
+}
+
+.mi-chevron-left {
+	-webkit-mask-position: -72px -24px;
+	-moz-mask-position: -72px -24px;
+	-ms-mask-position: -72px -24px;
+	-o-mask-position: -72px -24px;
+	mask-position: -72px -24px;
+}
+
+i {
+	display: block;
+}
+
+.mi-chevron-left,
+.mi-direction {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	background-color: $icon-default-color !important;
+}
+.mi-chevron-right {
+	-webkit-mask-position: -96px -24px;
+	-moz-mask-position: -96px -24px;
+	-ms-mask-position: -96px -24px;
+	-o-mask-position: -96px -24px;
+	mask-position: -96px -24px;
+}
+.mi-chevron-right,
+.mi-chevron-up {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	background-color: $icon-default-color !important;
+}
+// ---------------------------- end of nút chuyển trang -------------------------

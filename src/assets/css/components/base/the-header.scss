@@ -1,0 +1,223 @@
+// @import "../../setup/variables";
+
+.nav-wrapper {
+	display: flex;
+	height: 100%;
+
+	> .left {
+		.multi-media {
+			margin: auto 16px;
+			background-image: url("../../assets/img/icon-app-gray.eec2ff5c.svg");
+			background-position: 50%;
+			background-repeat: no-repeat;
+			cursor: pointer;
+		}
+		.logo-wrapper {
+			font-size: 18px;
+			color: #000;
+			padding: 0 10px 0 0;
+			font-weight: 600;
+			margin-right: 34px;
+
+			.logo {
+				background: transparent url(../../assets/img/logo.fe78f7ca.svg) no-repeat 0 0;
+				margin-right: 12px;
+			}
+			.text {
+				font-size: 18px;
+			}
+		}
+
+		.nav-options {
+			margin: 0;
+		}
+
+		.btn-nav {
+		}
+	}
+
+	> .right {
+		.global-search {
+			position: relative;
+			padding: 4px 8px;
+			border: 1px solid $border-color;
+			margin-right: 8px;
+			border-radius: 4px;
+			width: 240px;
+			height: 36px;
+			box-sizing: border-box;
+
+			.mi-search {
+				-webkit-mask-position: -192px 0;
+				-moz-mask-position: -192px 0;
+				-ms-mask-position: -192px 0;
+				-o-mask-position: -192px 0;
+				mask-position: -192px 0;
+				background-color: #9fa4b4 !important;
+
+				width: 24px;
+				height: 24px;
+				-webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				-moz-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				-ms-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				-o-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				-webkit-mask-repeat: no-repeat;
+				-moz-mask-repeat: no-repeat;
+				-ms-mask-repeat: no-repeat;
+				-o-mask-repeat: no-repeat;
+				mask-repeat: no-repeat;
+			}
+
+			input {
+				border: none;
+				outline: none;
+				margin-right: 24px;
+			}
+		}
+
+		.notification-wrapper {
+		}
+
+		.avatar {
+		}
+	}
+}
+
+.nav-options {
+	.menu-item {
+		margin-right: 36px;
+		display: flex;
+		flex-direction: column;
+		cursor: pointer;
+		justify-content: space-between;
+
+		height: 100%;
+		.menu-item-name {
+			margin-top: 20px;
+			font-weight: 500;
+		}
+		.menu-item-active {
+			background-color: $blue-color;
+			height: 3px;
+			width: 100%;
+			color: $primary-color;
+		}
+
+		&.active {
+			color: $blue-color;
+		}
+		&:hover {
+			color: $blue-color;
+		}
+	}
+
+	.btn-run-process {
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		> button {
+			width: auto !important;
+			height: 36px !important;
+			border-radius: 4px;
+			padding: 0px 16px 0px 12px;
+			min-width: 80px !important;
+		}
+	}
+}
+
+.icon-run-process {
+	-webkit-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	-moz-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	-ms-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	-o-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+
+	-webkit-mask-position: -136px -97px;
+	-moz-mask-position: -136px -97px;
+	-ms-mask-position: -136px -97px;
+	-o-mask-position: -136px -97px;
+	mask-position: -136px -97px;
+	background-color: #fff !important;
+}
+
+.notification-wrapper {
+	border-radius: 50%;
+	cursor: pointer;
+	width: 32px;
+	margin-right: 24px;
+	height: 32px;
+	font-size: 14px;
+	font-size: 14px;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-top: 2px;
+	background-image: url(../../assets/img/icon-notification-dark-thick.svg);
+
+	position: relative;
+
+	.notification-unread-count {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		position: absolute;
+		background-color: #ce0000;
+		top: -4px;
+		right: -4px;
+		color: #fff;
+		font-size: 10px;
+		line-height: 20px;
+		text-align: center;
+
+		background-color: #f44336;
+
+		opacity: 1;
+	}
+}
+
+.nav-wrapper {
+	.user {
+		height: 100%;
+		width: 48px;
+		position: relative;
+
+		text-align: center;
+		align-items: center;
+		display: flex;
+		.user-avatar {
+			margin: auto;
+			position: relative;
+			cursor: pointer;
+
+			.avatar-parent {
+				min-width: 32px;
+				height: 32px;
+				text-align: center;
+				line-height: 32px;
+				border-radius: 50%;
+				margin: 0;
+				padding: 0;
+				font-size: 11px;
+				color: #fff;
+				overflow: hidden;
+
+				img {
+					border-radius: 50%;
+					height: 32px;
+					width: 32px;
+					display: block;
+				}
+			}
+		}
+
+		.user-account-menu {
+		}
+	}
+}

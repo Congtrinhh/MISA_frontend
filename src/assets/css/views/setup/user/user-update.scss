@@ -1,0 +1,142 @@
+#dialogUpdate {
+	.dialog-main-content {
+		min-width: 600px;
+	}
+
+	.dialog-body {
+		.role-selection {
+			display: flex;
+			width: 100%;
+			line-height: 35px;
+			text-indent: 0px;
+			padding: 0px;
+			margin-bottom: 16px;
+
+			.role-wrapper {
+				margin-left: 0%;
+				width: 50%;
+			}
+		}
+	}
+
+	.container {
+		display: flex;
+		align-items: center;
+		position: relative;
+		padding: 1px 0 0 32px;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		height: 100%;
+	}
+
+    .avatar {
+        border-radius: 50%
+    }
+}
+
+.ms-col label {
+	color: #212121;
+}
+
+label {
+	text-align: left !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+label {
+	text-align: left !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+label {
+    text-align: left;
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.ms-checkbox--input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.ms-checkbox .ms-checkbox--input {
+	height: inherit;
+}
+
+.icon-square-check-primary,
+.icon-square-uncheck {
+	display: block;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+	-moz-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+	-ms-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+	-o-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+	mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+.icon-square-uncheck {
+	width: 23px;
+	-webkit-mask-position: -532px 2px;
+	-moz-mask-position: -532px 2px;
+	-ms-mask-position: -532px 2px;
+	-o-mask-position: -532px 2px;
+	mask-position: -532px 2px;
+	background-color: #686c7b !important;
+}
+
+.checkmark {
+	position: absolute;
+	left: 0;
+	height: 26px;
+	width: 22px;
+}
+.ms-checkbox .checkmark {
+	top: 0;
+}
+
+.con-slot-label {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: flex-start;
+}
+.con-slot-label {
+	text-overflow: ellipsis !important;
+	display: -webkit-box !important;
+	-webkit-box-orient: vertical !important;
+	font-weight: 400;
+}
+
+.ms-checkbox:focus .checkmark:not(.disabled),
+.ms-checkbox:focus .icon-square-check-primary.checkmark,
+.ms-checkbox:hover .checkmark:not(.disabled),
+.ms-checkbox:hover .icon-square-check-primary.checkmark {
+	border-radius: 50%;
+	background-color: $blue-color !important;
+}
+
+.ms-checkbox:focus .checkmark:not(.disabled),
+.ms-checkbox:focus .icon-square-check-primary.checkmark,
+.ms-checkbox:hover .checkmark:not(.disabled),
+.ms-checkbox:hover .icon-square-check-primary.checkmark {
+	border-radius: 50%;
+	background-color: $blue-color !important;
+}
+
+span.required {
+    color: #e54848;
+}

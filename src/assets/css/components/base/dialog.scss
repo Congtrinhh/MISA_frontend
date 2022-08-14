@@ -1,0 +1,158 @@
+.dialog-parent-wrapper {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	z-index: 20;
+	background: rgba(0, 0, 0, 0.4);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.dialog-main-content {
+		position: relative;
+		z-index: 100;
+		width: 600px;
+		max-width: calc(100% - 30px);
+		max-height: calc(100% - 4px);
+		border-radius: 6px;
+		box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+		background: #fff;
+		-webkit-animation: rebound 0.3s;
+		animation: rebound 0.3s;
+		overflow: visible;
+
+		background: rgb(255, 255, 255);
+		width: 415px;
+		min-width: 500px;
+
+		.dialog-header {
+			padding: 24px;
+			padding-bottom: 0;
+			padding-top: 18px !important;
+			min-height: 53px !important;
+
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-radius: 8px 8px;
+			position: relative;
+
+			height: 53px;
+
+			.title {
+				font-weight: 500;
+				font-size: 20px;
+				letter-spacing: 0.384px !important;
+
+				letter-spacing: 0.576px;
+				font-size: 24px;
+				color: rgb(33, 33, 33);
+			}
+
+			.btn-cancel {
+				cursor: pointer;
+
+				.btn-cancel-icon {
+					background-color: $icon-default-color !important;
+					display: inline-block;
+				}
+
+				.btn-cancel-icon {
+					width: 24px;
+					height: 24px;
+					-webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+					-moz-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+					-ms-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+					-o-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+					mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+					-webkit-mask-position: -216px -24px;
+					-moz-mask-position: -216px -24px;
+					-ms-mask-position: -216px -24px;
+					-o-mask-position: -216px -24px;
+					mask-position: -216px -24px;
+					-webkit-mask-repeat: no-repeat;
+					-moz-mask-repeat: no-repeat;
+					-ms-mask-repeat: no-repeat;
+					-o-mask-repeat: no-repeat;
+					mask-repeat: no-repeat;
+				}
+			}
+		}
+
+		.dialog-body {
+			padding: 24px;
+			overflow: auto;
+			height: calc(100% - 60px);
+
+			color: #1f1f20;
+			font-size: 14px;
+		}
+
+		.dialog-footer {
+			display: flex;
+			justify-content: flex-end;
+			background: #f2f2f2;
+			padding: 12px 24px;
+			border-radius: 0 0 8px 8px;
+			height: 60px;
+
+			.btn-left {
+				width: auto !important;
+				height: 36px !important;
+				border-radius: 4px;
+				padding: 0px 16px;
+				min-width: 80px !important;
+			}
+
+			.btn-right {
+				width: auto !important;
+				height: 36px !important;
+				border-radius: 4px;
+				padding: 0px 16px;
+				min-width: 80px !important;
+			}
+		}
+	}
+}
+
+.ms-button {
+	border: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	color: #fff;
+	box-sizing: border-box;
+	background: transparent;
+	height: 36px;
+
+	width: auto !important;
+	height: 36px !important;
+	border-radius: 4px;
+	padding: 0px 16px;
+	min-width: 80px !important;
+}
+
+.ms-button {
+	margin-right: 12px;
+}
+
+.ms-button.ms-button-filled.ms-button-secondary {
+	background-color: #fff;
+	border: 1px solid #e2e8f0;
+	color: #1e1e1e;
+}
+
+.ms-button.ms-button-filled.ms-button-danger {
+	background-color: #e61d1d;
+	color: #fff;
+	border: 1px solid #e61d1d;
+}
+
+.ms-button:last-child {
+	margin: 0;
+}

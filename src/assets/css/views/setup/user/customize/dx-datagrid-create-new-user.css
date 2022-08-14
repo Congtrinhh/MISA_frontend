@@ -1,0 +1,34 @@
+:root {
+	--input-hover-border-color: #02a3ec;
+	--input-active-border-color: #02a3ec;
+}
+.datagrid-wrapper {
+}
+
+.custom-column-wrapper {
+	height: 36px;
+	width: auto;
+}
+
+.ms-input {
+	height: 100%;
+	border: 1px solid var(--border-color);
+	border-radius: 3.5px;
+	background: #fff;
+	min-height: 36px;
+	align-items: center;
+	overflow: hidden;
+	display: flex;
+}
+.ms-input:hover {
+	border: 1px solid var(--input-hover-border-color);
+}
+.ms-input:focus-within {
+	border: 1px solid var(--input-active-border-color);
+}
+.ms-input .ms-input-item {
+	height: 100%;
+	border: none;
+	width: 100%;
+	padding: 0 12px;
+}

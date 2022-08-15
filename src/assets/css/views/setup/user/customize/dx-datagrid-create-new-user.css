@@ -17,8 +17,9 @@
 	background: #fff;
 	min-height: 36px;
 	align-items: center;
-	overflow: hidden;
 	display: flex;
+
+	position: relative;
 }
 .ms-input:hover {
 	border: 1px solid var(--input-hover-border-color);
@@ -31,4 +32,6 @@
 	border: none;
 	width: 100%;
 	padding: 0 12px;
+
+	position: absolute;
 }

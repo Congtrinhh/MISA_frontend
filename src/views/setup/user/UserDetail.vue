@@ -9,7 +9,7 @@
 							class="avatar-wrapper ms-col ms-xs- ms-sm- ms-lg-"
 							style="margin-left: 0%; width: 16.6667%"
 						>
-							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user)"></div>
+							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-64')"></div>
 						</div>
 						<div class="basic-info-wrapper ms-col ms-xs- ms-sm- ms-lg-" style="margin-left: 0%; width: 75%">
 							<div class="fullName font-20 bold">{{ user?.fullName }}</div>
@@ -26,23 +26,16 @@
 								</div>
 							</div>
 							<div class="flex">
-								<button
+								<MButton
 									@click="setShowUserUpdateDialog(true)"
-									tabindex="1"
-									type="button"
-									name="button"
-									class="btn-update ms-component ms-button ms-button-waiting ms-button-primary ms-button-filled ms-button-null"
+									btnClasses="btn-update ms-component ms-button ms-button-waiting ms-button-primary ms-button-filled ms-button-null"
+									>Cập nhật</MButton
 								>
-									<span class="ms-button-text ms-button--text">Cập nhật</span></button
-								><button
+								<MButton
 									@click="raiseDeleteBtnClickEvent"
-									tabindex="1"
-									type="button"
-									name="button"
-									class="btn-delete ms-component ms-button ms-button-waiting ms-button-primary ms-button-filled ms-button-null"
+									btnClasses="btn-delete ms-component ms-button ms-button-waiting ms-button-primary ms-button-filled ms-button-null"
+									>Xóa</MButton
 								>
-									<span class="ms-button-text ms-button--text">Xóa</span>
-								</button>
 							</div>
 						</div>
 					</div>
@@ -92,8 +85,10 @@
 import { defineComponent } from "vue";
 import { mapMutations, mapGetters } from "vuex";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
+import MButton from "@/components/base/MButton.vue";
 
 export default defineComponent({
+	components: { MButton },
 	computed: {
 		...mapGetters(["user"]),
 	},

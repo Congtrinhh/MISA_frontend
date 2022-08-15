@@ -1,10 +1,10 @@
 <template>
-	<div id="userCreateNewWrapper">
-		<div class="pop-up-content">
+	<div id="userCreateNewWrapper" ref="dialogCreateUser">
+		<Form @submit="onSubmit" v-slot="{ meta }" class="pop-up-content">
 			<!-- pop up header -->
 			<header class="header">
 				<div class="flex items-center justify-between">
-					<div class="header-title">17, Bảng dữ liệu</div>
+					<div class="header-title">Thêm người dùng</div>
 					<div class="flex align-center">
 						<div class="h-full"></div>
 						<div
@@ -28,94 +28,119 @@
 
 			<!-- pop up main content -->
 			<main class="main-content">
-				<Form @submit.prevent="onSubmit">
-					<!-- bảng nhập liệu chính -->
-					<div class="datagrid-wrapper">
-						<table>
-							<thead>
+				<!-- bảng nhập liệu chính -->
+				<div class="datagrid-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>
+									<div class="table-header-content flex items-center">
+										STT
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Mã nhân viên
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Họ và tên
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Phòng ban
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Vị trí công việc
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Email
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Vai trò
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+								<th>
+									<div class="table-header-content flex items-center">
+										Trạng thái
+										<div class="asterisk required"></div>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template v-for="(user, index) in users" :key="index">
 								<tr>
-									<th>
-										<div class="table-header-content flex items-center">
-											STT
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Mã nhân viên
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Họ và tên
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Phòng ban
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Vị trí công việc
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Email
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Vai trò
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-									<th>
-										<div class="table-header-content flex items-center">
-											Trạng thái
-											<div class="asterisk required"></div>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<template v-for="(user, index) in users" :key="index">
-									<tr>
-										<td class="column column-stt">
-											<div class="column-content-wrapper">{{ index + 1 }}</div>
-										</td>
-										<td class="column column-user-code">
-											<div class="column-content-wrapper">
-												<div class="ms-input">
-													<Field
+									<td class="column column-stt">
+										<div class="column-content-wrapper">{{ index + 1 }}</div>
+									</td>
+									<td class="column column-user-code">
+										<div class="column-content-wrapper">
+											<div class="ms-input vee-control-wrapper">
+												<Field
+													v-model="user.userCode"
+													:name="`userCode${index}`"
+													:rules="validateUserCode"
+													v-slot="{ errorMessage }"
+												>
+													<input
 														type="text"
 														class="ms-input-item"
 														v-model="user.userCode"
-														name="userCode"
+														:class="{ invalid: errorMessage }"
 													/>
-												</div>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div>
+												</Field>
 											</div>
-										</td>
-										<td class="column column-full-name">
-											<div class="column-content-wrapper">
-												<div class="ms-input">
-													<Field
+										</div>
+									</td>
+									<td class="column column-full-name">
+										<div class="column-content-wrapper vee-control-wrapper">
+											<div class="ms-input">
+												<Field
+													v-model="user.fullName"
+													:name="`fullName${index}`"
+													:rules="validateFullName"
+													v-slot="{ errorMessage }"
+												>
+													<input
 														type="text"
 														class="ms-input-item"
 														v-model="user.fullName"
-														name="fullName"
+														:class="{ invalid: errorMessage }"
 													/>
-												</div>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div>
+												</Field>
 											</div>
-										</td>
-										<td class="column column-department">
-											<div class="column-content-wrapper">
+										</div>
+									</td>
+									<td class="column column-department">
+										<div class="column-content-wrapper vee-control-wrapper">
+											<Field
+												:name="`department${index}`"
+												:rules="validateNotNull"
+												v-model="user.department"
+												v-slot="{ errorMessage }"
+											>
 												<DxSelectBox
 													:data-source="departments"
 													item-template="item"
@@ -124,6 +149,7 @@
 													class="ms-select-box"
 													placeholder=""
 													v-model="user.department"
+													:class="errorMessage ? 'invalid' : ''"
 												>
 													<template #item="{ data }">
 														<div class="dropdown-item">
@@ -131,10 +157,20 @@
 														</div>
 													</template>
 												</DxSelectBox>
-											</div>
-										</td>
-										<td class="column column-position">
-											<div class="column-content-wrapper">
+												<div class="vee-error-message" v-if="errorMessage">
+													{{ errorMessage }}
+												</div>
+											</Field>
+										</div>
+									</td>
+									<td class="column column-position">
+										<div class="column-content-wrapper vee-control-wrapper">
+											<Field
+												:name="`position${index}`"
+												:rules="validateNotNull"
+												v-model="user.position"
+												v-slot="{ errorMessage }"
+											>
 												<DxSelectBox
 													:data-source="positions"
 													item-template="item"
@@ -143,6 +179,7 @@
 													class="ms-select-box"
 													placeholder=""
 													v-model="user.position"
+													:class="errorMessage ? 'invalid' : ''"
 												>
 													<template #item="{ data }">
 														<div class="dropdown-item">
@@ -150,28 +187,64 @@
 														</div>
 													</template>
 												</DxSelectBox>
-											</div>
-										</td>
-										<td class="column column-email">
-											<div class="column-content-wrapper">
-												<div class="ms-input">
-													<input type="text" class="ms-input-item" v-model="user.email" />
+												<div class="vee-error-message" v-if="errorMessage">
+													{{ errorMessage }}
 												</div>
+											</Field>
+										</div>
+									</td>
+									<td class="column column-email">
+										<div class="column-content-wrapper">
+											<div class="ms-input vee-control-wrapper">
+												<Field
+													v-model="user.email"
+													:name="`email${index}`"
+													:rules="validateEmail"
+													v-slot="{ errorMessage }"
+												>
+													<input
+														type="text"
+														class="ms-input-item"
+														v-model="user.email"
+														:class="{ invalid: errorMessage }"
+													/>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div>
+												</Field>
 											</div>
-										</td>
-										<td class="column column-roles">
-											<div class="column-content-wrapper">
+										</div>
+									</td>
+									<td class="column column-roles">
+										<div class="column-content-wrapper vee-control-wrapper">
+											<Field
+												:name="`roles${index}`"
+												:rules="validateRoles"
+												v-model="user.roles"
+												v-slot="{ errorMessage }"
+											>
 												<DxTagBox
 													:data-source="roles"
 													value-expr="roleId"
 													display-expr="name"
-													@value-changed="onRoleChange"
 													v-model="user.roles"
+													placeholder=""
+													:class="{ invalid: errorMessage }"
 												/>
-											</div>
-										</td>
-										<td class="column column-status">
-											<div class="column-content-wrapper">
+												<div class="vee-error-message" v-if="errorMessage">
+													{{ errorMessage }}
+												</div></Field
+											>
+										</div>
+									</td>
+									<td class="column column-status">
+										<div class="column-content-wrapper vee-control-wrapper">
+											<Field
+												:name="`status${index}`"
+												:rules="validateStatus"
+												v-model="user.status"
+												v-slot="{ errorMessage }"
+											>
 												<DxSelectBox
 													:data-source="statuses"
 													item-template="item"
@@ -181,6 +254,7 @@
 													class="ms-select-box"
 													placeholder=""
 													v-model="user.status"
+													:class="{ invalid: errorMessage }"
 												>
 													<template #item="{ data }">
 														<div class="dropdown-item">
@@ -188,34 +262,45 @@
 														</div>
 													</template>
 												</DxSelectBox>
-											</div>
-										</td>
-									</tr></template
-								>
-							</tbody>
-						</table>
-					</div>
-					<!-- end of bảng nhập liệu chính -->
+												<div class="vee-error-message" v-if="errorMessage">
+													{{ errorMessage }}
+												</div></Field
+											>
+										</div>
+									</td>
+								</tr></template
+							>
+						</tbody>
+					</table>
+				</div>
+				<!-- end of bảng nhập liệu chính -->
 
-					<!-- button thêm dòng -->
-					<div @click="addNewUserRow" class="flex-m btn-new-column">
-						<div class="icon-plus-blue"></div>
-						<div class="m-t-2">Thêm dòng</div>
-					</div>
-					<!-- end of button thêm dòng -->
-
-					<!-- buttons submit -->
-					<div class="pop-up-footer flex justify-flexend">
-						<div class="buttons">
-							<button class="btn">Huỷ</button>
-							<button class="btn" :disabled="!formValid">Lưu</button>
-						</div>
-					</div>
-					<!-- end of buttons submit -->
-				</Form>
+				<!-- button thêm dòng -->
+				<div @click="addNewUserRow" class="flex-m btn-new-column">
+					<div class="icon-plus-blue"></div>
+					<div class="m-t-2">Thêm dòng</div>
+				</div>
+				<!-- end of button thêm dòng -->
 			</main>
 			<!-- end of pop up main content -->
-		</div>
+
+			<!-- buttons submit -->
+			<div class="pop-up-footer flex justify-flexend">
+				<div class="buttons flex justify-flexend direction-row-reverse">
+					<MButton
+						:disabled="!meta.valid"
+						btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
+						type="submit"
+						>Lưu</MButton
+					>
+					<MButton
+						btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
+						>Huỷ</MButton
+					>
+				</div>
+			</div>
+			<!-- end of buttons submit -->
+		</Form>
 	</div>
 </template>
 
@@ -229,7 +314,9 @@ import Role from "@/models/Role";
 import DxSelectBox from "devextreme-vue/select-box";
 import { DxTagBox } from "devextreme-vue/tag-box";
 import { UserStatus } from "@/resources/enums";
+import MButton from "@/components/base/MButton.vue";
 
+// @ts-ignore
 import ServiceFactory from "@/services/ServiceFactory";
 const UserService: any = ServiceFactory.get("users");
 const RoleService: any = ServiceFactory.get("roles");
@@ -243,6 +330,7 @@ export default defineComponent({
 		Field,
 		Form,
 		ErrorMessage,
+		MButton,
 	},
 
 	data() {
@@ -252,6 +340,9 @@ export default defineComponent({
 
 			// list user để thêm
 			users: new Array<User>(),
+
+			// form đâ thay đổi hay chưa - dùng để đưa ra dialog thông báo
+			modified: false,
 
 			// userCode hiện tại, làm căn cứ để thêm userCode mới cho mỗi dòng dữ liệu mới
 			currentUserCode: "",
@@ -273,15 +364,126 @@ export default defineComponent({
 	methods: {
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
+		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm
 		 * author TQCONG 14/8/2022
 		 */
-		onSubmit(values: any) {
+		async onSubmit(values: any) {
 			try {
 				console.log(values);
+				// gọi api tạo user
+				const { data } = await UserService.createUsers(this.users);
+				if (data === 1) {
+					// thông báo tạo thành công
+
+					// đóng dialog
+					this.$emit("closeDialogBtnClick");
+				}
 			} catch (error) {
 				console.log(error);
 			}
 		},
+		/**
+		 * validate user status
+		 * author TQCONG 14/8/2022
+		 */
+		validateStatus(value: number): boolean | string {
+			if (value < 0) {
+				return "Trường này là bắt buộc";
+			}
+			return true;
+		},
+		/**
+		 * validate email
+		 * author TQCONG 14/8/2022
+		 */
+		validateEmail(value: string): boolean | string {
+			try {
+				if (!value) {
+					return "Trường này là bắt buộc";
+				}
+				if (value.length > 255) {
+					return "Tên không được dài quá 255 ký tự";
+				}
+				const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+				if (!regex.test(value)) {
+					return "Email không hợp lệ";
+				}
+				return true;
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
+		/**
+		 * validate full name
+		 * author TQCONG 14/8/2022
+		 */
+		validateFullName(value: string): string | boolean {
+			try {
+				if (!value) {
+					return "Trường này là bắt buộc";
+				}
+				if (value.length > 255) {
+					return "Tên không được dài quá 255 ký tự";
+				}
+				return true;
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
+		/**
+		 * validate role
+		 * author TQCONG 14/8/2022
+		 */
+		validateRoles(roles: any): string | boolean {
+			try {
+				if (Array.isArray(roles) && roles.length > 0) {
+					return true;
+				}
+				return "Trường này là bắt buộc";
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
+		/**
+		 * validate rỗng
+		 * author TQCONG 14/8/2022
+		 */
+		validateNotNull(value: any): string | boolean {
+			try {
+				if (!value) {
+					return "Trường này là bắt buộc";
+				}
+
+				return true;
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
+		/**
+		 * validate user code
+		 * author TQCONG 14/8/2022
+		 */
+		validateUserCode(value: any): string | boolean {
+			try {
+				if (!value) {
+					return "Trường này là bắt buộc";
+				}
+				const regex = /^NV-\d*$/;
+				if (!regex.test(value)) {
+					return "Mã nhân viên không hợp lệ";
+				}
+
+				return true;
+			} catch (error) {
+				console.log(error);
+				return false;
+			}
+		},
+
 		/**
 		 * thêm một dòng user mới
 		 * author TQCONG 14/8/2022
@@ -336,6 +538,13 @@ export default defineComponent({
 			// get list position
 			const rsRole = await RoleService.getAll();
 			this.roles = rsRole.data;
+
+			// focus vào ô input đầu tiên
+			// @ts-ignore
+			const firstEl = this.$refs.dialogCreateUser.querySelector(
+				"table tbody tr:first-of-type td.column-user-code input.ms-input-item"
+			);
+			firstEl?.focus();
 		} catch (error) {
 			console.log(error);
 		}

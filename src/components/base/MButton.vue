@@ -1,11 +1,59 @@
-<template></template>
+<template>
+	<button
+		tabindex="1"
+		:type="type"
+		name="button"
+		class="ms-component ms-button"
+		:class="btnClasses"
+		:disabled="disabled"
+	>
+		<div
+			v-if="hasIcon"
+			class="ms-icon-default flex items-center justify-center ms-button--icon ms-icon-white"
+			size="16px"
+		>
+			<i size="16px" class="ms-icon" :class="iconClasses"></i>
+		</div>
+		<span class="ms-button-text ms-button--text"><slot></slot></span>
+	</button>
+</template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-	components: {},
+	data() {
+		return {};
+	},
+	props: {
+		type: { type: String, default: "button" },
+
+		disabled: Boolean,
+
+		// các class truyền vào element button
+		btnClasses: {
+			type: String,
+			default: "ms-component ms-button ms-button-primary ms-button-filled ms-button-null",
+		},
+		// các class truyền vào element i
+		iconClasses: {
+			type: String,
+			default: "ms-icon",
+		},
+		// nếu được set bằng true, button sẽ không có min-width
+		noDefaultMinWidth: {
+			type: Boolean,
+			required: false,
+		},
+	},
+	computed: {
+		hasIcon() {
+			return this.iconClasses && this.iconClasses.trim();
+		},
+	},
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/css/components/base/button.scss";
+</style>

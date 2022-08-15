@@ -26,8 +26,8 @@ function getUserStatusStyles(status: Status): object {
 	}
 }
 
-function getUserAvatarMarkup(user: User): string {
-	const defaultMarkup = `<div class="user-avatar" style="background-color: gray">--</div>`;
+function getUserAvatarMarkup(user: User, cssClasses: string=""): string {
+	const defaultMarkup = `<div class="user-avatar ${cssClasses}" style="background-color: gray">--</div>`;
 	try {
 		let code = user.userCode; // có dạng NV-12145
 		// lấy ra số cuối cùng của mã
@@ -42,7 +42,7 @@ function getUserAvatarMarkup(user: User): string {
 			let lastName = user.fullName.split(" ").pop()?.substring(0, 1);
 			const name = `${firstName}${lastName}`.toUpperCase();
 			// build thẻ html
-			const markup = `<div class="user-avatar" style="background-color: ${color}">${name}</div>`;
+			const markup = `<div class="user-avatar ${cssClasses}" style="background-color: ${color}">${name}</div>`;
 			return markup;
 		}
 		return defaultMarkup;

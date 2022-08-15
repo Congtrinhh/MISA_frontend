@@ -34,7 +34,7 @@ export default defineComponent({
 	data() {
 		return {
 			// hiện dialog thêm mới
-			showUserCreateNewDialog: true,
+			showUserCreateNewDialog: false,
 		};
 	},
 

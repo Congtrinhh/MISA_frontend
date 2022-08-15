@@ -32,13 +32,8 @@
 		.avatar-wrapper {
 			margin-left: 0%;
 			width: 16.6667%;
-            
-			.user-avatar {
-                border: 1px solid $border-color;
-                margin-top: 10px;
-				width: 64px;
-				height: 64px;
-			}
+			height: 64px;
+			margin-top: 10px;
 		}
 
 		.basic-info-wrapper {
@@ -97,6 +92,10 @@
 				display: flex;
 				align-items: center;
 				cursor: pointer;
+
+				font-weight: 700;
+				letter-spacing: 0.14px;
+				color: #171b2a;
 			}
 
 			.role-item {
@@ -113,7 +112,7 @@
 				}
 
 				&:hover {
-					background-color: $blue-color;
+					background-color: $table-row-hover;
 				}
 			}
 		}
@@ -135,6 +134,17 @@
 	}
 }
 
+
+
+// button
+.ms-button.ms-button-filled.ms-button-waiting {
+	background-color: #fff;
+	color: #ff6333;
+	border: 1px solid #f90;
+}
+
+
+// fix
 .mi-close,
 .mi-close-2 {
 	background-color: $icon-default-color !important;
@@ -144,12 +154,11 @@
 .mi-close-grey {
 	width: 24px;
 	height: 24px;
-	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-
+	-webkit-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-moz-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-ms-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-o-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
 	-webkit-mask-position: -216px -24px;
 	-moz-mask-position: -216px -24px;
 	-ms-mask-position: -216px -24px;
@@ -161,10 +170,10 @@
 	-o-mask-repeat: no-repeat;
 	mask-repeat: no-repeat;
 }
-
-// button
-.ms-button.ms-button-filled.ms-button-waiting {
-	background-color: #fff;
-	color: #ff6333;
-	border: 1px solid #f90;
+i {
+	display: block;
+}
+.mi-close-2 {
+	-webkit-mask-position: -153px -251px !important;
+	-webkit-mask-image: url("../../../assets/img/Icon_process.93f7e484.svg");
 }

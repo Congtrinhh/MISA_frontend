@@ -26,7 +26,8 @@
 						<div class="menu-item-active"></div>
 					</div>
 					<div class="btn-run-process">
-						<button
+						<MButton btnClasses="ms-button ms-button-primary ms-button-filled ms-button-icon-run-process includeIcon" iconClasses="ms-icon notranslate icon-scale icon-run-process mi-20">Chạy quy trình</MButton>
+						<!-- <button
 							tabindex="1"
 							type="button"
 							name="button"
@@ -39,7 +40,7 @@
 								<i class="ms-icon notranslate icon-scale icon-run-process mi-20"></i>
 							</div>
 							<span class="ms-button-text ms-button--text">Chạy quy trình </span>
-						</button>
+						</button> -->
 					</div>
 				</div>
 			</div>
@@ -71,8 +72,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import MButton from "@/components/base/MButton.vue";
 
-export default defineComponent({});
+export default defineComponent({
+	components: { MButton },
+});
 </script>
 
 <style scoped lang="scss">

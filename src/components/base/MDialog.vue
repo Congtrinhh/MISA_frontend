@@ -9,7 +9,8 @@
 				></slot>
 			</div>
 			<div class="dialog-body">
-				<slot name="dialog-body-content"> Phần thân của dialog </slot>
+				<!-- slot mặc định -->
+				<slot>Phần thân của dialog</slot>
 			</div>
 			<div class="dialog-footer">
 				<slot name="dialog-footer-content">
@@ -17,27 +18,18 @@
 
 					<slot name="dialog-footer-content-right-buttons"
 						><div class="right-buttons">
-							<button
-								tabindex="1"
-								type="button"
-								name="button"
-								class=":class"
-								:class="config?.cancelBtn?.classes ? config.cancelBtn.classes : cancelBtnClasses"
+							<MButton
 								@click="raiseCancelBtnClickEvent"
+								:btnClasses="config?.cancelBtn?.classes ? config.cancelBtn.classes : cancelBtnClasses"
+								>{{ config?.cancelBtn?.text ? config.cancelBtn.text : "Huỷ" }}</MButton
 							>
-								{{ config?.cancelBtn?.text ? config.cancelBtn.text : "Huỷ" }}
-							</button>
-							<slot name="confirm-button"
-								><button
-									tabindex="1"
-									type="button"
-									name="button"
+							<slot name="confirm-button">
+								<MButton
 									:class="config?.confirmBtn?.classes ? config.confirmBtn.classes : confirmBtnClasses"
 									@click="raiseConfirmBtnClickEvent"
+									>{{ config?.confirmBtn?.text ? config.confirmBtn.text : "Đồng ý" }}</MButton
 								>
-									{{ config?.confirmBtn?.text ? config.confirmBtn.text : "Đồng ý" }}
-								</button></slot
-							>
+							</slot>
 						</div></slot
 					>
 				</slot>
@@ -48,8 +40,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import MButton from "@/components/base/MButton.vue";
 
 export default defineComponent({
+	components: { MButton },
 	data() {
 		return {};
 	},

@@ -333,32 +333,7 @@
 	position: absolute;
 }
 
-.mi-pencil {
-	width: 24px !important;
-	height: 24px !important;
-	background: url(../../../../../../assets/img/Icon.de5bb0db.svg) -216px 0 no-repeat !important;
-}
 
-.icon-delete,
-.icon-delete-custom {
-	width: 24px;
-	height: 24px;
-	-webkit-mask-image: url(../../../../../../assets/img/Icon_process.93f7e484.svg);
-	-moz-mask-image: url(../../../../../../assets/img/Icon_process.93f7e484.svg);
-	-ms-mask-image: url(../../../../../../assets/img/Icon_process.93f7e484.svg);
-	-o-mask-image: url(../../../../../../assets/img/Icon_process.93f7e484.svg);
-	mask-image: url(../../../../../../assets/img/Icon_process.93f7e484.svg);
-	-webkit-mask-position: -264px 0;
-	-moz-mask-position: -264px 0;
-	-ms-mask-position: -264px 0;
-	-o-mask-position: -264px 0;
-	mask-position: -264px 0;
-	-webkit-mask-repeat: no-repeat;
-	-moz-mask-repeat: no-repeat;
-	-ms-mask-repeat: no-repeat;
-	-o-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-}
 .icon-delete-custom {
 	background-color: #de1e1e !important;
 }

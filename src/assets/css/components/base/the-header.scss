@@ -20,7 +20,7 @@
 			margin-right: 34px;
 
 			.logo {
-				background: transparent url(../../assets/img/logo.fe78f7ca.svg) no-repeat 0 0;
+				background: transparent url("../../assets/img/logo.fe78f7ca.svg") no-repeat 0 0;
 				margin-right: 12px;
 			}
 			.text {
@@ -57,11 +57,11 @@
 
 				width: 24px;
 				height: 24px;
-				-webkit-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
-				-moz-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
-				-ms-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
-				-o-mask-image: url(../../assets/img/Icon.de5bb0db.svg);
-				mask-image: url(../../assets/img/Icon.de5bb0db.svg);
+				-webkit-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
+				-moz-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
+				-ms-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
+				-o-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
+				mask-image: url("../../assets/img/Icon.de5bb0db.svg");
 				-webkit-mask-repeat: no-repeat;
 				-moz-mask-repeat: no-repeat;
 				-ms-mask-repeat: no-repeat;
@@ -129,11 +129,11 @@
 }
 
 .icon-run-process {
-	-webkit-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
-	-moz-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
-	-ms-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
-	-o-mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
-	mask-image: url(../../assets/img/Icon_process.4ac8c2f6.svg);
+	-webkit-mask-image: url("../../assets/img/Icon_process.4ac8c2f6.svg");
+	-moz-mask-image: url("../../assets/img/Icon_process.4ac8c2f6.svg");
+	-ms-mask-image: url("../../assets/img/Icon_process.4ac8c2f6.svg");
+	-o-mask-image: url("../../assets/img/Icon_process.4ac8c2f6.svg");
+	mask-image: url("../../assets/img/Icon_process.4ac8c2f6.svg");
 	-webkit-mask-repeat: no-repeat;
 	-moz-mask-repeat: no-repeat;
 	-ms-mask-repeat: no-repeat;
@@ -159,7 +159,7 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	margin-top: 2px;
-	background-image: url(../../assets/img/icon-notification-dark-thick.svg);
+	background-image: url("../../assets/img/icon-notification-dark-thick.svg");
 
 	position: relative;
 

@@ -5,31 +5,21 @@
 				<div class="content-header p-b-16">
 					<div class="header-custom flex justify-between items-center">
 						<div class="font-20 bold">Người dùng</div>
-
 						<!-- button -->
-						<button
-							@click="$emit('btnAddNewUserClick')"
-							tabindex="1"
-							type="button"
-							name="button"
+						<MButton
 							id="btnAddPermission"
-							class="ms-component ms-button ms-button-primary ms-button-filled ms-button-mi-plus-white includeIcon"
+							@click="$emit('btnAddNewUserClick')"
+							btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-mi-plus-white includeIcon"
+							iconClasses="ms-icon notranslate icon-scale mi-plus-white"
+							>Thêm mới</MButton
 						>
-							<div
-								class="ms-icon-default flex items-center justify-center ms-button--icon ms-icon-white"
-								size="16px"
-							>
-								<i size="16px" class="ms-icon notranslate icon-scale mi-plus-white"></i>
-							</div>
-							<span class="ms-button-text ms-button--text">Thêm mới</span>
-						</button>
 						<!-- end of button -->
 					</div>
 				</div>
 				<div class="content-main">
 					<div class="h-full w-full">
 						<!-- search box, filter, setting -->
-						<div class="flex items-center w-full bg-white" style="height: 60px">
+						<div class="content-main-header flex items-center w-full bg-white" style="height: 60px">
 							<span class="input-search-user">
 								<div class="m-l-12">
 									<div style="height: 36px; width: 240px">
@@ -66,11 +56,6 @@
 										:hover-state-enabled="true"
 										class="ms-select-box"
 									>
-										<!-- <DxItem>
-											<template #default>
-												<span>Tất cả</span>
-											</template>
-										</DxItem> -->
 										<template #item="{ data }">
 											<div class="dropdown-item">
 												{{ data.name }}
@@ -79,7 +64,7 @@
 									</DxSelectBox>
 								</div>
 							</span>
-							<div class="su-filter m-r-16">
+							<div class="su-filter m-r-16" @click="togglePopupTableConfig">
 								<div class="adjust-column">
 									<div
 										type="gradient"
@@ -89,6 +74,20 @@
 									></div>
 								</div>
 							</div>
+
+							<!-- pop up config table display -->
+							<DxPopup
+								id="popupTableConfig"
+								content-template="popup-content"
+								:hide-on-outside-click="true"
+								v-model:visible="isPopupTableConfigVisible"
+								:min-height="500"
+								:min-width="316"
+								:drag-enabled="false"
+							>
+								<template #popup-content>pip </template>
+							</DxPopup>
+							<!-- end of pop up config table display -->
 						</div>
 						<!-- end of search box, filter, setting -->
 
@@ -353,9 +352,7 @@
 
 	<!-- dialog xác nhận xoá user -->
 	<MDialog v-if="showDialog" @confirmBtnClick="handleDeleteUser" @cancelBtnClick="closeDialog" :config="dialogConfig">
-		<template #dialog-body-content>
-			Bạn có chắc chắn muốn xóa <b>{{ user.fullName }}</b> khỏi ứng dụng AMIS Quy trình không?
-		</template>
+		Bạn có chắc chắn muốn xóa <b>{{ user.fullName }}</b> khỏi ứng dụng AMIS Quy trình không?
 	</MDialog>
 	<!-- end of dialog xác nhận xoá user -->
 
@@ -376,6 +373,8 @@ import UserPaginationRequest from "@/models/paging/UserPaginationRequest";
 import { Status } from "@/enums/Status";
 import MDialog from "@/components/base/MDialog.vue";
 import MSelect from "@/components/base/MSelect.vue";
+import MButton from "@/components/base/MButton.vue";
+import { DxPopup } from "devextreme-vue/popup";
 
 import UserDetail from "@/views/setup/user/UserDetail.vue";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
@@ -397,6 +396,8 @@ export default defineComponent({
 		MDialog,
 		UserDetail,
 		MSelect,
+		MButton,
+		DxPopup,
 	},
 	data() {
 		return {
@@ -420,6 +421,9 @@ export default defineComponent({
 
 			// list roles
 			roles: new Array<Role>(),
+
+			// hiện pop up config table hay không
+			isPopupTableConfigVisible: false,
 		};
 	},
 
@@ -454,33 +458,14 @@ export default defineComponent({
 		...mapGetters(["showUserDetailScreen", "user", "needReload"]),
 	},
 
-	async created() {
-		try {
-			// cấu hình cho dialog xác nhận xoá
-			this.dialogConfig = {
-				width: 500,
-				headerTitle: "Xoá người dùng",
-				cancelBtn: {
-					text: "Huỷ",
-					classes: "ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null",
-				},
-				confirmBtn: {
-					text: "Xoá",
-					classes: "ms-component ms-button ms-button-danger ms-button-filled ms-button-null",
-				},
-			};
-
-			// lấy ra list user
-			await this.getUsers();
-
-			// lấy ra list role
-			await this.getAllRoles();
-		} catch (error) {
-			console.log(error);
-		}
-	},
-
 	methods: {
+		/**
+		 * ẩn/hiện pop up table config
+		 * author TQCONG 15/8/2022
+		 */
+		togglePopupTableConfig() {
+			this.isPopupTableConfigVisible = !this.isPopupTableConfigVisible;
+		},
 		/**
 		 * xử lý khi nút "xoá" ở mỗi dòng của bảng user được click
 		 * author TQCONG 13/8/2022
@@ -640,6 +625,37 @@ export default defineComponent({
 			this.showDialog = false;
 		},
 	},
+
+	async created() {
+		try {
+			// cấu hình cho dialog xác nhận xoá
+			this.dialogConfig = {
+				width: 500,
+				headerTitle: "Xoá người dùng",
+				cancelBtn: {
+					text: "Huỷ",
+					classes: "ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null",
+				},
+				confirmBtn: {
+					text: "Xoá",
+					classes: "ms-component ms-button ms-button-danger ms-button-filled ms-button-null",
+				},
+			};
+
+			// lấy ra list user
+			await this.getUsers();
+
+			// lấy ra list role
+			await this.getAllRoles();
+			// thêm option tất cả vào mảng role
+			const roleAll: Role = new Role();
+			roleAll.name = "Tất cả";
+			roleAll.roleId = -1;
+			this.roles.unshift(roleAll);
+		} catch (error) {
+			console.log(error);
+		}
+	},
 });
 </script>
 
@@ -651,4 +667,5 @@ export default defineComponent({
 /* custom css cho dx-datagrid - dùng css vì không thể override bằng scss */
 @import "@/assets/css/views/setup/user/customize/dx-datagrid.css";
 @import "@/assets/css/views/setup/user/customize/dx-select.css";
+@import "@/assets/css/views/setup/user/customize/dx-popup.css";
 </style>

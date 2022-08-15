@@ -1,3 +1,6 @@
+.ms-select-box {
+	border: 1px solid $border-color;
+}
 #userCreateNewWrapper {
 	position: fixed;
 	width: 100vw;
@@ -19,15 +22,14 @@
 		color: $text-primary-color;
 
 		min-width: 200px;
-		min-height: 200px;
-		max-height: 100vh;
 		width: 94vw;
 		height: 90vh;
-
 		border-radius: 4px;
-
 		display: flex;
 		flex-direction: column;
+
+		max-height: 90vh;
+		overflow: auto;
 	}
 }
 
@@ -61,41 +63,11 @@ main.main-content {
 .popup-show-enpand-table .popup-icon-close {
 	margin-right: -8px !important;
 }
-.mi-close,
-.mi-close-2 {
-	background-color: $icon-default-color !important;
-}
-.mi-close,
-.mi-close-2,
-.mi-close-grey {
-	width: 24px;
-	height: 24px;
-	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
-	-webkit-mask-position: -216px -24px;
-	-moz-mask-position: -216px -24px;
-	-ms-mask-position: -216px -24px;
-	-o-mask-position: -216px -24px;
-	mask-position: -216px -24px;
-	-webkit-mask-repeat: no-repeat;
-	-moz-mask-repeat: no-repeat;
-	-ms-mask-repeat: no-repeat;
-	-o-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-}
-i {
-	display: block;
-}
-.mi-close-2 {
-	-webkit-mask-position: -153px -251px !important;
-	-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-}
 
 // main table
 .datagrid-wrapper {
+	overflow: auto;
+
 	table {
 		min-width: 100%;
 		border: 1px solid $border-color;
@@ -134,7 +106,7 @@ i {
 				border-bottom: 1px solid $border-color;
 			}
 			tr:hover {
-				background: rgb(169, 205, 230);
+				background: $table-row-hover;
 				cursor: pointer;
 			}
 			tr:last-child td {
@@ -142,15 +114,21 @@ i {
 			}
 		}
 
-		thead th:first-child,
-		tbody td:first-child {
-			text-align: center;
+		thead th:not(:first-of-type),
+		tbody td:not(:first-of-type) {
+			min-width: 200px;
 		}
 
-        thead th:nth-of-type(7),
+		thead th:first-of-type,
+		tbody td:first-of-type {
+			text-align: center;
+			max-width: 60px;
+		}
+
+		thead th:nth-of-type(7),
 		tbody td:nth-of-type(7) {
 			width: 220px;
-            max-height: 100px;
+			max-height: 100px;
 		}
 	}
 }
@@ -165,32 +143,91 @@ i {
 	cursor: pointer;
 	align-items: center;
 	margin-top: 16px;
-
-	.icon-plus-blue {
-		transform: scale(0.5);
-
-		width: 24px;
-		height: 24px;
-		-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-		-moz-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-		-ms-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-		-o-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-		mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
-		-webkit-mask-position: -168px 0;
-		-moz-mask-position: -168px 0;
-		-ms-mask-position: -168px 0;
-		-o-mask-position: -168px 0;
-		mask-position: -168px 0;
-		-webkit-mask-repeat: no-repeat;
-		-moz-mask-repeat: no-repeat;
-		-ms-mask-repeat: no-repeat;
-		-o-mask-repeat: no-repeat;
-		mask-repeat: no-repeat;
-		background-color: #02a3ec !important;
-	}
+	display: inline-flex;
 }
 
-[disabled] {
-	cursor: default;
-	background-color: rgba(255, 255, 255, 0.2);
+.pop-up-footer {
+	display: flex;
+	justify-content: flex-end;
+	background: #f2f2f2;
+	padding: 12px 24px;
+	border-radius: 0 0 8px 8px;
+	height: 60px;
+}
+
+.mi-close,
+.mi-close-2 {
+	background-color: $icon-default-color !important;
+}
+.mi-close,
+.mi-close-2,
+.mi-close-grey {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-webkit-mask-position: -216px -24px;
+	-moz-mask-position: -216px -24px;
+	-ms-mask-position: -216px -24px;
+	-o-mask-position: -216px -24px;
+	mask-position: -216px -24px;
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+.mi-close-2 {
+	-webkit-mask-position: -153px -251px !important;
+	-webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+}
+.btn-icon-1 {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 36px !important;
+	height: 36px !important;
+	border-radius: 50% !important;
+	border: none !important;
+	outline: none !important;
+}
+.popup-icon-close {
+	margin-right: -8px !important;
+}
+
+.tooltip-container,
+.con-ms-tooltip {
+	width: 100%;
+	height: 100%;
+}
+
+i {
+	display: block;
+}
+
+.icon-plus-blue {
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+    -moz-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+    -ms-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+    -o-mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+    mask-image: url(../../../assets/img/Icon_process.93f7e484.svg);
+    -webkit-mask-position: -168px 0;
+    -moz-mask-position: -168px 0;
+    -ms-mask-position: -168px 0;
+    -o-mask-position: -168px 0;
+    mask-position: -168px 0;
+    -webkit-mask-repeat: no-repeat;
+    -moz-mask-repeat: no-repeat;
+    -ms-mask-repeat: no-repeat;
+    -o-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: #02a3ec!important;
+
+	transform: scale(0.5);
 }

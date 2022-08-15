@@ -184,6 +184,9 @@ textarea {
 .m-r-6 {
 	margin-right: 6px;
 }
+.m-r-12 {
+	margin-right: 12px !important;
+}
 .p-l-8 {
 	padding-left: 8px !important;
 }
@@ -197,6 +200,11 @@ textarea {
 	display: flex;
 	-ms-align-items: center;
 	align-items: center;
+}
+
+.direction-row-reverse {
+	display: flex;
+	flex-direction: row-reverse;
 }
 .ms-row {
 	clear: both;
@@ -254,6 +262,11 @@ textarea {
 	letter-spacing: 1px;
 	font-size: 16px;
 }
+.user-avatar-64 {
+	width: 64px;
+	height: 64px;
+	font-size: 32px;
+}
 
 .asterisk {
 	position: relative;
@@ -274,3 +287,37 @@ button,
 input[type="button"] {
 	cursor: pointer;
 }
+
+// vee validate message
+.vee-control-wrapper {
+	position: relative;
+	overflow: visible !important;
+
+	&:hover .vee-error-message {
+		display: block;
+	}
+	.vee-error-message {
+		position: absolute;
+		bottom: -70%;
+		left: 50%;
+		transform: translateX(-50%);
+
+		border-radius: 4px;
+		color: #fff;
+		background-color: #4e4e4e;
+		display: inline-block;
+		padding: 9px 12px;
+		font-size: 0.85em;
+		white-space: nowrap;
+		line-height: normal;
+
+		z-index: 20;
+		display: none;
+	}
+
+	.invalid {
+		border: 1px solid red !important;
+		height: 100%;
+	}
+}
+// end of vee validate message

@@ -2,103 +2,55 @@
 	<div id="dialogUpdate">
 		<form novalidate @submit.prevent="onSubmit">
 			<MDialog :config="dialogConfig" @cancelBtnClick="hideUserUpdateDialog">
-				<template #dialog-body-content>
-					<div>
-						<div class="item-wrap">
-							<div class="flex items-center">
-								<div class="avatar m-r-8">
-									<img
-										src="https://testcdnamisapp.misa.vn/APIS/PlatformAPI/api/Avatar/5a426d1d-f731-4d88-962f-52b7756868ba/594LXLY7.jpg?avatarID=14c4257a-3b69-4879-b32c-641aeab08957&amp;width=64&amp;height=64"
-										class="avatar"
-									/>
+				<div>
+					<div class="item-wrap">
+						<div class="flex items-center">
+							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-64')"></div>
+							<div class="user-information">
+								<div>
+									<span
+										><b>{{ userToUpdate?.fullName }}</b></span
+									><span class="m-l-4">({{ userToUpdate?.userCode }})</span>
 								</div>
-								<div class="user-information">
-									<div>
-										<span
-											><b>{{ userToUpdate?.fullName }}</b></span
-										><span class="m-l-4">(B-0822)</span>
-									</div>
-									<div class="m-t-4 m-b-4">
-										<span>{{ userToUpdate?.email }}</span>
-									</div>
-									<div>
-										<span>{{ userToUpdate?.positionName }}</span
-										><span> - </span><span>{{ userToUpdate?.departmentName }}</span>
-									</div>
+								<div class="m-t-4 m-b-4">
+									<span>{{ userToUpdate?.email }}</span>
+								</div>
+								<div>
+									<span>{{ userToUpdate?.positionName }}</span
+									><span> - </span><span>{{ userToUpdate?.departmentName }}</span>
 								</div>
 							</div>
-						</div>
-						<br /><label class="font-20 bold">
-							<p style="margin: 0px !important; color: rgb(27, 28, 30) !important">
-								Vai trò<span class="required" style="float: inherit"> * </span>
-							</p></label
-						><br />
-						<div class="ms-row role-selection">
-							<template v-for="(role, index) in roles" :key="index">
-								<div class="role-wrapper ms-col ms-xs- ms-sm- ms-lg-">
-									<div class="input-wrapper">
-										<input
-											type="checkbox"
-											:id="`roleCheckbox${index}`"
-											@click="handleRoleCheckboxClick($event, role)"
-											:checked="checkRoleContains(role, user.roles)"
-										/>
-									</div>
-									<label :for="`roleCheckbox${index}`">{{ role.name }}</label>
-								</div>
-							</template>
-							<!-- <div class="role-wrapper ms-col ms-xs- ms-sm- ms-lg-">
-							<div class="flex items-center">
-								<label tabindex="1" class="container ms-checkbox"
-									><input type="checkbox" class="ms-checkbox--input" value="false" /><span
-										class="icon-square-uncheck checkmark"
-									></span
-									><span class="con-slot-label"
-										><div title="Quản trị ứng dụng Quy trình" style="margin-top: -5px">
-											Quản trị ứng dụng Quy trình
-										</div></span
-									></label
-								>
-							</div>
-						</div>
-						<div class="role-wrapper ms-col ms-xs- ms-sm- ms-lg-">
-							<div class="flex items-center">
-								<label tabindex="1" class="container ms-checkbox"
-									><input type="checkbox" class="ms-checkbox--input" value="true" /><span
-										class="icon-square-uncheck checkmark"
-									></span
-									><span class="con-slot-label"
-										><div title="Nhân viên" style="margin-top: -5px">Nhân viên</div></span
-									></label
-								>
-							</div>
-						</div>
-						<div class="role-wrapper ms-col ms-xs- ms-sm- ms-lg-">
-							<div class="flex items-center">
-								<label tabindex="1" class="container ms-checkbox"
-									><input type="checkbox" class="ms-checkbox--input" value="false" /><span
-										class="icon-square-uncheck checkmark"
-									></span
-									><span class="con-slot-label"
-										><div title="quản lý" style="margin-top: -5px">quản lý</div></span
-									></label
-								>
-							</div>
-						</div> -->
 						</div>
 					</div>
-				</template>
+					<br /><label class="font-20 bold">
+						<p style="margin: 0px !important; color: rgb(27, 28, 30) !important">
+							Vai trò<span class="required" style="float: inherit"> * </span>
+						</p></label
+					><br />
+					<div class="ms-row role-selection">
+						<template v-for="(role, index) in roles" :key="index">
+							<div class="role-wrapper ms-col ms-xs- ms-sm- ms-lg-">
+								<div class="input-wrapper">
+									<input
+										type="checkbox"
+										:id="`roleCheckbox${index}`"
+										@click="handleRoleCheckboxClick($event, role)"
+										:checked="checkRoleContains(role, user.roles)"
+									/>
+								</div>
+								<label :for="`roleCheckbox${index}`">{{ role.name }}</label>
+							</div>
+						</template>
+					</div>
+				</div>
 
 				<template #confirm-button>
-					<button
-						tabindex="1"
-						type="submit"
-						name="button"
+					<MButton
 						class="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
 						:disabled="!isUserValid"
+						type="submit"
+						>Lưu</MButton
 					>
-						Lưu
-					</button>
 				</template>
 			</MDialog>
 		</form>
@@ -112,6 +64,8 @@ import { mapActions, mapGetters } from "vuex";
 import Role from "@/models/Role";
 import User from "@/models/User";
 import { ModificationMode } from "@/enums/ModificationMode";
+import { getUserAvatarMarkup } from "@/helpers/common";
+import MButton from "@/components/base/MButton.vue";
 
 // dùng để gọi API
 // @ts-ignore
@@ -120,7 +74,7 @@ import ServiceFactory from "@/services/ServiceFactory";
 const RoleService: any = ServiceFactory.get("roles");
 
 export default defineComponent({
-	components: { MDialog },
+	components: { MDialog, MButton },
 
 	data() {
 		return {
@@ -158,6 +112,12 @@ export default defineComponent({
 
 	methods: {
 		/**
+		 * (hàm import từ helper) - trả về thẻ html chứa đầy đủ style cho avatar của một user
+		 * author TQCONG 13/8/2022
+		 */
+		getUserAvatarMarkup,
+
+		/**
 		 * thực hiện cập nhật khi form được submit (form chỉ submit khi user hợp lệ)
 		 * author TQCONG 13/8/2022
 		 */
@@ -166,7 +126,6 @@ export default defineComponent({
 				this.userToUpdate.roles = this.buildRolesForUpdate(this.user.roles, this.userToUpdate.roles as Role[]);
 				await this.handleUpdateUser(this.userToUpdate);
 				// reload lại user list sau khi update thành công
-				
 			} catch (error) {
 				console.log(error);
 			}

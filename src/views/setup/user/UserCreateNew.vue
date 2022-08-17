@@ -34,10 +34,7 @@
 						<thead>
 							<tr>
 								<th>
-									<div class="table-header-content flex items-center">
-										STT
-										<div class="asterisk required"></div>
-									</div>
+									<div class="table-header-content flex items-center">STT</div>
 								</th>
 								<th>
 									<div class="table-header-content flex items-center">

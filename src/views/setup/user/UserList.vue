@@ -19,7 +19,11 @@
 				<div class="content-main">
 					<div class="h-full w-full">
 						<!-- search box, filter, setting -->
-						<div class="content-main-header flex items-center w-full bg-white" style="height: 60px">
+						<div
+							id="contentMainHeader"
+							class="content-main-header flex items-center w-full bg-white"
+							style="height: 60px"
+						>
 							<span class="input-search-user">
 								<div class="m-l-12">
 									<div style="height: 36px; width: 240px">
@@ -79,13 +83,376 @@
 							<DxPopup
 								id="popupTableConfig"
 								content-template="popup-content"
-								:hide-on-outside-click="true"
 								v-model:visible="isPopupTableConfigVisible"
-								:min-height="500"
-								:min-width="316"
 								:drag-enabled="false"
+								:hide-on-outside-click="true"
+								:show-close-button="false"
+								:show-title="false"
+								:width="316"
+								:height="420"
+								container=".dx-viewport"
+								:animation="{
+									show: {
+										type: 'fade',
+										duration: 400,
+										from: { opacity: 0 },
+										to: { opacity: 1 },
+									},
+								}"
+								:wrapper-attr="{ class: 'adjust-column-popover' }"
 							>
-								<template #popup-content>pip </template>
+								<!-- <DxPosition offset="-100 200" /> -->
+								<template #popup-content>
+									<div class="content-container">
+										<div id="adjust-colum-popover" class="flex flex-col">
+											<header>
+												<div class="p-b-8 header">
+													<div class="flex justify-between items-center p-b-12">
+														<div class="title">Tùy chỉnh cột</div>
+														<div
+															class="ms-icon-container flex items-center justify-center ms-icon- btn-icon-1"
+															style="cursor: pointer"
+														></div>
+													</div>
+													<div sizeicon="20px" iconnoborder="true" inputbackground="#ffffff">
+														<div title="" style="height: 35px; width: 100%">
+															<div class="flex items-center w-full h-full">
+																<div class="ms-input flex w-full">
+																	<div
+																		class="ms-icon-default flex items-center justify-center p-l-8 ms-icon-"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-search"
+																		></i>
+																	</div>
+																	<input
+																		maxlength="255"
+																		placeholder="Tìm kiếm"
+																		autofocus="autofocus"
+																		tabindex="1"
+																		type="text"
+																		class="ms-input-item"
+																	/><!---->
+																</div>
+																<!---->
+															</div>
+															<div class="flex" style="display: none">
+																<div
+																	class="root flex justify-between items-center text-border"
+																>
+																	<p class="w-full" style="height: 35px">
+																		<span title=""></span>
+																	</p>
+																	<div
+																		class="ms-icon-container flex items-center justify-center ms-icon- btn-icon-1"
+																	>
+																		<div class="tooltip-container">
+																			<div class="con-ms-tooltip">
+																				<i
+																					class="ms-icon notranslate icon-scale mi-pencil"
+																				></i>
+																			</div>
+																			<div
+																				class="ms-tooltips dx-overlay dx-popup dx-popover dx-widget dx-state-invisible dx-visibility-change-handler dx-tooltip"
+																			>
+																				<div
+																					class="dx-overlay-content dx-popup-normal"
+																					aria-hidden="true"
+																					id="dx-a620409d-b959-3959-b165-d58d5862813b"
+																					role="tooltip"
+																					style="width: auto; height: auto"
+																				>
+																					<div class="dx-popover-arrow"></div>
+																					<div class="dx-popup-content"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<!---->
+																</div>
+															</div>
+														</div>
+														<!---->
+													</div>
+												</div>
+											</header>
+											<main>
+												<div class="list-group-wrap list-content p-b-12">
+													<div class="list-group">
+														<div class="">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				disabled="disabled"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark disabled"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Mã nhân viên"
+																					class="columnName m-t-2"
+																				>
+																					Mã nhân viên
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- opacity-0"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				disabled="disabled"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark disabled"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Họ và tên"
+																					class="columnName m-t-2"
+																				>
+																					Họ và tên
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- opacity-0"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="element">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Phòng ban"
+																					class="columnName m-t-2"
+																				>
+																					Phòng ban
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="element">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Vị trí công việc"
+																					class="columnName m-t-2"
+																				>
+																					Vị trí công việc
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="element">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Email"
+																					class="columnName m-t-2"
+																				>
+																					Email
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="element">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Vai trò"
+																					class="columnName m-t-2"
+																				>
+																					Vai trò
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="element">
+															<div class="list-group-item">
+																<div class="flex items-center justify-between">
+																	<div class="flex items-center">
+																		<label
+																			tabindex="1"
+																			class="container ms-checkbox"
+																			><input
+																				type="checkbox"
+																				class="ms-checkbox--input"
+																				value="true"
+																			/><span
+																				class="icon-square-check-primary checkmark"
+																			></span
+																			><span class="con-slot-label"
+																				><div
+																					title="Trạng thái"
+																					class="columnName m-t-2"
+																				>
+																					Trạng thái
+																				</div></span
+																			></label
+																		>
+																	</div>
+																	<div
+																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
+																		style="cursor: all-scroll"
+																	>
+																		<i
+																			class="ms-icon notranslate icon-scale mi-drag"
+																		></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div
+														class="flex-col items-center justify-center w-full p-y-24"
+														style="height: 250px; display: none"
+													>
+														<div class="mi-empty-state-sheets"></div>
+														<div style="font-style: italic; color: rgb(221, 221, 221)">
+															Không có dữ liệu
+														</div>
+													</div>
+												</div>
+											</main>
+											<footer>
+												<div class="comand-wrap flex justify-flexend">
+													<MButton
+														btnClasses="ms-component ms-button ms-button-secondary ms-button-filled ms-button-null"
+														>Lấy lại mặc định</MButton
+													>
+													<MButton
+														btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
+														>Áp dụng</MButton
+													>
+												</div>
+											</footer>
+										</div>
+									</div>
+								</template>
 							</DxPopup>
 							<!-- end of pop up config table display -->
 						</div>
@@ -374,7 +741,7 @@ import { Status } from "@/enums/Status";
 import MDialog from "@/components/base/MDialog.vue";
 import MSelect from "@/components/base/MSelect.vue";
 import MButton from "@/components/base/MButton.vue";
-import { DxPopup } from "devextreme-vue/popup";
+import DxPopup, { DxPosition } from "devextreme-vue/popup";
 
 import UserDetail from "@/views/setup/user/UserDetail.vue";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
@@ -614,13 +981,9 @@ export default defineComponent({
 		},
 
 		/**
-		 *
+		 * ẩn dialog xác nhận xoá
 		 * author TQCONG 12/8/2022
 		 */
-		// handleTableRowClick(){
-		// 	this.$emit('show');
-		// },
-
 		closeDialog(): void {
 			this.showDialog = false;
 		},

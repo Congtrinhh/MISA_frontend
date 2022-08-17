@@ -24,7 +24,6 @@ export default defineComponent({
 		UserList,
 		UserUpdate,
 		UserCreateNew,
-		
 	},
 
 	computed: {
@@ -47,6 +46,7 @@ export default defineComponent({
 		 * author TQCONG 14/8/2022
 		 */
 		handleShowUserCreateNewDialog() {
+			debugger;
 			this.showUserCreateNewDialog = true;
 		},
 	},

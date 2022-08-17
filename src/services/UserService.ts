@@ -17,7 +17,7 @@ export default {
 	},
 
 	getNewUserCode: function () {
-		return Repository.get(`${resource}/new-user-code`);
+		return Repository.get(`${resource}/newUserCode`);
 	},
 
 	/**

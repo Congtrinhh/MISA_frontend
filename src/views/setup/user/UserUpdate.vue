@@ -3,7 +3,7 @@
 		<form novalidate @submit.prevent="onSubmit">
 			<MDialog :config="dialogConfig" @cancelBtnClick="hideUserUpdateDialog">
 				<div>
-					<div class="item-wrap">
+					<div class="item-wrap table-cell">
 						<div class="flex items-center">
 							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-64')"></div>
 							<div class="user-information">

@@ -1,19 +1,6 @@
-import { createRouter, createWebHistory , RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
-	// {
-	// 	path: "/",
-	// 	name: "home",
-	// 	component: UserPage,
-	// },
-	{
-		path: "/about",
-		name: "about",
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-	},
 	{
 		path: "/process/setting/user",
 		name: "user-setting",
@@ -24,10 +11,14 @@ const routes: Array<RouteRecordRaw> = [
 		name: "role-setting",
 		component: () => import("../views/setup/role/RolePage.vue"),
 	},
+	{
+		path: "/",
+		redirect: "/process/setting/user",
+	},
 ];
 
 const router = createRouter({
-	history: createWebHistory (),
+	history: createWebHistory(),
 	routes,
 	linkExactActiveClass: "item-activated",
 });

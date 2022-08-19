@@ -11,6 +11,10 @@
 			background-position: 50%;
 			background-repeat: no-repeat;
 			cursor: pointer;
+			&:hover {
+				background-color: #f2f2f2;
+				border-radius: 50%;
+			}
 		}
 		.logo-wrapper {
 			font-size: 18px;

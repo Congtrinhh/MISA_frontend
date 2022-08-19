@@ -222,7 +222,6 @@
 											>
 												<DxTagBox
 													:data-source="roles"
-													value-expr="roleId"
 													display-expr="name"
 													v-model="user.roles"
 													placeholder=""
@@ -312,6 +311,10 @@ import DxSelectBox from "devextreme-vue/select-box";
 import { DxTagBox } from "devextreme-vue/tag-box";
 import { UserStatus } from "@/resources/enums";
 import MButton from "@/components/base/MButton.vue";
+import ToastConfig from "@/enums/ToastConfig";
+import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
+import { error, notification } from "@/resources/messages";
+import { mapMutations } from "vuex";
 
 // @ts-ignore
 import ServiceFactory from "@/services/ServiceFactory";
@@ -359,23 +362,36 @@ export default defineComponent({
 	},
 
 	methods: {
+		...mapMutations(["setToastConfig"]),
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
 		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm
 		 * author TQCONG 14/8/2022
 		 */
 		async onSubmit(values: any) {
+			let myToastConfig: ToastConfig = {
+				visible: true,
+				type: "success",
+				message: notification.insertSuccess,
+			};
 			try {
-				console.log(values);
-				// gọi api tạo user
-				const { data } = await UserService.createUsers(this.users);
+				const { data } = await UserService.createMany(this.users);
 				if (data === 1) {
 					// thông báo tạo thành công
+					this.setToastConfig(myToastConfig);
 
 					// đóng dialog
 					this.$emit("closeDialogBtnClick");
 				}
-			} catch (error) {
+			} catch (error: any) {
+				if (error.response.data) {
+					const errorResp: ErrorMessageResponse = error.response.data;
+					myToastConfig.type = "error";
+					myToastConfig.message = errorResp.userMsg;
+				}
+				// hiện toast
+				this.setToastConfig(myToastConfig);
+
 				console.log(error);
 			}
 		},

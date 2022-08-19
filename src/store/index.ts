@@ -5,6 +5,10 @@ import { createStore } from "vuex";
 import ServiceFactory from "@/services/ServiceFactory";
 const UserService: any = ServiceFactory.get("users");
 
+import ToastConfig from "@/enums/ToastConfig";
+import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
+import { error, notification } from "@/resources/messages";
+
 export default createStore({
 	state: {
 		// đối tượng user của toàn app - dùng để thực hiện việc update/xoá
@@ -18,12 +22,16 @@ export default createStore({
 
 		// bất kì danh sách entity nào cần lấy mới nhất từ DB. trong trường hợp này là user list
 		needReload: false,
+
+		// cấu hình toast cho toàn app
+		toastConfig: {} as ToastConfig,
 	},
 	getters: {
 		user: (state: any): User => state.user,
 		showUserDetailScreen: (state: any): boolean => state.showUserDetailScreen,
 		showUserUpdateDialog: (state: any): boolean => state.showUserUpdateDialog,
 		needReload: (state: any): boolean => state.needReload,
+		toastConfig: (state: any): ToastConfig => state.toastConfig,
 	},
 	mutations: {
 		setUser(state, user: User): void {
@@ -38,6 +46,9 @@ export default createStore({
 		setNeedReload(state, newValue: boolean): void {
 			state.needReload = newValue;
 		},
+		setToastConfig(state, newToastConfig: ToastConfig): void {
+			state.toastConfig = newToastConfig;
+		},
 	},
 	actions: {
 		/**
@@ -47,13 +58,30 @@ export default createStore({
 		 * author TQCONG 13/8/2022
 		 */
 		async handleShowUserUpdateDialog(context, user: User) {
-			const rs = await UserService.getById(user.userId);
-			const userFromDb = rs.data;
-			if (userFromDb) {
-				// set user mới
-				context.commit("setUser", userFromDb);
-				// mở dialog update user
-				context.commit("setShowUserUpdateDialog", true);
+			try {
+				const rs = await UserService.getById(user.userId);
+				const userFromDb = rs.data;
+				if (userFromDb) {
+					// set user mới
+					context.commit("setUser", userFromDb);
+					// mở dialog update user
+					context.commit("setShowUserUpdateDialog", true);
+				}
+			} catch (error: any) {
+				let myToastConfig: ToastConfig = {
+					visible: true,
+					type: "error",
+					message: error.messageDefault,
+				};
+
+				if (error.response.data) {
+					const errorResp: ErrorMessageResponse = error.response.data;
+					myToastConfig.message = errorResp.userMsg;
+				}
+
+				// hiện toast
+				context.commit("setToastConfig", myToastConfig);
+				console.log(error);
 			}
 		},
 		updateUser(context, user: User): void {
@@ -66,6 +94,11 @@ export default createStore({
 		 * author TQCONG 12/8/2022
 		 */
 		async deleteUser(context) {
+			let myToastConfig: ToastConfig = {
+				visible: true,
+				type: "success",
+				message: notification.deleteSuccess,
+			};
 			try {
 				// call api to delete user
 				const { data } = await UserService.deleteUser(context.state.user?.userId);
@@ -75,8 +108,19 @@ export default createStore({
 
 					// ẩn màn hình chi tiết user nếu nút xoá được kích từ màn hình này (vì lúc này user đã bị xoá nên việc hiển thị màn hình chi tiết không còn ý nghĩa)
 					context.commit("setShowUserDetailScreen", false);
+
+					// hiện toast thông báo thành công
+					context.commit("setToastConfig", myToastConfig);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				if (error.response.data) {
+					const errorResp: ErrorMessageResponse = error.response.data;
+					myToastConfig.type = "error";
+					myToastConfig.message = errorResp.userMsg;
+				}
+
+				// hiện toast
+				context.commit("setToastConfig", myToastConfig);
 				console.log(error);
 			}
 		},
@@ -90,13 +134,25 @@ export default createStore({
 		 */
 		async handleTableRowClick(context, { data }) {
 			try {
-				console.log("row clicked");
 				// set user mới
 				const rs = await UserService.getById(data.userId);
 				context.commit("setUser", rs.data);
 				// hiện màn hình chi tiết user
 				context.commit("setShowUserDetailScreen", true);
-			} catch (error) {
+			} catch (error: any) {
+				let myToastConfig: ToastConfig = {
+					visible: true,
+					type: "error",
+					message: error.messageDefault,
+				};
+
+				if (error.response.data) {
+					const errorResp: ErrorMessageResponse = error.response.data;
+					myToastConfig.message = errorResp.userMsg;
+				}
+
+				// hiện toast
+				context.commit("setToastConfig", myToastConfig);
 				console.log(error);
 			}
 		},
@@ -116,22 +172,43 @@ export default createStore({
 		 * author TQCONG 12/8/2022
 		 */
 		async handleUpdateUser(context, user) {
-			const { data } = await UserService.updateUser(user);
-			if (data === 1) {
-				// thông báo thành công
-				console.log("update thanh cong");
+			let myToastConfig: ToastConfig = {
+				visible: true,
+				type: "success",
+				message: notification.updateSuccess,
+			};
+			try {
+				const { data } = await UserService.updateUser(user);
+				if (data === 1) {
+					// đóng dialog update
+					context.commit("setShowUserUpdateDialog", false);
+
+					// request để reload lại user list trong userList component
+					context.commit("setNeedReload", true);
+
+					// hiện toast thông báo thành công
+					context.commit("setToastConfig", myToastConfig);
+
+					// cập nhật lại user của store
+					const { data } = await UserService.getById(user.userId);
+					if (!data) {
+						return;
+					}
+					context.commit("setUser", data);
+				}
+			} catch (error: any) {
+				if (error.response.data) {
+					const errorResp: ErrorMessageResponse = error.response.data;
+					myToastConfig.type = "error";
+					myToastConfig.message = errorResp.userMsg;
+				}
 
 				// đóng dialog update
 				context.commit("setShowUserUpdateDialog", false);
 
-				// request để reload lại user list trong userList component
-				context.commit("setNeedReload", true);
-
-				const { data } = await UserService.getById(user.userId);
-				if (!data) {
-					return;
-				}
-				context.commit("setUser", data);
+				// hiện toast
+				context.commit("setToastConfig", myToastConfig);
+				console.log(error);
 			}
 		},
 	},

@@ -619,6 +619,9 @@
 											</div>
 										</template>
 										<!-- end of action -->
+
+										<DxPager :enabled="false" />
+										<PxPaging :enabled="false" />
 									</DxDataGrid>
 									<!-- end of actual dx table -->
 
@@ -731,7 +734,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import { DxDataGrid, DxColumn, DxColumnChooser, DxColumnFixing } from "devextreme-vue/data-grid";
+import { DxDataGrid, DxColumn, DxPager, DxPaging } from "devextreme-vue/data-grid";
 import DxSelectBox, { DxItem } from "devextreme-vue/select-box";
 import User from "@/models/User";
 import Role from "@/models/Role";
@@ -756,8 +759,6 @@ export default defineComponent({
 	components: {
 		DxDataGrid,
 		DxColumn,
-		DxColumnChooser,
-		DxColumnFixing,
 		DxSelectBox,
 		DxItem,
 		MDialog,
@@ -765,6 +766,8 @@ export default defineComponent({
 		MSelect,
 		MButton,
 		DxPopup,
+		DxPaging,
+		DxPager,
 	},
 	data() {
 		return {

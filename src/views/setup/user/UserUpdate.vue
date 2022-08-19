@@ -38,7 +38,7 @@
 										:checked="checkRoleContains(role, user.roles)"
 									/>
 								</div>
-								<label :for="`roleCheckbox${index}`">{{ role.name }}</label>
+								<label :for="`roleCheckbox${index}`" :title="role.name">{{ role.name }}</label>
 							</div>
 						</template>
 					</div>
@@ -66,6 +66,7 @@ import User from "@/models/User";
 import { ModificationMode } from "@/enums/ModificationMode";
 import { getUserAvatarMarkup } from "@/helpers/common";
 import MButton from "@/components/base/MButton.vue";
+import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
 
 // dùng để gọi API
 // @ts-ignore
@@ -126,8 +127,12 @@ export default defineComponent({
 				this.userToUpdate.roles = this.buildRolesForUpdate(this.user.roles, this.userToUpdate.roles as Role[]);
 				await this.handleUpdateUser(this.userToUpdate);
 				// reload lại user list sau khi update thành công
-			} catch (error) {
+			} catch (error: any) {
 				console.log(error);
+				if (error.data) {
+					const errorRes: ErrorMessageResponse = error.data;
+					
+				}
 			}
 		},
 		/**

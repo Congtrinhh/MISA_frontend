@@ -1,4 +1,18 @@
 <template>
+	<!-- Toast thông báo chung  -->
+	<DxToast
+		:displayTime="3000"
+		v-model:message="toastConfig.message"
+		v-model:type="toastConfig.type"
+		v-model:visible="toastConfig.visible"
+		:min-width="260"
+		width="auto"
+		:height="45"
+		type="custom"
+		:position="{ my: 'top', at: 'top', offset: '0 50' }"
+	/>
+	<!-- end of Toast thông báo chung  -->
+
 	<!-- bảng user và các tuỳ chọn lọc -->
 	<UserList @btnAddNewUserClick="handleShowUserCreateNewDialog" />
 	<!-- end of bảng user và các tuỳ chọn lọc -->
@@ -14,20 +28,25 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import UserList from "@/views/setup/user/UserList.vue";
 import UserUpdate from "@/views/setup/user/UserUpdate.vue";
 import UserCreateNew from "@/views/setup/user/UserCreateNew.vue";
+import { DxToast, DxPosition } from "devextreme-vue/toast";
+import ToastConfig from "@/enums/ToastConfig";
+import notify from "devextreme/ui/notify";
 
 export default defineComponent({
 	components: {
 		UserList,
 		UserUpdate,
 		UserCreateNew,
+		DxToast,
+		DxPosition,
 	},
 
 	computed: {
-		...mapGetters(["showUserUpdateDialog"]),
+		...mapGetters(["showUserUpdateDialog", "toastConfig"]),
 	},
 
 	data() {
@@ -38,6 +57,8 @@ export default defineComponent({
 	},
 
 	methods: {
+		...mapMutations(["setToastConfig"]),
+
 		hideUserCreateNewDialog() {
 			this.showUserCreateNewDialog = false;
 		},
@@ -46,11 +67,11 @@ export default defineComponent({
 		 * author TQCONG 14/8/2022
 		 */
 		handleShowUserCreateNewDialog() {
-			debugger;
 			this.showUserCreateNewDialog = true;
 		},
 	},
-});
+
+	});
 </script>
 
 <style scoped lang="scss">

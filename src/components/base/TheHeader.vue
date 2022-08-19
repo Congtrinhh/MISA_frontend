@@ -26,21 +26,11 @@
 						<div class="menu-item-active"></div>
 					</div>
 					<div class="btn-run-process">
-						<MButton btnClasses="ms-button ms-button-primary ms-button-filled ms-button-icon-run-process includeIcon" iconClasses="ms-icon notranslate icon-scale icon-run-process mi-20">Chạy quy trình</MButton>
-						<!-- <button
-							tabindex="1"
-							type="button"
-							name="button"
-							class="ms-button ms-button-primary ms-button-filled ms-button-icon-run-process includeIcon"
+						<MButton
+							btnClasses="ms-button ms-button-primary ms-button-filled ms-button-icon-run-process includeIcon"
+							iconClasses="ms-icon notranslate icon-scale icon-run-process mi-20"
+							>Chạy quy trình</MButton
 						>
-							<div
-								class="ms-icon-default flex items-center justify-center ms-button--icon ms-icon-white"
-								style="order: 0; margin-right: 4px; margin-left: 0px"
-							>
-								<i class="ms-icon notranslate icon-scale icon-run-process mi-20"></i>
-							</div>
-							<span class="ms-button-text ms-button--text">Chạy quy trình </span>
-						</button> -->
 					</div>
 				</div>
 			</div>

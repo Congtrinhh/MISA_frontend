@@ -6,6 +6,7 @@
 		class="ms-component ms-button"
 		:class="btnClasses"
 		:disabled="disabled"
+		:id="id"
 	>
 		<div
 			v-if="hasIcon"
@@ -26,8 +27,13 @@ export default defineComponent({
 		return {};
 	},
 	props: {
+		// id của button
+		id: String,
+
+		// type của button
 		type: { type: String, default: "button" },
 
+		// trạng thái disabled của button
 		disabled: Boolean,
 
 		// các class truyền vào element button

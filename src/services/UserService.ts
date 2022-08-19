@@ -16,6 +16,10 @@ export default {
 		);
 	},
 
+	/**
+	 *
+	 * @returns
+	 */
 	getNewUserCode: function () {
 		return Repository.get(`${resource}/newUserCode`);
 	},
@@ -26,7 +30,7 @@ export default {
 	 * @returns
 	 */
 	createMany: function (users: User[]) {
-		return Repository.post(`${resource}/create-many`, users);
+		return Repository.post(`${resource}/many`, users);
 	},
 
 	/**

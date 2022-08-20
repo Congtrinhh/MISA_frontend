@@ -38,8 +38,8 @@
 													tabindex="1"
 													type="text"
 													class="ms-input-item"
-													v-model="fullNameSearchKeyword"
-													@input="searchUsers(fullNameSearchKeyword)"
+													v-model="searchKeyword"
+													@input="searchUsers(searchKeyword)"
 												/>
 											</div>
 										</div>
@@ -61,8 +61,16 @@
 										class="ms-select-box"
 									>
 										<template #item="{ data }">
-											<div class="dropdown-item">
+											<div class="dropdown-item" :id="`roleOption${data.roleId}`">
 												{{ data.name }}
+												<DxTooltip
+													:hide-on-outside-click="false"
+													show-event="dxhoverstart"
+													hide-event="dxhoverend"
+													:target="`#roleOption${data.roleId}`"
+												>
+													{{ data.name }}
+												</DxTooltip>
 											</div>
 										</template>
 									</DxSelectBox>
@@ -476,6 +484,7 @@
 										:columnMinWidth="200"
 										:hover-state-enabled="true"
 										columnResizingMode="widget"
+										showScrollbar="always"
 									>
 										<!-- user code -->
 										<DxColumn
@@ -585,7 +594,7 @@
 												class="p-l-16 pos-relative"
 												:style="{ color: getUserStatusStyles(data.data?.status).color }"
 											>
-												Chờ xác nhận
+												{{ getUserStatusStyles(data.data?.status).text }}
 												<span
 													class="dot"
 													:style="{
@@ -655,6 +664,7 @@
 																class="ms-pagination--nav flex justify-between items-center"
 															>
 																<div
+																	id="previousPageBtn"
 																	class="ms-bottom-nav"
 																	@click="decreaseCurrentPage"
 																	:class="{
@@ -670,12 +680,20 @@
 																					class="ms-icon notranslate icon-scale mi-chevron-left"
 																				></i>
 																			</div>
-																			<!-- tooltip here -->
+																			<DxTooltip
+																				:hide-on-outside-click="false"
+																				show-event="dxhoverstart"
+																				hide-event="dxhoverend"
+																				target="#previousPageBtn"
+																			>
+																				Quay lại
+																			</DxTooltip>
 																		</div>
 																	</div>
 																</div>
 
 																<div
+																	id="nextPageBtn"
 																	class="ms-bottom-nav"
 																	@click="increaseCurrentPage"
 																	:class="{
@@ -691,7 +709,14 @@
 																					class="ms-icon notranslate icon-scale mi-chevron-right"
 																				></i>
 																			</div>
-																			<!-- tooltip here -->
+																			<DxTooltip
+																				:hide-on-outside-click="false"
+																				show-event="dxhoverstart"
+																				hide-event="dxhoverend"
+																				target="#nextPageBtn"
+																			>
+																				Tiếp tục
+																			</DxTooltip>
 																		</div>
 																	</div>
 																</div>
@@ -745,6 +770,7 @@ import MDialog from "@/components/base/MDialog.vue";
 import MSelect from "@/components/base/MSelect.vue";
 import MButton from "@/components/base/MButton.vue";
 import DxPopup, { DxPosition } from "devextreme-vue/popup";
+import { DxTooltip } from "devextreme-vue/tooltip";
 
 import UserDetail from "@/views/setup/user/UserDetail.vue";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
@@ -768,6 +794,7 @@ export default defineComponent({
 		DxPopup,
 		DxPaging,
 		DxPager,
+		DxTooltip,
 	},
 	data() {
 		return {
@@ -920,13 +947,18 @@ export default defineComponent({
 
 		...mapMutations(["setUser", "setNeedReload"]),
 		...mapActions(["handleTableRowClick", "deleteUser", "handleShowUserUpdateDialog"]),
-		searchUsers(fullNameSearchKeyword: string): void {
+
+		/**
+		 * Tìm kiếm user sau 1 khoảng delay kể từ khi người dùng dừng nhập vào ô search box
+		 * Created by TQCONG 20/8/2022
+		 */
+		searchUsers(keyword: string): void {
 			try {
 				const me = this;
 				clearTimeout(me.searchTimeOutHolder);
 				this.searchTimeOutHolder = setTimeout(() => {
 					// chỉ cần thay đổi giá trị là list user mới sẽ được lấy về
-					this.paginationRequest.fullName = fullNameSearchKeyword;
+					this.paginationRequest.keyword = keyword;
 					this.paginationRequest.currentPage = 1;
 				}, 500);
 			} catch (error) {

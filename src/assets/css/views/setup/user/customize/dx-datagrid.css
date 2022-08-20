@@ -357,7 +357,7 @@
 	display: none;
 }
 .dx-datagrid-rowsview .dx-row.dx-row-lines.dx-state-hover .btn-more {
-	display: block;
+	display: flex;
 }
 
 .user-action-wrapper {

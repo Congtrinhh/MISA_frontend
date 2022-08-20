@@ -9,21 +9,9 @@
 				</div>
 
 				<div class="nav-options flex-middle">
-					<div class="menu-item">
-						<div class="menu-item-name">Lượt chạy</div>
-						<div class=""></div>
-					</div>
-					<div class="menu-item">
-						<div class="menu-item-name">Thiết kế quy trình</div>
-						<div class=""></div>
-					</div>
-					<div class="menu-item">
-						<div class="menu-item-name">Báo cáo</div>
-						<div class=""></div>
-					</div>
-					<div class="menu-item active">
-						<div class="menu-item-name">Thiết lập</div>
-						<div class="menu-item-active"></div>
+					<div class="menu-item" :class="{ active: tab.active }" v-for="(tab, index) in tabs" :key="index">
+						<div class="menu-item-name">{{ tab.name }}</div>
+						<div :class="{ 'menu-item-active': tab.active }"></div>
 					</div>
 					<div class="btn-run-process">
 						<MButton
@@ -66,6 +54,29 @@ import MButton from "@/components/base/MButton.vue";
 
 export default defineComponent({
 	components: { MButton },
+	data() {
+		return {
+			tabs: [
+				{
+					name: "Lượt chạy",
+					link: "",
+				},
+				{
+					name: "Thiết kế quy trình",
+					link: "",
+				},
+				{
+					name: "Báo cáo",
+					link: "",
+				},
+				{
+					name: "Thiết lập",
+					link: "",
+					active: true,
+				},
+			],
+		};
+	},
 });
 </script>
 

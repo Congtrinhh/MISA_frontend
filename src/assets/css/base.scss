@@ -103,6 +103,9 @@ textarea {
 .pos-relative {
 	position: relative;
 }
+.pos-absolute {
+	position: absolute;
+}
 
 .cursor-pointer {
 	cursor: pointer;
@@ -262,9 +265,9 @@ textarea {
 	letter-spacing: 1px;
 	font-size: 16px;
 }
-.user-avatar-64 {
-	width: 64px;
-	height: 64px;
+.user-avatar-66 {
+	width: 66px;
+	height: 66px;
 	font-size: 32px;
 }
 
@@ -321,3 +324,8 @@ input[type="button"] {
 	}
 }
 // end of vee validate message
+
+label {
+	outline: none;
+	font-weight: 500;
+}

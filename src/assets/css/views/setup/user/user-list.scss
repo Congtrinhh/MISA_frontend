@@ -188,6 +188,8 @@
 	height: 40px;
 	line-height: 40px;
 	padding: 0 24px;
+
+	min-width: 160px;
 }
 // ---------------------------- end of thông tin trang và dropdown chọn số item/trang -------------------------
 
@@ -258,6 +260,9 @@
 }
 .btn-icon-1:hover {
 	background-color: #eff1f6 !important;
+}
+.btn-icon-1:active {
+	background-color: #e8eaef !important;
 }
 
 .mi-chevron-left {
@@ -542,4 +547,39 @@ i {
 	height: 60px;
 
 	position: relative;
+}
+
+.ms-input:focus-within {
+	border: 1px solid $input-active-border-color;
+}
+
+// .grid-container  .button-comand-wrap {
+//     height: 30px;
+//     width: 30px;
+//     border-radius: 50%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+.grid-container .btn-more:active,
+.grid-container .btn-more:hover {
+	background-color: #dadce3;
+}
+
+.grid-container .btn-more {
+	cursor: pointer;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+.grid-container td.custom-column .button-comand-wrap {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

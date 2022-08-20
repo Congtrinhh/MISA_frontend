@@ -5,7 +5,7 @@
 				<div>
 					<div class="item-wrap table-cell">
 						<div class="flex items-center">
-							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-64')"></div>
+							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-66')"></div>
 							<div class="user-information">
 								<div>
 									<span
@@ -22,8 +22,8 @@
 							</div>
 						</div>
 					</div>
-					<br /><label class="font-20 bold">
-						<p style="margin: 0px !important; color: rgb(27, 28, 30) !important">
+					<br /><label class="font-20 bold sub-header">
+						<p style="">
 							Vai trò<span class="required" style="float: inherit"> * </span>
 						</p></label
 					><br />
@@ -38,7 +38,7 @@
 										:checked="checkRoleContains(role, user.roles)"
 									/>
 								</div>
-								<label :for="`roleCheckbox${index}`" :title="role.name">{{ role.name }}</label>
+								<label :for="`roleCheckbox${index}`" :title="role.name" class="checkbox-label">{{ role.name }}</label>
 							</div>
 						</template>
 					</div>

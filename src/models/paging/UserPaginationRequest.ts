@@ -3,17 +3,17 @@ import BasePaginationRequest from "./BasePaginationRequest";
 export default class UserPaginationRequest extends BasePaginationRequest {
 	constructor() {
 		super();
-		this._fullName = "";
+		this._keyword = "";
 		this._roleId = -1;
 	}
 
-	/// Tìm kiếm từ khoá trong họ tên
-	private _fullName: string;
-	public get fullName(): string {
-		return this._fullName;
+	/// Tìm kiếm từ khoá trong Mã, Họ tên, Phòng ban, vị trí, Email
+	private _keyword: string;
+	public get keyword(): string {
+		return this._keyword;
 	}
-	public set fullName(value: string) {
-		this._fullName = value;
+	public set keyword(value: string) {
+		this._keyword = value;
 	}
 
 	/// Tìm kiếm theo id vai trò

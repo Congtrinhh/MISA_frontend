@@ -134,15 +134,12 @@
 	}
 }
 
-
-
 // button
 .ms-button.ms-button-filled.ms-button-waiting {
 	background-color: #fff;
 	color: #ff6333;
 	border: 1px solid #f90;
 }
-
 
 // fix
 .mi-close,
@@ -176,4 +173,16 @@ i {
 .mi-close-2 {
 	-webkit-mask-position: -153px -251px !important;
 	-webkit-mask-image: url("../../../assets/img/Icon_process.93f7e484.svg");
+}
+
+.role-item-text {
+	color: #171b2a;
+}
+
+.roles-wrapper {
+	margin-top: 20px;
+}
+
+.permission-info-header {
+	margin-top: 20px;
 }

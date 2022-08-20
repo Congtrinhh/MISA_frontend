@@ -4,9 +4,18 @@
 			<div class="dialog-header">
 				<slot name="dialog-header-content"
 					><div class="title">{{ config?.headerTitle }}</div>
-					<div class="btn-cancel" @click="raiseCancelBtnClickEvent">
-						<i class="btn-cancel-icon"></i></div
-				></slot>
+					<div id="topCloseBtn" class="btn-cancel" @click="raiseCancelBtnClickEvent">
+						<i class="btn-cancel-icon"></i>
+						<DxTooltip
+							:hide-on-outside-click="false"
+							show-event="dxhoverstart"
+							hide-event="dxhoverend"
+							target="#topCloseBtn"
+						>
+							Đóng
+						</DxTooltip>
+					</div>
+				</slot>
 			</div>
 			<div class="dialog-body">
 				<!-- slot mặc định -->
@@ -41,11 +50,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MButton from "@/components/base/MButton.vue";
+import { DxTooltip } from "devextreme-vue/tooltip";
 
 export default defineComponent({
-	components: { MButton },
+	components: { MButton, DxTooltip },
 	data() {
-		return {};
+		return {
+			
+		};
 	},
 
 	props: {

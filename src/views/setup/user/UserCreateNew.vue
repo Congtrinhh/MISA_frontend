@@ -7,19 +7,16 @@
 					<div class="header-title">Thêm người dùng</div>
 					<div class="flex align-center">
 						<div class="h-full"></div>
-						<div
-							@click="$emit('closeDialogBtnClick')"
-							class="popup-header-icon flex items-center cursor-pointer"
-						>
-							<div
-								class="ms-icon-container flex items-center justify-center popup-icon-close ms-icon- btn-icon-1"
+						<div id="closeBtn" @click="$emit('closeDialogBtnClick')" class="btn-cancel popup-header-icon">
+							<i class="btn-cancel-icon"></i>
+							<DxTooltip
+								:hide-on-outside-click="false"
+								show-event="dxhoverstart"
+								hide-event="dxhoverend"
+								target="#closeBtn"
 							>
-								<div class="tooltip-container">
-									<div class="con-ms-tooltip">
-										<i class="ms-icon notranslate icon-scale mi-close-2"></i>
-									</div>
-								</div>
-							</div>
+								Đóng
+							</DxTooltip>
 						</div>
 					</div>
 				</div>
@@ -29,246 +26,303 @@
 			<!-- pop up main content -->
 			<main class="main-content">
 				<!-- bảng nhập liệu chính -->
-				<div class="datagrid-wrapper">
-					<table>
-						<thead>
-							<tr>
-								<th>
-									<div class="table-header-content flex items-center">STT</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Mã nhân viên
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Họ và tên
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Phòng ban
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Vị trí công việc
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Email
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Vai trò
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-								<th>
-									<div class="table-header-content flex items-center">
-										Trạng thái
-										<div class="asterisk required"></div>
-									</div>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<template v-for="(user, index) in users" :key="index">
+				<DxScrollView direction="both" showScrollbar="always" >
+					<div class="datagrid-wrapper">
+						<table>
+							<thead>
 								<tr>
-									<td class="column column-stt">
-										<div class="column-content-wrapper">{{ index + 1 }}</div>
-									</td>
-									<td class="column column-user-code">
-										<div class="column-content-wrapper">
-											<div class="ms-input vee-control-wrapper">
-												<Field
-													v-model="user.userCode"
-													:name="`userCode${index}`"
-													:rules="validateUserCode"
-													v-slot="{ errorMessage }"
-												>
-													<input
-														type="text"
-														class="ms-input-item"
+									<th>
+										<div class="table-header-content flex items-center">STT</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Mã nhân viên
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Họ và tên
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Phòng ban
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Vị trí công việc
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Email
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Vai trò
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+									<th>
+										<div class="table-header-content flex items-center">
+											Trạng thái
+											<div class="asterisk required"></div>
+										</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template v-for="(user, index) in users" :key="index">
+									<tr>
+										<td class="column column-stt">
+											<div class="column-content-wrapper">{{ index + 1 }}</div>
+										</td>
+										<td class="column column-user-code">
+											<div class="column-content-wrapper">
+												<div class="ms-input vee-control-wrapper">
+													<Field
 														v-model="user.userCode"
-														:class="{ invalid: errorMessage }"
-													/>
-													<div class="vee-error-message" v-if="errorMessage">
-														{{ errorMessage }}
-													</div>
-												</Field>
+														:name="`userCode${index}`"
+														:rules="validateUserCode"
+														v-slot="{ errorMessage }"
+													>
+														<input
+															type="text"
+															class="ms-input-item pos-absolute"
+															v-model="user.userCode"
+															:class="{ invalid: errorMessage }"
+														/>
+														<div class="vee-error-message" v-if="errorMessage">
+															{{ errorMessage }}
+														</div>
+													</Field>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td class="column column-full-name">
-										<div class="column-content-wrapper vee-control-wrapper">
-											<div class="ms-input">
-												<Field
-													v-model="user.fullName"
-													:name="`fullName${index}`"
-													:rules="validateFullName"
-													v-slot="{ errorMessage }"
-												>
-													<input
-														type="text"
-														class="ms-input-item"
+										</td>
+										<td class="column column-full-name">
+											<div class="column-content-wrapper vee-control-wrapper">
+												<div class="ms-input">
+													<Field
 														v-model="user.fullName"
-														:class="{ invalid: errorMessage }"
-													/>
-													<div class="vee-error-message" v-if="errorMessage">
-														{{ errorMessage }}
-													</div>
-												</Field>
+														:name="`fullName${index}`"
+														:rules="validateFullName"
+														v-slot="{ errorMessage }"
+													>
+														<input
+															type="text"
+															class="ms-input-item pos-absolute"
+															v-model="user.fullName"
+															:class="{ invalid: errorMessage }"
+														/>
+														<div class="vee-error-message" v-if="errorMessage">
+															{{ errorMessage }}
+														</div>
+													</Field>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td class="column column-department">
-										<div class="column-content-wrapper vee-control-wrapper">
-											<Field
-												:name="`department${index}`"
-												:rules="validateNotNull"
-												v-model="user.department"
-												v-slot="{ errorMessage }"
-											>
-												<DxSelectBox
-													:data-source="departments"
-													item-template="item"
-													display-expr="name"
-													:hover-state-enabled="true"
-													class="ms-select-box"
-													placeholder=""
-													v-model="user.department"
-													:class="errorMessage ? 'invalid' : ''"
-												>
-													<template #item="{ data }">
-														<div class="dropdown-item">
-															{{ data.name }}
-														</div>
-													</template>
-												</DxSelectBox>
-												<div class="vee-error-message" v-if="errorMessage">
-													{{ errorMessage }}
-												</div>
-											</Field>
-										</div>
-									</td>
-									<td class="column column-position">
-										<div class="column-content-wrapper vee-control-wrapper">
-											<Field
-												:name="`position${index}`"
-												:rules="validateNotNull"
-												v-model="user.position"
-												v-slot="{ errorMessage }"
-											>
-												<DxSelectBox
-													:data-source="positions"
-													item-template="item"
-													display-expr="name"
-													:hover-state-enabled="true"
-													class="ms-select-box"
-													placeholder=""
-													v-model="user.position"
-													:class="errorMessage ? 'invalid' : ''"
-												>
-													<template #item="{ data }">
-														<div class="dropdown-item">
-															{{ data.name }}
-														</div>
-													</template>
-												</DxSelectBox>
-												<div class="vee-error-message" v-if="errorMessage">
-													{{ errorMessage }}
-												</div>
-											</Field>
-										</div>
-									</td>
-									<td class="column column-email">
-										<div class="column-content-wrapper">
-											<div class="ms-input vee-control-wrapper">
+										</td>
+										<td class="column column-department">
+											<div class="column-content-wrapper vee-control-wrapper">
 												<Field
-													v-model="user.email"
-													:name="`email${index}`"
-													:rules="validateEmail"
+													:name="`department${index}`"
+													:rules="validateNotNull"
+													v-model="user.department"
 													v-slot="{ errorMessage }"
 												>
-													<input
-														type="text"
-														class="ms-input-item"
-														v-model="user.email"
-														:class="{ invalid: errorMessage }"
-													/>
+													<DxSelectBox
+														:data-source="departments"
+														item-template="item"
+														display-expr="name"
+														:hover-state-enabled="true"
+														class="ms-select-box"
+														placeholder=""
+														v-model="user.department"
+														:class="errorMessage ? 'invalid' : ''"
+													>
+														<template #item="{ data }">
+															<div
+																class="dropdown-item"
+																:id="`departmentOption${data.departmentId}`"
+															>
+																{{ data.name }}
+																<DxTooltip
+																	:hide-on-outside-click="false"
+																	show-event="dxhoverstart"
+																	hide-event="dxhoverend"
+																	:target="`#departmentOption${data.departmentId}`"
+																>
+																	{{ data.name }}
+																</DxTooltip>
+															</div>
+														</template>
+													</DxSelectBox>
 													<div class="vee-error-message" v-if="errorMessage">
 														{{ errorMessage }}
 													</div>
 												</Field>
 											</div>
-										</div>
-									</td>
-									<td class="column column-roles">
-										<div class="column-content-wrapper vee-control-wrapper">
-											<Field
-												:name="`roles${index}`"
-												:rules="validateRoles"
-												v-model="user.roles"
-												v-slot="{ errorMessage }"
-											>
-												<DxTagBox
-													:data-source="roles"
-													display-expr="name"
-													v-model="user.roles"
-													placeholder=""
-													:class="{ invalid: errorMessage }"
-												/>
-												<div class="vee-error-message" v-if="errorMessage">
-													{{ errorMessage }}
-												</div></Field
-											>
-										</div>
-									</td>
-									<td class="column column-status">
-										<div class="column-content-wrapper vee-control-wrapper">
-											<Field
-												:name="`status${index}`"
-												:rules="validateStatus"
-												v-model="user.status"
-												v-slot="{ errorMessage }"
-											>
-												<DxSelectBox
-													:data-source="statuses"
-													item-template="item"
-													display-expr="text"
-													value-expr="value"
-													:hover-state-enabled="true"
-													class="ms-select-box"
-													placeholder=""
-													v-model="user.status"
-													:class="{ invalid: errorMessage }"
+										</td>
+										<td class="column column-position">
+											<div class="column-content-wrapper vee-control-wrapper">
+												<Field
+													:name="`position${index}`"
+													:rules="validateNotNull"
+													v-model="user.position"
+													v-slot="{ errorMessage }"
 												>
-													<template #item="{ data }">
-														<div class="dropdown-item">
-															{{ data.text }}
+													<DxSelectBox
+														:data-source="positions"
+														item-template="item"
+														display-expr="name"
+														:hover-state-enabled="true"
+														class="ms-select-box"
+														placeholder=""
+														v-model="user.position"
+														:class="errorMessage ? 'invalid' : ''"
+													>
+														<template #item="{ data }">
+															<div
+																class="dropdown-item"
+																:id="`positionOption${data.positionId}`"
+															>
+																{{ data.name }}
+																<DxTooltip
+																	:hide-on-outside-click="false"
+																	show-event="dxhoverstart"
+																	hide-event="dxhoverend"
+																	:target="`#positionOption${data.positionId}`"
+																>
+																	{{ data.name }}
+																</DxTooltip>
+															</div>
+														</template>
+													</DxSelectBox>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div>
+												</Field>
+											</div>
+										</td>
+										<td class="column column-email">
+											<div class="column-content-wrapper">
+												<div class="ms-input vee-control-wrapper">
+													<Field
+														v-model="user.email"
+														:name="`email${index}`"
+														:rules="validateEmail"
+														v-slot="{ errorMessage }"
+													>
+														<input
+															type="text"
+															class="ms-input-item pos-absolute"
+															v-model="user.email"
+															:class="{ invalid: errorMessage }"
+														/>
+														<div class="vee-error-message" v-if="errorMessage">
+															{{ errorMessage }}
 														</div>
-													</template>
-												</DxSelectBox>
-												<div class="vee-error-message" v-if="errorMessage">
-													{{ errorMessage }}
-												</div></Field
-											>
-										</div>
-									</td>
-								</tr></template
-							>
-						</tbody>
-					</table>
-				</div>
+													</Field>
+												</div>
+											</div>
+										</td>
+										<td class="column column-roles">
+											<div class="column-content-wrapper vee-control-wrapper">
+												<Field
+													:name="`roles${index}`"
+													:rules="validateRoles"
+													v-model="user.roles"
+													v-slot="{ errorMessage }"
+												>
+													<DxTagBox
+														:data-source="roles"
+														display-expr="name"
+														v-model="user.roles"
+														placeholder=""
+														:class="
+															errorMessage
+																? 'invalid dx-show-invalid-badge dx-tagbox dx-tagbox-only-select dx-selectbox dx-textbox dx-texteditor dx-texteditor-empty dx-widget dx-tagbox-default-template dx-dropdowneditor dx-dropdowneditor-field-clickable ms-select-box dx-editor-outlined'
+																: 'dx-show-invalid-badge dx-tagbox dx-tagbox-only-select dx-selectbox dx-textbox dx-texteditor dx-texteditor-empty dx-widget dx-tagbox-default-template dx-dropdowneditor dx-dropdowneditor-field-clickable ms-select-box dx-editor-outlined'
+														"
+														:multiline="false"
+													>
+														<template #item="{ data }">
+															<div
+																class="dropdown-item"
+																:id="`roleOptionFormCreate${data.roleId}`"
+															>
+																{{ data.name }}
+																<DxTooltip
+																	:hide-on-outside-click="false"
+																	show-event="dxhoverstart"
+																	hide-event="dxhoverend"
+																	:target="`#roleOptionFormCreate${data.roleId}`"
+																>
+																	{{ data.name }}
+																</DxTooltip>
+															</div>
+														</template>
+													</DxTagBox>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div></Field
+												>
+											</div>
+										</td>
+										<td class="column column-status">
+											<div class="column-content-wrapper vee-control-wrapper">
+												<Field
+													:name="`status${index}`"
+													:rules="validateStatus"
+													v-model="user.status"
+													v-slot="{ errorMessage }"
+												>
+													<DxSelectBox
+														:data-source="statuses"
+														item-template="item"
+														display-expr="text"
+														value-expr="value"
+														:hover-state-enabled="true"
+														class="ms-select-box"
+														placeholder=""
+														v-model="user.status"
+														:class="{ invalid: errorMessage }"
+													>
+														<template #item="{ data }">
+															<div
+																class="dropdown-item"
+																:id="`statusOption${data.value}`"
+															>
+																{{ data.text }}
+																<DxTooltip
+																	:hide-on-outside-click="false"
+																	show-event="dxhoverstart"
+																	hide-event="dxhoverend"
+																	:target="`#statusOption${data.value}`"
+																>
+																	{{ data.text }}
+																</DxTooltip>
+															</div>
+														</template>
+													</DxSelectBox>
+													<div class="vee-error-message" v-if="errorMessage">
+														{{ errorMessage }}
+													</div></Field
+												>
+											</div>
+										</td>
+									</tr></template
+								>
+							</tbody>
+						</table>
+					</div>
+				</DxScrollView>
 				<!-- end of bảng nhập liệu chính -->
 
 				<!-- button thêm dòng -->
@@ -290,6 +344,7 @@
 						>Lưu</MButton
 					>
 					<MButton
+						@click="$emit('closeDialogBtnClick')"
 						btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
 						>Huỷ</MButton
 					>
@@ -315,6 +370,8 @@ import ToastConfig from "@/enums/ToastConfig";
 import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
 import { error, notification } from "@/resources/messages";
 import { mapMutations } from "vuex";
+import { DxScrollView } from "devextreme-vue/scroll-view";
+import { DxTooltip } from "devextreme-vue/tooltip";
 
 // @ts-ignore
 import ServiceFactory from "@/services/ServiceFactory";
@@ -331,6 +388,8 @@ export default defineComponent({
 		Form,
 		ErrorMessage,
 		MButton,
+		DxScrollView,
+		DxTooltip,
 	},
 
 	data() {

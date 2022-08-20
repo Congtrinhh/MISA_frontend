@@ -7,11 +7,10 @@
 					<div class="section-1 ms-row">
 						<div
 							class="avatar-wrapper ms-col ms-xs- ms-sm- ms-lg-"
-							style="margin-left: 0%; width: 16.6667%"
 						>
-							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-64')"></div>
+							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-66')"></div>
 						</div>
-						<div class="basic-info-wrapper ms-col ms-xs- ms-sm- ms-lg-" style="margin-left: 0%; width: 75%">
+						<div class="basic-info-wrapper ms-col ms-xs- ms-sm- ms-lg-" >
 							<div class="fullName font-20 bold">{{ user?.fullName }}</div>
 							<div class="email">{{ user?.email }}</div>
 							<div class="status">
@@ -65,8 +64,8 @@
 								<div class="jobPositionName">{{ user?.positionName }}</div>
 							</div>
 						</div>
-						<div class="font-20 bold" style="margin-top: 20px">THÔNG TIN PHÂN QUYỀN</div>
-						<div class="w-full roles-wrapper flex flex-column" style="margin-top: 20px">
+						<div class="font-20 bold permission-info-header" >THÔNG TIN PHÂN QUYỀN</div>
+						<div class="w-full roles-wrapper flex flex-column">
 							<div class="role-header bold">Vai trò</div>
 							<template v-for="(role, index) in user.roles" :key="index">
 								<div class="role-item" :title="role.name">

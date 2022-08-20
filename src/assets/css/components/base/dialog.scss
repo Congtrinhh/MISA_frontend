@@ -128,6 +128,11 @@
 				padding: 0px 16px;
 				min-width: 80px !important;
 			}
+
+			.right-buttons {
+				display: flex;
+				align-items: center;
+			}
 		}
 	}
 }

@@ -15,7 +15,33 @@
 			.role-wrapper {
 				margin-left: 0%;
 				width: 50%;
+
+				margin-bottom: 4px;
+				
+				.checkbox-label {
+					margin-bottom: 0;
+					font-weight: 400;
+					line-height: 31px;
+					cursor: pointer;
+				}
+
+				.input-wrapper {
+					display: flex;
+					align-items: center;
+				}
 			}
+		}
+	}
+
+	.sub-header {
+		text-align: left;
+		display: flex;
+		margin-bottom: 4px;
+		margin-top: 4px;
+
+		p {
+			margin: 0px !important;
+			color: rgb(27, 28, 30) !important;
 		}
 	}
 
@@ -47,18 +73,6 @@ label {
 	align-items: center !important;
 }
 
-label {
-	text-align: left !important;
-	display: flex !important;
-	align-items: center !important;
-}
-
-label {
-	text-align: left;
-	display: flex;
-	margin-bottom: 4px;
-}
-
 .ms-checkbox--input {
 	position: absolute;
 	opacity: 0;
@@ -70,7 +84,6 @@ label {
 .ms-checkbox .ms-checkbox--input {
 	height: inherit;
 }
-
 
 .ms-checkbox .checkmark {
 	top: 0;
@@ -146,7 +159,7 @@ span.required {
 	input[type="checkbox"]::after {
 		content: "✔";
 		position: absolute;
-		top: 0;
+		top: -1px;
 		left: 0;
 		width: 16px;
 		height: 16px;
@@ -333,7 +346,6 @@ i {
 	-o-mask-repeat: no-repeat;
 	mask-repeat: no-repeat;
 }
-
 
 .mi-chevron-down {
 	background-color: $icon-default-color !important;

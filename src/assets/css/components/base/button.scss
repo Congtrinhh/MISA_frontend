@@ -541,21 +541,33 @@ i {
 	border: 1px solid $button-primary-hover-border-color;
 }
 
-.ms-button.ms-button-filled.ms-button-waiting:active,
-.ms-button.ms-button-filled.ms-button-waiting:focus,
-.ms-button.ms-button-filled.ms-button-waiting:hover {
-	background-color: #fff;
-	color: #f90;
-	border: 1px solid #f90;
-}
-
 .ms-button.ms-button-filled.ms-button-secondary {
 	background-color: #fff;
 	border: 1px solid #e2e8f0;
 	color: #1e1e1e;
 }
 
-.ms-button[disabled]{
-    cursor: default !important;
-    opacity: 0.6 !important;
+.ms-button[disabled] {
+	cursor: default !important;
+	opacity: 0.6 !important;
+}
+
+.ms-button.ms-button-filled.ms-button-primary:focus {
+	background-color: $button-primary-focus-bg-color;
+	color: $button-primary-color;
+	border: 1px solid $button-primary-focus-border-color;
+}
+
+.ms-button.ms-button-filled.ms-button-waiting {
+	background-color: #fff;
+	color: #ff6333;
+	border: 1px solid #f90;
+}
+
+.ms-button.ms-button-filled.ms-button-waiting:active,
+.ms-button.ms-button-filled.ms-button-waiting:focus,
+.ms-button.ms-button-filled.ms-button-waiting:hover {
+	background-color: #fff;
+	color: #f90;
+	border: 1px solid #f90;
 }

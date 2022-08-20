@@ -12,7 +12,7 @@ export default {
 	 */
 	getPaging: function (paginationRequest: UserPaginationRequest): Promise<PaginationResponse<User>> {
 		return Repository.get(
-			`${resource}?currentPage=${paginationRequest.currentPage}&pageSize=${paginationRequest.pageSize}&roleId=${paginationRequest.roleId}&fullName=${paginationRequest.fullName}`
+			`${resource}?currentPage=${paginationRequest.currentPage}&pageSize=${paginationRequest.pageSize}&roleId=${paginationRequest.roleId}&keyword=${paginationRequest.keyword}`
 		);
 	},
 

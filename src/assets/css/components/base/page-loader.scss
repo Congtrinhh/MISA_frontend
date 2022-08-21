@@ -1,0 +1,25 @@
+.loader-wrapper {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 20;
+	background: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: hsla(0, 0%, 100%, 0.4);
+}
+
+.loader-wrapper img {
+	animation: rotate 1.5s linear infinite;
+}
+
+/* ENDLESS ROTATE */
+@keyframes rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}

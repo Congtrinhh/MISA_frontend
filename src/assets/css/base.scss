@@ -119,6 +119,9 @@ textarea {
 .w-full {
 	width: 100% !important;
 }
+.flex-col {
+	flex-direction: column !important;
+}
 
 .h-full {
 	height: 100% !important;
@@ -126,6 +129,22 @@ textarea {
 .m-x-8 {
 	margin-left: 8px !important;
 	margin-right: 8px !important;
+}
+.p-b-8 {
+	padding-bottom: 8px !important;
+}
+.m-r-12 {
+	margin-right: 12px !important;
+}
+.p-b-12 {
+	padding-bottom: 12px !important;
+}
+.p-y-24 {
+	padding-top: 24px !important;
+	padding-bottom: 24px !important;
+}
+.opacity-0 {
+	opacity: 0;
 }
 .justify-flexend {
 	justify-content: flex-end !important;
@@ -329,3 +348,70 @@ label {
 	outline: none;
 	font-weight: 500;
 }
+
+// checkbox
+input[type="checkbox"] {
+	appearance: none;
+	width: 22px;
+	height: 24px;
+	position: relative;
+	cursor: pointer;
+}
+
+input[type="checkbox"]::after {
+	content: "";
+	position: absolute;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	-webkit-mask-position: -532px 2px;
+	-moz-mask-position: -532px 2px;
+	-ms-mask-position: -532px 2px;
+	-o-mask-position: -532px 2px;
+	mask-position: -532px 2px;
+	background-color: #686c7b !important;
+
+	-webkit-mask-image: url(../../assets/img/Icon_process.93f7e484.svg);
+	-moz-mask-image: url(../../assets/img/Icon_process.93f7e484.svg);
+	-ms-mask-image: url(../../assets/img/Icon_process.93f7e484.svg);
+	-o-mask-image: url(../../assets/img/Icon_process.93f7e484.svg);
+	mask-image: url(../../assets/img/Icon_process.93f7e484.svg);
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+input[type="checkbox"]:hover::after {
+	background-color: $blue-color !important;
+}
+
+input[type="checkbox"]:checked::after {
+	-webkit-mask-position: -512px 2px;
+	-moz-mask-position: -512px 2px;
+	-ms-mask-position: -512px 2px;
+	-o-mask-position: -512px 2px;
+	mask-position: -512px 2px;
+	background-color: $blue-color !important;
+}
+
+.input-wrapper {
+	display: flex;
+	align-items: center;
+}
+
+.checkbox-label {
+	margin-left: 12px;
+	cursor: pointer;
+	font-weight: 400;
+}
+
+.checkbox-label:hover {
+	color: $blue-color;
+}
+
+input[type="checkbox"][disabled] {
+	opacity: 0.5;
+}
+// end of checkbox

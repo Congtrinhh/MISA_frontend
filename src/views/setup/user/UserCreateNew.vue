@@ -26,7 +26,7 @@
 			<!-- pop up main content -->
 			<main class="main-content">
 				<!-- bảng nhập liệu chính -->
-				<DxScrollView direction="both" showScrollbar="always" >
+				<DxScrollView direction="both" showScrollbar="always">
 					<div class="datagrid-wrapper">
 						<table>
 							<thead>
@@ -338,6 +338,7 @@
 			<div class="pop-up-footer flex justify-flexend">
 				<div class="buttons flex justify-flexend direction-row-reverse">
 					<MButton
+						id="btnSave"
 						:disabled="!meta.valid"
 						btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
 						type="submit"
@@ -421,7 +422,7 @@ export default defineComponent({
 	},
 
 	methods: {
-		...mapMutations(["setToastConfig"]),
+		...mapMutations(["setToastConfig", "setShowLoader"]),
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
 		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm
@@ -434,8 +435,14 @@ export default defineComponent({
 				message: notification.insertSuccess,
 			};
 			try {
+				// hiện loader
+				this.setShowLoader(true);
+
 				const { data } = await UserService.createMany(this.users);
 				if (data === 1) {
+					// ẩn loader
+					this.setShowLoader(false);
+
 					// thông báo tạo thành công
 					this.setToastConfig(myToastConfig);
 
@@ -443,6 +450,9 @@ export default defineComponent({
 					this.$emit("closeDialogBtnClick");
 				}
 			} catch (error: any) {
+				// ẩn loader
+				this.setShowLoader(false);
+
 				if (error.response.data) {
 					const errorResp: ErrorMessageResponse = error.response.data;
 					myToastConfig.type = "error";

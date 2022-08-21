@@ -97,8 +97,7 @@
 								:show-close-button="false"
 								:show-title="false"
 								:width="316"
-								:height="420"
-								container=".dx-viewport"
+								height="auto"
 								:animation="{
 									show: {
 										type: 'fade',
@@ -108,8 +107,15 @@
 									},
 								}"
 								:wrapper-attr="{ class: 'adjust-column-popover' }"
+								container=".dx-viewport"
+								:position="{
+									my: 'top right',
+									at: 'bottom right',
+									of: '#popupTableConfig',
+									offset: '14 21',
+								}"
+								@shown="focusOnAdjustColumnSearchBox"
 							>
-								<!-- <DxPosition offset="-100 200" /> -->
 								<template #popup-content>
 									<div class="content-container">
 										<div id="adjust-colum-popover" class="flex flex-col">
@@ -118,9 +124,28 @@
 													<div class="flex justify-between items-center p-b-12">
 														<div class="title">Tùy chỉnh cột</div>
 														<div
+															id="btnClosePopUpConfigTable"
+															@click="hidePopUpConfigTable"
 															class="ms-icon-container flex items-center justify-center ms-icon- btn-icon-1"
 															style="cursor: pointer"
-														></div>
+														>
+															<div class="tooltip-container">
+																<div class="con-ms-tooltip">
+																	<i
+																		class="ms-icon notranslate icon-scale ms-icon notranslate icon-scale mi-close-2"
+																	></i>
+																</div>
+															</div>
+
+															<DxTooltip
+																:hide-on-outside-click="false"
+																show-event="dxhoverstart"
+																hide-event="dxhoverend"
+																target="#btnClosePopUpConfigTable"
+															>
+																Đóng
+															</DxTooltip>
+														</div>
 													</div>
 													<div sizeicon="20px" iconnoborder="true" inputbackground="#ffffff">
 														<div title="" style="height: 35px; width: 100%">
@@ -140,9 +165,15 @@
 																		tabindex="1"
 																		type="text"
 																		class="ms-input-item"
-																	/><!---->
+																		id="popupTableConfigFieldNameKeyword"
+																		v-model="popupTableConfigFieldNameKeyword"
+																		@input="
+																			searchTableConfigFieldName(
+																				popupTableConfigFieldNameKeyword
+																			)
+																		"
+																	/>
 																</div>
-																<!---->
 															</div>
 															<div class="flex" style="display: none">
 																<div
@@ -160,60 +191,54 @@
 																					class="ms-icon notranslate icon-scale mi-pencil"
 																				></i>
 																			</div>
-																			<div
-																				class="ms-tooltips dx-overlay dx-popup dx-popover dx-widget dx-state-invisible dx-visibility-change-handler dx-tooltip"
-																			>
-																				<div
-																					class="dx-overlay-content dx-popup-normal"
-																					aria-hidden="true"
-																					id="dx-a620409d-b959-3959-b165-d58d5862813b"
-																					role="tooltip"
-																					style="width: auto; height: auto"
-																				>
-																					<div class="dx-popover-arrow"></div>
-																					<div class="dx-popup-content"></div>
-																				</div>
-																			</div>
 																		</div>
 																	</div>
-																	<!---->
 																</div>
 															</div>
 														</div>
-														<!---->
 													</div>
 												</div>
 											</header>
 											<main>
 												<div class="list-group-wrap list-content p-b-12">
-													<div class="list-group">
-														<div class="">
-															<div class="list-group-item">
+													<DxScrollView>
+														<div class="list-group">
+															<div
+																class="list-group-item"
+																v-for="(fieldName, index) in Object.keys(
+																	tempPopupTableConfigFields
+																)"
+																:key="index"
+															>
 																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
+																	<div class="popup-option-wrapper">
+																		<div class="input-wrapper">
+																			<input
+																				:id="`optionAdjustColumn${index}`"
 																				type="checkbox"
-																				disabled="disabled"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark disabled"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Mã nhân viên"
-																					class="columnName m-t-2"
-																				>
-																					Mã nhân viên
-																				</div></span
-																			></label
+																				v-model="
+																					tempPopupTableConfigFields[
+																						fieldName
+																					].visible
+																				"
+																				:disabled="
+																					tempPopupTableConfigFields[
+																						fieldName
+																					].locked
+																				"
+																			/>
+																		</div>
+																		<label
+																			class="checkbox-label"
+																			:for="`optionAdjustColumn${index}`"
+																			>{{
+																				tempPopupTableConfigFields[fieldName]
+																					.text
+																			}}</label
 																		>
 																	</div>
 																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- opacity-0"
+																		class="icon-drag-wrapper ms-icon-default flex items-center justify-center ms-icon- drag-class"
 																		style="cursor: all-scroll"
 																	>
 																		<i
@@ -223,236 +248,28 @@
 																</div>
 															</div>
 														</div>
-														<div class="">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				disabled="disabled"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark disabled"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Họ và tên"
-																					class="columnName m-t-2"
-																				>
-																					Họ và tên
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- opacity-0"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
+														<div
+															class="no-data-wrapper flex-col items-center justify-center w-full p-y-24"
+															style="height: 250px; display: none"
+														>
+															<div class="mi-empty-state-sheets"></div>
+															<div style="font-style: italic; color: rgb(221, 221, 221)">
+																Không có dữ liệu
 															</div>
 														</div>
-														<div class="element">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Phòng ban"
-																					class="columnName m-t-2"
-																				>
-																					Phòng ban
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="element">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Vị trí công việc"
-																					class="columnName m-t-2"
-																				>
-																					Vị trí công việc
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="element">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Email"
-																					class="columnName m-t-2"
-																				>
-																					Email
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="element">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Vai trò"
-																					class="columnName m-t-2"
-																				>
-																					Vai trò
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="element">
-															<div class="list-group-item">
-																<div class="flex items-center justify-between">
-																	<div class="flex items-center">
-																		<label
-																			tabindex="1"
-																			class="container ms-checkbox"
-																			><input
-																				type="checkbox"
-																				class="ms-checkbox--input"
-																				value="true"
-																			/><span
-																				class="icon-square-check-primary checkmark"
-																			></span
-																			><span class="con-slot-label"
-																				><div
-																					title="Trạng thái"
-																					class="columnName m-t-2"
-																				>
-																					Trạng thái
-																				</div></span
-																			></label
-																		>
-																	</div>
-																	<div
-																		class="ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
-																	>
-																		<i
-																			class="ms-icon notranslate icon-scale mi-drag"
-																		></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div
-														class="flex-col items-center justify-center w-full p-y-24"
-														style="height: 250px; display: none"
-													>
-														<div class="mi-empty-state-sheets"></div>
-														<div style="font-style: italic; color: rgb(221, 221, 221)">
-															Không có dữ liệu
-														</div>
-													</div>
+													</DxScrollView>
 												</div>
 											</main>
 											<footer>
 												<div class="comand-wrap flex justify-flexend">
 													<MButton
+														@click="restoreDefaultPopupTableConfig"
 														btnClasses="ms-component ms-button ms-button-secondary ms-button-filled ms-button-null"
+														class="m-r-12"
 														>Lấy lại mặc định</MButton
 													>
 													<MButton
+														@click="updatePopupTableConfig"
 														btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
 														>Áp dụng</MButton
 													>
@@ -526,6 +343,7 @@
 											data-field="departmentName"
 											caption="Phòng ban"
 											header-cell-template="departmentNameHeader"
+											:visible="popupTableConfigFields.departmentName.visible"
 										/>
 										<template #departmentNameHeader="{ data }">
 											<div class="justify-flexstart header-title">
@@ -540,6 +358,7 @@
 											data-field="positionName"
 											caption="Vị trí công việc"
 											header-cell-template="positionNameHeader"
+											:visible="popupTableConfigFields.positionName.visible"
 										/>
 										<template #positionNameHeader="{ data }">
 											<div class="justify-flexstart header-title">
@@ -554,6 +373,7 @@
 											data-field="email"
 											caption="Email"
 											header-cell-template="emailHeader"
+											:visible="popupTableConfigFields.email.visible"
 										/>
 										<template #emailHeader="{ data }">
 											<div class="justify-flexstart header-title">
@@ -568,6 +388,7 @@
 											data-field="roleNames"
 											caption="Vai trò"
 											header-cell-template="roleNamesHeader"
+											:visible="popupTableConfigFields.roleNames.visible"
 										/>
 										<template #roleNamesHeader="{ data }">
 											<div class="justify-flexstart header-title">
@@ -582,6 +403,7 @@
 											caption="Trạng thái"
 											cell-template="userStatus"
 											header-cell-template="statusHeader"
+											:visible="popupTableConfigFields.status.visible"
 										/>
 										<template #statusHeader="{ data }">
 											<div class="justify-flexstart header-title">
@@ -771,9 +593,18 @@ import MSelect from "@/components/base/MSelect.vue";
 import MButton from "@/components/base/MButton.vue";
 import DxPopup, { DxPosition } from "devextreme-vue/popup";
 import { DxTooltip } from "devextreme-vue/tooltip";
+import { DxScrollView } from "devextreme-vue/scroll-view";
 
 import UserDetail from "@/views/setup/user/UserDetail.vue";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
+
+import ToastConfig from "@/enums/ToastConfig";
+import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
+import { error, notification } from "@/resources/messages";
+import { popupTableConfigFields } from "@/resources/enums";
+
+// @ts-ignore
+import { toLowerCaseNonAccentVietnamese } from "@/helpers/nonAccentVietnamese";
 
 // dùng để gọi API
 // @ts-ignore
@@ -795,6 +626,7 @@ export default defineComponent({
 		DxPaging,
 		DxPager,
 		DxTooltip,
+		DxScrollView,
 	},
 	data() {
 		return {
@@ -821,6 +653,11 @@ export default defineComponent({
 
 			// hiện pop up config table hay không
 			isPopupTableConfigVisible: false,
+
+			// mảng các cột thông tin người dùng để cấu hình ẩn/hiện trên bảng người dùng
+			popupTableConfigFields: JSON.parse(JSON.stringify(popupTableConfigFields)),
+
+			tempPopupTableConfigFields: JSON.parse(JSON.stringify(popupTableConfigFields)),
 		};
 	},
 
@@ -856,6 +693,80 @@ export default defineComponent({
 	},
 
 	methods: {
+		/**
+		 * focus vào ô search của pop up chỉnh cột
+		 * author TQCONG 21/8/2022
+		 */
+		focusOnAdjustColumnSearchBox() {
+			document.getElementById("popupTableConfigFieldNameKeyword")?.focus();
+		},
+
+		/**
+		 * ẩn pop up tuỳ chỉnh cột
+		 * author TQCONG 21/8/2022
+		 */
+
+		hidePopUpConfigTable() {
+			this.isPopupTableConfigVisible = false;
+		},
+		
+		/**
+		 * lọc các trường được chọn lam option trong pop up cấu hình ẩn hiện trường của bảng user
+		 * author TQCONG 21/8/2022
+		 */
+		searchTableConfigFieldName(keyword: string): void {
+			// convert sang tiếng việt viết thường không dấu. Ví dụ: Hà -> ha
+			const keywordNonVietnamese = toLowerCaseNonAccentVietnamese(keyword);
+
+			// mảng các key của object popupTableConfigFields (mảng tên trường)
+			const filteredFieldNames = Object.keys(this.popupTableConfigFields).filter((fieldName) => {
+				const fieldNameTextNonVietnamese = toLowerCaseNonAccentVietnamese(
+					// @ts-ignore
+					this.popupTableConfigFields[fieldName].text
+				);
+				return fieldNameTextNonVietnamese.includes(keywordNonVietnamese);
+			});
+
+			// biến tạm để gán cho tempPopupTableConfigFields
+			let tempObj = {};
+
+			// lấy ra tất cả các trường có trong mảng đã lọc bên trên
+			filteredFieldNames.forEach((fieldName) => {
+				// @ts-ignore
+				tempObj[fieldName] = JSON.parse(JSON.stringify(this.popupTableConfigFields[fieldName]));
+			});
+
+			// @ts-ignore
+			this.tempPopupTableConfigFields = tempObj;
+		},
+
+		/**
+		 * lấy lại cấu hình các trường nào được hiện/ẩn trên bảng user mặc định
+		 * author TQCONG 21/8/2022
+		 */
+		restoreDefaultPopupTableConfig() {
+			this.popupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
+			this.tempPopupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
+			// ẩn pop up
+			this.isPopupTableConfigVisible = false;
+		},
+		/**
+		 * cập nhật lại cấu hình các trường nào được hiện/ẩn trên bảng user ngay khi nút "Áp dùng" trên pop up được bấm
+		 * author TQCONG 21/8/2022
+		 */
+		updatePopupTableConfig() {
+			// gán giá trị của các trường của object temp cho object chính (lúc này số field trong object temp có thể ít hơn số field trong object chính - vì được lọc khi người dùng nhập qua ô search)
+			Object.keys(this.tempPopupTableConfigFields).forEach((fieldName) => {
+				// @ts-ignore
+				this.popupTableConfigFields[fieldName] = JSON.parse(
+					// @ts-ignore
+					JSON.stringify(this.tempPopupTableConfigFields[fieldName])
+				);
+			});
+
+			// ẩn pop up
+			this.isPopupTableConfigVisible = false;
+		},
 		/**
 		 * ẩn/hiện pop up table config
 		 * author TQCONG 15/8/2022
@@ -945,7 +856,7 @@ export default defineComponent({
 			});
 		},
 
-		...mapMutations(["setUser", "setNeedReload"]),
+		...mapMutations(["setUser", "setNeedReload", "setShowLoader", "setToastConfig"]),
 		...mapActions(["handleTableRowClick", "deleteUser", "handleShowUserUpdateDialog"]),
 
 		/**
@@ -981,8 +892,15 @@ export default defineComponent({
 		 */
 		async getUsers() {
 			try {
+				// hiện loader
+				this.setShowLoader(true);
+
 				// lấy data từ api
 				const { data } = await UserService.getPaging(this.paginationRequest);
+
+				// ẩn loader
+				this.setShowLoader(false);
+
 				// set thông tin phân trang để hiển thị
 				this.paginationResponse = data;
 				// set users
@@ -990,8 +908,18 @@ export default defineComponent({
 
 				// cập nhật current page cho lần lấy user tiếp theo
 				// this.paginationRequest.currentPage = this.paginationResponse.currentPage;
-			} catch (error) {
-				console.log(error);
+			} catch (err) {
+				// hiện thông báo lỗi
+				let myToastConfig: ToastConfig = {
+					visible: true,
+					type: "error",
+					message: error.messageDefault,
+				};
+				this.setToastConfig(myToastConfig);
+
+				console.log(err);
+				// ẩn loader
+				this.setShowLoader(false);
 			}
 		},
 
@@ -1006,6 +934,8 @@ export default defineComponent({
 		addClassDataGrid() {
 			try {
 				document.getElementById("gridContainer")?.classList.add("ms-datagrid");
+				// @ts-ignore
+				document.querySelector("#gridContainer .dx-scrollable")?.dxScrollable({ showScrollbar: "always" });
 			} catch (error) {
 				console.log(error);
 			}

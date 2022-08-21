@@ -571,3 +571,15 @@ i {
 	color: #f90;
 	border: 1px solid #f90;
 }
+
+.ms-button.ms-button-filled.ms-button-secondary:active,
+.ms-button.ms-button-filled.ms-button-secondary:focus {
+	background-color: #f5f5f5;
+	color: #02a3ec;
+	border: 1px solid #eaebef;
+}
+.ms-button.ms-button-filled.ms-button-secondary:hover {
+	background-color: #dbf4ff;
+	color: #02a3ec;
+	border: 1px solid #eaebef;
+}

@@ -25,6 +25,9 @@ export default createStore({
 
 		// cấu hình toast cho toàn app
 		toastConfig: {} as ToastConfig,
+
+		// hiện loader
+		showLoader: false,
 	},
 	getters: {
 		user: (state: any): User => state.user,
@@ -32,6 +35,7 @@ export default createStore({
 		showUserUpdateDialog: (state: any): boolean => state.showUserUpdateDialog,
 		needReload: (state: any): boolean => state.needReload,
 		toastConfig: (state: any): ToastConfig => state.toastConfig,
+		showLoader: (state: any): boolean => state.showLoader,
 	},
 	mutations: {
 		setUser(state, user: User): void {
@@ -48,6 +52,9 @@ export default createStore({
 		},
 		setToastConfig(state, newToastConfig: ToastConfig): void {
 			state.toastConfig = newToastConfig;
+		},
+		setShowLoader(state, newValue: boolean): void {
+			state.showLoader = newValue;
 		},
 	},
 	actions: {
@@ -100,9 +107,15 @@ export default createStore({
 				message: notification.deleteSuccess,
 			};
 			try {
+				// hiện loader
+				context.commit("setShowLoader", true);
+
 				// call api to delete user
 				const { data } = await UserService.deleteUser(context.state.user?.userId);
 				if (data === 1) {
+					// ẩn loader
+					context.commit("setShowLoader", false);
+
 					// cập nhật user trong store nếu xoá thành công
 					context.commit("setUser", new User());
 
@@ -113,6 +126,9 @@ export default createStore({
 					context.commit("setToastConfig", myToastConfig);
 				}
 			} catch (error: any) {
+				// ẩn loader
+				context.commit("setShowLoader", false);
+				
 				if (error.response.data) {
 					const errorResp: ErrorMessageResponse = error.response.data;
 					myToastConfig.type = "error";
@@ -172,12 +188,17 @@ export default createStore({
 		 * author TQCONG 12/8/2022
 		 */
 		async handleUpdateUser(context, user) {
+			// khởi tạo cấu hình của toast
 			let myToastConfig: ToastConfig = {
 				visible: true,
 				type: "success",
 				message: notification.updateSuccess,
 			};
+
 			try {
+				// hiện loader
+				context.commit("setShowLoader", true);
+
 				const { data } = await UserService.updateUser(user);
 				if (data === 1) {
 					// đóng dialog update
@@ -195,8 +216,14 @@ export default createStore({
 						return;
 					}
 					context.commit("setUser", data);
+
+					// ẩn loader
+					context.commit("setShowLoader", false);
 				}
 			} catch (error: any) {
+				// ẩn loader
+				context.commit("setShowLoader", false);
+
 				if (error.response.data) {
 					const errorResp: ErrorMessageResponse = error.response.data;
 					myToastConfig.type = "error";

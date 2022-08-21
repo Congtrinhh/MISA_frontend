@@ -68,6 +68,7 @@ main.main-content {
 .datagrid-wrapper {
 	// overflow: auto;
 	max-height: calc(90vh - 220px);
+	position: relative;
 
 	table {
 		min-width: 100%;
@@ -341,4 +342,10 @@ i {
 	background-color: rgba(196, 13, 13, 0.1568627451);
 	color: #fff;
 	border: 1px solid #c40d0d;
+}
+
+
+.column-delete-btn {
+	position: sticky;
+	right: 0;
 }

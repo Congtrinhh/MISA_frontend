@@ -333,7 +333,6 @@
 	position: absolute;
 }
 
-
 .icon-delete-custom {
 	background-color: #de1e1e !important;
 }
@@ -377,3 +376,26 @@
 	color: #333;
 }
 /* end of table body */
+
+/* horizontal scrollbar */
+.dx-scrollable-scrollbar {
+	border-radius: 10px !important;
+}
+.dx-scrollable-scroll-content {
+	background: #d2d8df !important;
+	border-radius: 10px !important;
+}
+.dx-scrollbar-horizontal {
+	bottom: -2px;
+}
+/* end of horizontal scrollbar */
+
+/* vertical scrollbar */
+
+.dx-scrollable-scrollbar {
+	border-radius: 10px !important;
+}
+.dx-scrollbar-vertical .dx-scrollable-scroll {
+	width: 12px !important;
+}
+/* end of vertical scrollbar */

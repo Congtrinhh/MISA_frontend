@@ -1,3 +1,7 @@
+:root {
+	--text-primary-color: #171b2a;
+	--icon-default-color: #686c7b;
+}
 #popupTableConfig {
 	/* position: absolute;
 	top: 0;
@@ -57,4 +61,19 @@
 	transition: none 0s ease 0s;
 	visibility: visible;
 	opacity: 1;
+}
+
+@media only screen and (max-height: 1080px) {
+	.list-content {
+		height: calc(100% - 168px);
+	}
+}
+@media only screen and (max-height: 768px) {
+	.list-content {
+		height: 250px;
+	}
+}
+
+#adjust-colum-popover .dx-scrollable {
+	height: 100%;
 }

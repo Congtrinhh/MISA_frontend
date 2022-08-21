@@ -1,5 +1,5 @@
 // Style và tên tương ứng cho các trạng thái của user (để vẽ style html cho phần hiển thị trạng thái user)
-const UserStatus = {
+export const UserStatus = {
 	notActivated: {
 		text: "Chưa kích hoạt",
 		color: "#02a3ec",
@@ -31,7 +31,41 @@ const UserStatus = {
 	},
 };
 
-// mảng các màu để chọn ngẫu nhiên cho từng user dựa trên thuật toán có trước
-const UserAvatarColor = ["blue", "green", "orange", "aqua", "gray", "yellow", "pink", "purple", "green", "red"];
 
-export { UserStatus, UserAvatarColor };
+// object chứa các trường của bảng người dùng - dùng cho pop up để cấu hình ẩn/hiện cột nào của bảng người dùng
+export const popupTableConfigFields = {
+	userCode: {
+		text: "Mã nhân viên",
+		visible: true,
+		locked: true,
+	},
+	fullName: {
+		text: "Họ và tên",
+		visible: true,
+		locked: true,
+	},
+	departmentName: {
+		text: "Phòng ban",
+		visible: true,
+	},
+	positionName: {
+		text: "Vị trí công việc",
+		visible: true,
+	},
+	email: {
+		text: "Email",
+		visible: true,
+	},
+	roleNames: {
+		text: "Vai trò",
+		visible: true,
+	},
+	status: {
+		text: "Trạng thái",
+		visible: true,
+	},
+};
+
+// mảng các màu để chọn ngẫu nhiên cho từng user dựa trên thuật toán có trước
+export const UserAvatarColor = ["blue", "green", "orange", "aqua", "gray", "yellow", "pink", "purple", "green", "red"];
+

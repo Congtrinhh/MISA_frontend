@@ -1,4 +1,8 @@
 <template>
+	<!-- loader -->
+	<PageLoader v-show="showLoader" />
+	<!-- end of loader -->
+
 	<!-- Toast thông báo chung  -->
 	<DxToast
 		:displayTime="3000"
@@ -33,8 +37,7 @@ import UserList from "@/views/setup/user/UserList.vue";
 import UserUpdate from "@/views/setup/user/UserUpdate.vue";
 import UserCreateNew from "@/views/setup/user/UserCreateNew.vue";
 import { DxToast, DxPosition } from "devextreme-vue/toast";
-import ToastConfig from "@/enums/ToastConfig";
-import notify from "devextreme/ui/notify";
+import PageLoader from "@/components/base/PageLoader.vue";
 
 export default defineComponent({
 	components: {
@@ -43,10 +46,11 @@ export default defineComponent({
 		UserCreateNew,
 		DxToast,
 		DxPosition,
+		PageLoader,
 	},
 
 	computed: {
-		...mapGetters(["showUserUpdateDialog", "toastConfig"]),
+		...mapGetters(["showUserUpdateDialog", "toastConfig", "showLoader"]),
 	},
 
 	data() {
@@ -57,8 +61,12 @@ export default defineComponent({
 	},
 
 	methods: {
-		...mapMutations(["setToastConfig"]),
+		...mapMutations(["setToastConfig", "setShowLoader"]),
 
+		/**
+		 * ẩn dialog thêm mới
+		 * author TQCONG 14/8/2022
+		 */
 		hideUserCreateNewDialog() {
 			this.showUserCreateNewDialog = false;
 		},
@@ -70,8 +78,7 @@ export default defineComponent({
 			this.showUserCreateNewDialog = true;
 		},
 	},
-
-	});
+});
 </script>
 
 <style scoped lang="scss">

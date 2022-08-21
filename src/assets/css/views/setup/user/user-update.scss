@@ -122,59 +122,9 @@ span.required {
 	color: #e54848;
 }
 
-.role-selection {
-	// display: grid;
-	// grid-template-columns: repeat(1fr, 2);
-	// grid-template-rows: repeat(1fr, 2);
-}
-
 .role-wrapper {
 	display: flex;
 	align-items: center;
-
-	input[type="checkbox"] {
-		appearance: none;
-		width: 16px;
-		height: 16px;
-		border-radius: 2px;
-		border: 2px solid #686c7b;
-		background: #fff;
-
-		position: relative;
-		cursor: pointer;
-	}
-
-	input[type="checkbox"]:hover {
-		border-color: $blue-color;
-	}
-
-	input[type="checkbox"]:checked {
-		background-color: $blue-color;
-		border-color: $blue-color;
-	}
-	input[type="checkbox"]:checked::after {
-		display: inline-block;
-	}
-
-	input[type="checkbox"]::after {
-		content: "✔";
-		position: absolute;
-		top: -1px;
-		left: 0;
-		width: 16px;
-		height: 16px;
-		color: #fff;
-		transform: rotate(6deg);
-		display: none;
-	}
-
-	label {
-		margin-left: 16px;
-	}
-
-	label:hover {
-		color: $blue-color;
-	}
 }
 
 // fallback

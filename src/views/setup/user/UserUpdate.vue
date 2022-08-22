@@ -23,9 +23,7 @@
 						</div>
 					</div>
 					<br /><label class="font-20 bold sub-header">
-						<p style="">
-							Vai trò<span class="required" style="float: inherit"> * </span>
-						</p></label
+						<p>Vai trò<span class="required" style="float: inherit"> * </span></p></label
 					><br />
 					<div class="ms-row role-selection">
 						<template v-for="(role, index) in roles" :key="index">
@@ -38,7 +36,9 @@
 										:checked="checkRoleContains(role, user.roles)"
 									/>
 								</div>
-								<label :for="`roleCheckbox${index}`" :title="role.name" class="checkbox-label">{{ role.name }}</label>
+								<label :for="`roleCheckbox${index}`" :title="role.name" class="checkbox-label">{{
+									role.name
+								}}</label>
 							</div>
 						</template>
 					</div>
@@ -131,7 +131,6 @@ export default defineComponent({
 				console.log(error);
 				if (error.data) {
 					const errorRes: ErrorMessageResponse = error.data;
-					
 				}
 			}
 		},

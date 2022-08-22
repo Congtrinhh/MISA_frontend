@@ -2,7 +2,7 @@ import { Status } from "@/enums/Status";
 import User from "@/models/User";
 import { UserAvatarColor, UserStatus } from "@/resources/enums";
 
-function getUserStatusStyles(status: Status): object {
+export function getUserStatusStyles(status: Status): object {
 	try {
 		switch (status) {
 			case Status.Active:
@@ -26,7 +26,7 @@ function getUserStatusStyles(status: Status): object {
 	}
 }
 
-function getUserAvatarMarkup(user: User, cssClasses: string=""): string {
+export function getUserAvatarMarkup(user: User, cssClasses: string=""): string {
 	const defaultMarkup = `<div class="user-avatar ${cssClasses}" style="background-color: gray">--</div>`;
 	try {
 		let code = user.userCode; // có dạng NV-12145
@@ -52,4 +52,13 @@ function getUserAvatarMarkup(user: User, cssClasses: string=""): string {
 	}
 }
 
-export { getUserStatusStyles, getUserAvatarMarkup };
+
+/**
+ * trả về chuỗi có các số 0 đằng trước để đủ 4 chữ số
+ * @param num số chính (số mà có các số 0 đằng trước)
+ * @param totalLength độ dài của chuỗi (tính cả số num)
+ * @returns ví dụ: nhận vào: num=3, totalLength=4 => return 0003
+ */
+export function addLeadingZeros(num:number, totalLength:number=4) :string{
+	return String(num).padStart(totalLength, "0");
+}

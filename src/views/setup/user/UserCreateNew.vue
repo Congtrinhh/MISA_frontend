@@ -149,14 +149,14 @@
 														<template #item="{ data }">
 															<div
 																class="dropdown-item"
-																:id="`departmentOption${data.departmentId}`"
+																:id="`departmentOption${data.departmentId}${index}`"
 															>
 																{{ data.name }}
 																<DxTooltip
 																	:hide-on-outside-click="false"
 																	show-event="dxhoverstart"
 																	hide-event="dxhoverend"
-																	:target="`#departmentOption${data.departmentId}`"
+																	:target="`#departmentOption${data.departmentId}${index}`"
 																>
 																	{{ data.name }}
 																</DxTooltip>
@@ -190,14 +190,14 @@
 														<template #item="{ data }">
 															<div
 																class="dropdown-item"
-																:id="`positionOption${data.positionId}`"
+																:id="`positionOption${data.positionId}${index}`"
 															>
 																{{ data.name }}
 																<DxTooltip
 																	:hide-on-outside-click="false"
 																	show-event="dxhoverstart"
 																	hide-event="dxhoverend"
-																	:target="`#positionOption${data.positionId}`"
+																	:target="`#positionOption${data.positionId}${index}`"
 																>
 																	{{ data.name }}
 																</DxTooltip>
@@ -255,14 +255,14 @@
 														<template #item="{ data }">
 															<div
 																class="dropdown-item"
-																:id="`roleOptionFormCreate${data.roleId}`"
+																:id="`roleOptionFormCreate${data.roleId}${index}`"
 															>
 																{{ data.name }}
 																<DxTooltip
 																	:hide-on-outside-click="false"
 																	show-event="dxhoverstart"
 																	hide-event="dxhoverend"
-																	:target="`#roleOptionFormCreate${data.roleId}`"
+																	:target="`#roleOptionFormCreate${data.roleId}${index}`"
 																>
 																	{{ data.name }}
 																</DxTooltip>
@@ -297,14 +297,14 @@
 														<template #item="{ data }">
 															<div
 																class="dropdown-item"
-																:id="`statusOption${data.value}`"
+																:id="`statusOption${data.value}${index}`"
 															>
 																{{ data.text }}
 																<DxTooltip
 																	:hide-on-outside-click="false"
 																	show-event="dxhoverstart"
 																	hide-event="dxhoverend"
-																	:target="`#statusOption${data.value}`"
+																	:target="`#statusOption${data.value}${index}`"
 																>
 																	{{ data.text }}
 																</DxTooltip>
@@ -352,6 +352,23 @@
 				</div>
 			</div>
 			<!-- end of buttons submit -->
+
+			<!-- dialog chi tiết lỗi -->
+			<MDialog
+				v-if="showErrorDetailDialog"
+				:config="{ headerTitle: 'Chi tiết lỗi' }"
+				@cancelBtnClick="closeErrorDetailDialog"
+			>
+				<template #default>
+					<div v-for="(error, index) in errorMessages" :key="index">
+						{{ error }}
+					</div>
+				</template>
+				<template #dialog-footer-content>
+					<MButton @click="closeErrorDetailDialog">Đóng</MButton>
+				</template>
+			</MDialog>
+			<!-- end of dialog chi tiết lỗi -->
 		</Form>
 	</div>
 </template>
@@ -369,10 +386,12 @@ import { UserStatus } from "@/resources/enums";
 import MButton from "@/components/base/MButton.vue";
 import ToastConfig from "@/enums/ToastConfig";
 import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
-import { error, notification } from "@/resources/messages";
+import { error, notification, validate } from "@/resources/messages";
 import { mapMutations } from "vuex";
 import { DxScrollView } from "devextreme-vue/scroll-view";
 import { DxTooltip } from "devextreme-vue/tooltip";
+import MDialog from "@/components/base/MDialog.vue";
+import { addLeadingZeros } from "@/helpers/common";
 
 // @ts-ignore
 import ServiceFactory from "@/services/ServiceFactory";
@@ -391,6 +410,7 @@ export default defineComponent({
 		MButton,
 		DxScrollView,
 		DxTooltip,
+		MDialog,
 	},
 
 	data() {
@@ -418,10 +438,20 @@ export default defineComponent({
 
 			// list role cho select box
 			roles: new Array<Role>(),
+
+			// hiện dialog chi tiết lỗi
+			showErrorDetailDialog: false,
+
+			// danh sách lỗi từ server gửi về
+			errorMessages: new Array<string>(),
 		};
 	},
 
 	methods: {
+		closeErrorDetailDialog() {
+			this.showErrorDetailDialog = false;
+		},
+
 		...mapMutations(["setToastConfig", "setShowLoader"]),
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
@@ -455,11 +485,19 @@ export default defineComponent({
 
 				if (error.response.data) {
 					const errorResp: ErrorMessageResponse = error.response.data;
+
+					// lấy ds lỗi
+					this.errorMessages = errorResp.data;
+
+					// cấu hình toast
 					myToastConfig.type = "error";
 					myToastConfig.message = errorResp.userMsg;
 				}
 				// hiện toast
 				this.setToastConfig(myToastConfig);
+
+				// hiện dialog chi tiết lỗi
+				this.showErrorDetailDialog = true;
 
 				console.log(error);
 			}
@@ -470,7 +508,7 @@ export default defineComponent({
 		 */
 		validateStatus(value: number): boolean | string {
 			if (value < 0) {
-				return "Trường này là bắt buộc";
+				return validate.status.required;
 			}
 			return true;
 		},
@@ -481,14 +519,14 @@ export default defineComponent({
 		validateEmail(value: string): boolean | string {
 			try {
 				if (!value) {
-					return "Trường này là bắt buộc";
+					return validate.email.required;
 				}
 				if (value.length > 255) {
-					return "Tên không được dài quá 255 ký tự";
+					return validate.email.maxLength;
 				}
 				const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 				if (!regex.test(value)) {
-					return "Email không hợp lệ";
+					return validate.email.format;
 				}
 				return true;
 			} catch (error) {
@@ -503,10 +541,10 @@ export default defineComponent({
 		validateFullName(value: string): string | boolean {
 			try {
 				if (!value) {
-					return "Trường này là bắt buộc";
+					return validate.fullName.required;
 				}
 				if (value.length > 255) {
-					return "Tên không được dài quá 255 ký tự";
+					return validate.fullName.maxLength;
 				}
 				return true;
 			} catch (error) {
@@ -523,7 +561,7 @@ export default defineComponent({
 				if (Array.isArray(roles) && roles.length > 0) {
 					return true;
 				}
-				return "Trường này là bắt buộc";
+				return validate.role.required;
 			} catch (error) {
 				console.log(error);
 				return false;
@@ -536,7 +574,7 @@ export default defineComponent({
 		validateNotNull(value: any): string | boolean {
 			try {
 				if (!value) {
-					return "Trường này là bắt buộc";
+					return validate.default.required;
 				}
 
 				return true;
@@ -552,11 +590,11 @@ export default defineComponent({
 		validateUserCode(value: any): string | boolean {
 			try {
 				if (!value) {
-					return "Trường này là bắt buộc";
+					return validate.userCode.required;
 				}
 				const regex = /^NV-\d*$/;
 				if (!regex.test(value)) {
-					return "Mã nhân viên không hợp lệ";
+					return validate.userCode.format;
 				}
 
 				return true;
@@ -590,7 +628,7 @@ export default defineComponent({
 		getNewUserCode(userCode: string): string {
 			try {
 				const numericPart = Number(userCode.substring(3));
-				return "NV-" + (numericPart + 1);
+				return "NV-" + addLeadingZeros(numericPart + 1);
 			} catch (error) {
 				console.log(error);
 				return "";

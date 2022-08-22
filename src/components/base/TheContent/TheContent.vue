@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import TheSidebar from "@/components/base/TheSidebar.vue";
+import TheSidebar from "@/components/base/TheSidebar/TheSidebar.vue";
 
 export default defineComponent({
 	components: { TheSidebar },
@@ -19,5 +19,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/components/base/the-content.scss";
+@import "./the-content.scss";
 </style>

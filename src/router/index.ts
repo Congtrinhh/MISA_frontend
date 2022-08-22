@@ -4,12 +4,12 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: "/process/setting/user",
 		name: "user-setting",
-		component: () => import("../views/setup/user/UserPage.vue"),
+		component: () => import("../views/setup/user/UserPage/UserPage.vue"),
 	},
 	{
 		path: "/process/setting/role",
 		name: "role-setting",
-		component: () => import("../views/setup/role/RolePage.vue"),
+		component: () => import("../views/setup/role/RolePage/RolePage.vue"),
 	},
 	{
 		path: "/",

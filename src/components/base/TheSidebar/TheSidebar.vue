@@ -26,5 +26,5 @@ export default defineComponent({});
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/components/base/the-sidebar.scss";
+@import "./the-sidebar.scss";
 </style>

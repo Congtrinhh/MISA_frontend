@@ -61,5 +61,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/base/button.scss";
+@import "./button.scss";
 </style>

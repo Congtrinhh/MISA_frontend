@@ -170,11 +170,11 @@ i {
 .mi-check {
 	width: 24px;
 	height: 24px;
-	-webkit-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
-	-moz-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
-	-ms-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
-	-o-mask-image: url("../../assets/img/Icon.de5bb0db.svg");
-	mask-image: url("../../assets/img/Icon.de5bb0db.svg");
+	-webkit-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-moz-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-ms-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	-o-mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
+	mask-image: url("../../../assets/img/Icon.de5bb0db.svg");
 	-webkit-mask-position: -48px -96px;
 	-moz-mask-position: -48px -96px;
 	-ms-mask-position: -48px -96px;
@@ -188,8 +188,7 @@ i {
 	background-color: $blue-color !important;
 }
 
-
-.icon-check{
-    width: 20px;
-    margin-left: 8px;
+.icon-check {
+	width: 20px;
+	margin-left: 8px;
 }

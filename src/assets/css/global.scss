@@ -1,4 +1,6 @@
 // overall styles
 @import "./base.scss";
 @import "./setup/layout.scss";
-@import "./views/setup/user/customize/tooltip.css";
+
+@import "./setup/customize/dx-tooltip.css";
+@import "./setup/customize/dx-select.css";

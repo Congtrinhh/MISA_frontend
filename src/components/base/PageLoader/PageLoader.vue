@@ -1,6 +1,6 @@
 <template>
 	<div class="loader-wrapper">
-		<img src="../../assets/img/loading.svg" alt="loading animation" />
+		<img src="../../../assets/img/loading.svg" alt="loading animation" />
 	</div>
 </template>
 
@@ -13,5 +13,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/base/page-loader.scss";
+@import "./page-loader.scss";
 </style>

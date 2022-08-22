@@ -95,5 +95,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/base/select.scss";
+@import "./select.scss";
 </style>

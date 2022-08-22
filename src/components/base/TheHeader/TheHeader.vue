@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MButton from "@/components/base/MButton.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 
 export default defineComponent({
 	components: { MButton },
@@ -81,5 +81,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/css/components/base/the-header.scss";
+@import "./the-header.scss";
 </style>

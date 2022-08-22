@@ -49,15 +49,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MButton from "@/components/base/MButton.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 import { DxTooltip } from "devextreme-vue/tooltip";
 
 export default defineComponent({
 	components: { MButton, DxTooltip },
 	data() {
-		return {
-			
-		};
+		return {};
 	},
 
 	props: {
@@ -94,5 +92,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/components/base/dialog.scss";
+@import "./dialog.scss";
 </style>

@@ -110,6 +110,10 @@ textarea {
 .cursor-pointer {
 	cursor: pointer;
 }
+.cursor-all-scroll {
+
+	cursor: all-scroll
+}
 .justify-flexstart {
 	justify-content: flex-start !important;
 }
@@ -300,6 +304,9 @@ textarea {
 	top: 0;
 	left: 6px;
 	transform: translateY(-50%);
+}
+.float-inherit {
+	float: inherit;
 }
 .red {
 	color: red;

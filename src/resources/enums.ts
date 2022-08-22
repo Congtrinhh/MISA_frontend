@@ -7,7 +7,7 @@ export const UserStatus = {
 	},
 
 	pending: {
-		text: "Chờ kích hoạt",
+		text: "Chờ xác nhận",
 		color: "rgb(243, 150, 25)",
 		value: 1,
 	},
@@ -67,5 +67,16 @@ export const popupTableConfigFields = {
 };
 
 // mảng các màu để chọn ngẫu nhiên cho từng user dựa trên thuật toán có trước
-export const UserAvatarColor = ["blue", "green", "orange", "aqua", "gray", "yellow", "pink", "purple", "green", "red"];
+export const UserAvatarColor = [
+	"#1DA9F4",
+	"#5ED56D",
+	"#FD632F",
+	"#4386DF",
+	"#84AF94", //gray
+	"#FEC874",
+	"#EB509E",
+	"#7C70EE",
+	"#39C5AB",
+	"#E33C4D",
+];
 

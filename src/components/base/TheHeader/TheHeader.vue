@@ -56,6 +56,7 @@ export default defineComponent({
 	components: { MButton },
 	data() {
 		return {
+			// mảng các tabs của header
 			tabs: [
 				{
 					name: "Lượt chạy",

@@ -7,8 +7,9 @@ const resource = "/Users";
 export default {
 	/**
 	 * lấy ra danh sách user theo trang và lọc
-	 * @param paginationRequest
-	 * @returns
+	 * @param paginationRequest đối tượng request phân trang và lọc
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	getPaging: function (paginationRequest: UserPaginationRequest): Promise<PaginationResponse<User>> {
 		return Repository.get(
@@ -17,8 +18,9 @@ export default {
 	},
 
 	/**
-	 *
-	 * @returns
+	 * lấy ra mã user code mới
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	getNewUserCode: function () {
 		return Repository.get(`${resource}/newUserCode`);
@@ -27,7 +29,8 @@ export default {
 	/**
 	 * tạo nhiều user
 	 * @param users
-	 * @returns
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	createMany: function (users: User[]) {
 		return Repository.post(`${resource}/many`, users);
@@ -36,7 +39,8 @@ export default {
 	/**
 	 * lấy ra user theo id
 	 * @param id
-	 * @returns
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	getById: function (id: number) {
 		return Repository.get(`${resource}/${id}`);
@@ -44,7 +48,8 @@ export default {
 
 	/**
 	 * lấy ra tất cả user trong DB
-	 * @returns
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	getAll: function () {
 		return Repository.get(`${resource}/all`);
@@ -53,7 +58,8 @@ export default {
 	/**
 	 * cập nhật user
 	 * @param user
-	 * @returns
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	updateUser: function (user: User) {
 		return Repository.put(`${resource}/${user.userId}`, user);
@@ -62,7 +68,8 @@ export default {
 	/**
 	 * xoá user
 	 * @param id
-	 * @returns
+	 * @returns axios Promise để tiếp tục xử lý
+	 * author TQCONG 14/8/2022
 	 */
 	deleteUser: function (id: number) {
 		return Repository.delete(`${resource}/${id}`);

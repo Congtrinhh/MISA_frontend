@@ -1,3 +1,7 @@
+/**
+ * Class thông tin phân trang do server trả về
+ * author TQCONG 19/8/2022
+ */
 export default interface PaginationResponse<T> {
 	/// Danh sách entity
 	data: T[];

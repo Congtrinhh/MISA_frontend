@@ -103,9 +103,14 @@ export default defineComponent({
 		 */
 		getUserAvatarMarkup,
 
+		/**
+		 * emit sự kiện nút xoá được click lên compnent cha
+		 * author TQCONG 13/8/2022
+		 */
 		raiseDeleteBtnClickEvent() {
 			this.$emit("deleteBtnClick");
 		},
+		
 		...mapMutations(["setShowUserDetailScreen", "setShowUserUpdateDialog"]),
 	},
 });

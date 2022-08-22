@@ -1,4 +1,5 @@
 // This function converts the string to lowercase, then perform the conversion
+// Ví dụ: Hà -> ha
 export function toLowerCaseNonAccentVietnamese(str) {
     str = str.toLowerCase();
 //     We can also use this instead of from line 11 to line 17

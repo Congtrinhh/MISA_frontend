@@ -23,7 +23,7 @@
 						</div>
 					</div>
 					<br /><label class="font-20 bold sub-header">
-						<p>Vai trò<span class="required" style="float: inherit"> * </span></p></label
+						<p>Vai trò<span class="required float-inherit"> * </span></p></label
 					><br />
 					<div class="ms-row role-selection">
 						<template v-for="(role, index) in roles" :key="index">
@@ -134,6 +134,7 @@ export default defineComponent({
 				}
 			}
 		},
+
 		/**
 		 * validate user (trước khi thực hiện update hoặc mỗi khi có sự thay đổi trong user)
 		 * có thể đưa thông báo lỗi trong quá trình validate
@@ -152,6 +153,7 @@ export default defineComponent({
 				return false;
 			}
 		},
+
 		/**
 		 * cập nhật lại mảng role trong userToUpdate khi một checkbox được click
 		 * author TQCONG 13/8/2022
@@ -165,6 +167,7 @@ export default defineComponent({
 				this.userToUpdate.roles = this.userToUpdate.roles?.filter((r) => r.roleId != role.roleId);
 			}
 		},
+
 		/**
 		 * trả về list role cho việc cập nhật
 		 * author TQCONG 13/8/2022
@@ -195,6 +198,7 @@ export default defineComponent({
 			});
 			return newListRole;
 		},
+		
 		/**
 		 * kiểm tra xem liệu role có tồn tại trong số các role của user không
 		 * author TQCONG 13/8/2022

@@ -1,3 +1,7 @@
+/**
+ * enum trạng thái của hoạt động của đối tượng user
+ * createdBy TQCONG 14/8/2022
+ */
 export enum Status {
 	/// <summary>
 	///  Chưa được kích hoạt

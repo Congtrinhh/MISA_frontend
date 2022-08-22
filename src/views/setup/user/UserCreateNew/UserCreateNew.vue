@@ -345,7 +345,7 @@
 						>Lưu</MButton
 					>
 					<MButton
-						@click="$emit('closeDialogBtnClick')"
+						@click="raiseCloseDialogBtnClickEvent"
 						btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
 						>Huỷ</MButton
 					>
@@ -449,6 +449,14 @@ export default defineComponent({
 
 	methods: {
 		/**
+		 * emit sự kiện ẩn dialog thêm mới lên component cha
+		 * author TQCONG 22/8/2022
+		 */
+		raiseCloseDialogBtnClickEvent() {
+			this.$emit("closeDialogBtnClick");
+		},
+
+		/**
 		 * ẩn dialog chi tiết lỗi
 		 * author TQCONG 22/8/2022
 		 */
@@ -512,10 +520,15 @@ export default defineComponent({
 		 * author TQCONG 14/8/2022
 		 */
 		validateStatus(value: number): boolean | string {
-			if (value < 0) {
-				return validate.status.required;
+			try {
+				if (value < 0) {
+					return validate.status.required;
+				}
+				return true;
+			} catch (error) {
+				console.log(error);
+				return false;
 			}
-			return true;
 		},
 		/**
 		 * validate email
@@ -643,9 +656,11 @@ export default defineComponent({
 
 	async created() {
 		try {
+			// lấy ra mã user code mới nhất từ DB
 			const { data } = await UserService.getNewUserCode();
 			this.currentUserCode = data;
 
+			// khởi tạo user đầu tiên của bảng
 			let user = new User();
 			user.userCode = data;
 
@@ -684,5 +699,4 @@ export default defineComponent({
 <style scoped>
 /* custom css cho dx-datagrid - dùng css vì không thể override bằng scss */
 @import "./dx-datagrid-create-new-user.css";
-/* @import "@/assets/css/views/setup/user/customize/dx-select.css"; */
 </style>

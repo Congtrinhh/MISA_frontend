@@ -8,7 +8,7 @@
 						<!-- button -->
 						<MButton
 							id="btnAddPermission"
-							@click="$emit('btnAddNewUserClick')"
+							@click="raiseBtnAddNewUserClickEvent"
 							btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-mi-plus-white includeIcon"
 							iconClasses="ms-icon notranslate icon-scale mi-plus-white"
 							>Thêm mới</MButton
@@ -19,14 +19,10 @@
 				<div class="content-main">
 					<div class="h-full w-full">
 						<!-- search box, filter, setting -->
-						<div
-							id="contentMainHeader"
-							class="content-main-header flex items-center w-full bg-white"
-							style="height: 60px"
-						>
+						<div id="contentMainHeader" class="content-main-header flex items-center w-full bg-white">
 							<span class="input-search-user">
 								<div class="m-l-12">
-									<div style="height: 36px; width: 240px">
+									<div class="input-search-user-child">
 										<div class="flex items-center w-full h-full">
 											<div class="ms-input flex w-full">
 												<div class="ms-icon-default flex items-center justify-center p-l-8">
@@ -126,8 +122,7 @@
 														<div
 															id="btnClosePopUpConfigTable"
 															@click="hidePopUpConfigTable"
-															class="ms-icon-container flex items-center justify-center ms-icon- btn-icon-1"
-															style="cursor: pointer"
+															class="ms-icon-container flex items-center justify-center ms-icon- btn-icon-1 cursor-pointer"
 														>
 															<div class="tooltip-container">
 																<div class="con-ms-tooltip">
@@ -148,7 +143,7 @@
 														</div>
 													</div>
 													<div sizeicon="20px" iconnoborder="true" inputbackground="#ffffff">
-														<div title="" style="height: 35px; width: 100%">
+														<div title="" class="search-pop-up-table-config-wrapper">
 															<div class="flex items-center w-full h-full">
 																<div class="ms-input flex w-full">
 																	<div
@@ -175,11 +170,11 @@
 																	/>
 																</div>
 															</div>
-															<div class="flex" style="display: none">
+															<div class="flex display-none">
 																<div
 																	class="root flex justify-between items-center text-border"
 																>
-																	<p class="w-full" style="height: 35px">
+																	<p class="w-full pop-up-title-wrapper">
 																		<span title=""></span>
 																	</p>
 																	<div
@@ -238,8 +233,7 @@
 																		>
 																	</div>
 																	<div
-																		class="icon-drag-wrapper ms-icon-default flex items-center justify-center ms-icon- drag-class"
-																		style="cursor: all-scroll"
+																		class="icon-drag-wrapper ms-icon-default flex items-center justify-center ms-icon- drag-class cursor-all-scroll"
 																	>
 																		<i
 																			class="ms-icon notranslate icon-scale mi-drag"
@@ -250,12 +244,9 @@
 														</div>
 														<div
 															class="no-data-wrapper flex-col items-center justify-center w-full p-y-24"
-															style="height: 250px; display: none"
 														>
 															<div class="mi-empty-state-sheets"></div>
-															<div style="font-style: italic; color: rgb(221, 221, 221)">
-																Không có dữ liệu
-															</div>
+															<div class="no-data-text">Không có dữ liệu</div>
 														</div>
 													</DxScrollView>
 												</div>
@@ -312,7 +303,7 @@
 										<template #userCodeHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<!-- end of user code -->
@@ -327,7 +318,7 @@
 										<template #fullNameHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<template #fullName="{ data }">
@@ -348,7 +339,7 @@
 										<template #departmentNameHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<!-- end of department name -->
@@ -363,7 +354,7 @@
 										<template #positionNameHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<!-- end of position name -->
@@ -378,7 +369,7 @@
 										<template #emailHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<!-- end of email -->
@@ -393,7 +384,7 @@
 										<template #roleNamesHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<!-- end of role names -->
@@ -408,7 +399,7 @@
 										<template #statusHeader="{ data }">
 											<div class="justify-flexstart header-title">
 												<div class="">{{ data.column.caption }}</div>
-												<div class="m-l-4" style="display: none"></div>
+												<div class="m-l-4 display-none"></div>
 											</div>
 										</template>
 										<template #userStatus="{ data }">
@@ -452,7 +443,7 @@
 										<!-- end of action -->
 
 										<DxPager :enabled="false" />
-										<PxPaging :enabled="false" />
+										<DxPaging :enabled="false" />
 									</DxDataGrid>
 									<!-- end of actual dx table -->
 
@@ -461,7 +452,7 @@
 										<div class="grid-navigation">
 											<div class="page-total flex">
 												Tổng số bản ghi:
-												<b style="padding: 0px 6px">{{ paginationResponse.totalCount }}</b>
+												<b>{{ paginationResponse.totalCount }}</b>
 											</div>
 											<div class="page-size-selector flex items-center">
 												<div class="m-r-8">Số bản ghi/trang</div>
@@ -478,10 +469,7 @@
 											<div class="page-next-preview">
 												<div class="ms-row m-0">
 													<div class="ms-pagination--mb ms-col ms-xs-12 ms-sm-12 ms-lg-">
-														<div
-															class="con-ms-pagination w-full ms-pagination-primary"
-															style="height: 40px"
-														>
+														<div class="con-ms-pagination w-full ms-pagination-primary">
 															<nav
 																class="ms-pagination--nav flex justify-between items-center"
 															>
@@ -581,13 +569,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import { DxDataGrid, DxColumn, DxPager, DxPaging } from "devextreme-vue/data-grid";
+import  DxDataGrid, { DxColumn, DxPager, DxPaging } from "devextreme-vue/data-grid";
 import DxSelectBox, { DxItem } from "devextreme-vue/select-box";
 import User from "@/models/User";
 import Role from "@/models/Role";
 import PaginationResponse from "@/models/paging/PaginationResponse";
 import UserPaginationRequest from "@/models/paging/UserPaginationRequest";
-import { Status } from "@/enums/Status";
 import MDialog from "@/components/base/MDialog/MDialog.vue";
 import MSelect from "@/components/base/MSelect/MSelect.vue";
 import MButton from "@/components/base/MButton/MButton.vue";
@@ -657,6 +644,8 @@ export default defineComponent({
 			// mảng các cột thông tin người dùng để cấu hình ẩn/hiện trên bảng người dùng
 			popupTableConfigFields: JSON.parse(JSON.stringify(popupTableConfigFields)),
 
+			// mảng tạm các cột thông tin người dùng để cấu hình ẩn/hiện trên bảng người dùng
+			// (cần mảng này vì không muốn cột được ẩn/hiện ngay khi người dùng tích/bỏ tích các ô checkbox trong phần popup chỉnh cột)
 			tempPopupTableConfigFields: JSON.parse(JSON.stringify(popupTableConfigFields)),
 		};
 	},
@@ -694,6 +683,13 @@ export default defineComponent({
 
 	methods: {
 		/**
+		 * emit sự kiện bấm vào nút thêm mới lên component cha
+		 * author TQCONG 22/8/2022
+		 */
+		raiseBtnAddNewUserClickEvent() {
+			this.$emit("btnAddNewUserClick");
+		},
+		/**
 		 * focus vào ô search của pop up chỉnh cột
 		 * author TQCONG 21/8/2022
 		 */
@@ -715,29 +711,33 @@ export default defineComponent({
 		 * author TQCONG 21/8/2022
 		 */
 		searchTableConfigFieldName(keyword: string): void {
-			// convert sang tiếng việt viết thường không dấu. Ví dụ: Hà -> ha
-			const keywordNonVietnamese = toLowerCaseNonAccentVietnamese(keyword);
+			try {
+				// convert sang tiếng việt viết thường không dấu. Ví dụ: Hà -> ha
+				const keywordNonVietnamese = toLowerCaseNonAccentVietnamese(keyword);
 
-			// mảng các key của object popupTableConfigFields (mảng tên trường)
-			const filteredFieldNames = Object.keys(this.popupTableConfigFields).filter((fieldName) => {
-				const fieldNameTextNonVietnamese = toLowerCaseNonAccentVietnamese(
+				// mảng các key của object popupTableConfigFields (mảng tên trường)
+				const filteredFieldNames = Object.keys(this.popupTableConfigFields).filter((fieldName) => {
+					const fieldNameTextNonVietnamese = toLowerCaseNonAccentVietnamese(
+						// @ts-ignore
+						this.popupTableConfigFields[fieldName].text
+					);
+					return fieldNameTextNonVietnamese.includes(keywordNonVietnamese);
+				});
+
+				// biến tạm để gán cho tempPopupTableConfigFields
+				let tempObj = {};
+
+				// lấy ra tất cả các trường có trong mảng đã lọc bên trên
+				filteredFieldNames.forEach((fieldName) => {
 					// @ts-ignore
-					this.popupTableConfigFields[fieldName].text
-				);
-				return fieldNameTextNonVietnamese.includes(keywordNonVietnamese);
-			});
+					tempObj[fieldName] = JSON.parse(JSON.stringify(this.popupTableConfigFields[fieldName]));
+				});
 
-			// biến tạm để gán cho tempPopupTableConfigFields
-			let tempObj = {};
-
-			// lấy ra tất cả các trường có trong mảng đã lọc bên trên
-			filteredFieldNames.forEach((fieldName) => {
 				// @ts-ignore
-				tempObj[fieldName] = JSON.parse(JSON.stringify(this.popupTableConfigFields[fieldName]));
-			});
-
-			// @ts-ignore
-			this.tempPopupTableConfigFields = tempObj;
+				this.tempPopupTableConfigFields = tempObj;
+			} catch (error) {
+				console.log(error);
+			}
 		},
 
 		/**
@@ -745,27 +745,35 @@ export default defineComponent({
 		 * author TQCONG 21/8/2022
 		 */
 		restoreDefaultPopupTableConfig() {
-			this.popupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
-			this.tempPopupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
-			// ẩn pop up
-			this.isPopupTableConfigVisible = false;
+			try {
+				this.popupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
+				this.tempPopupTableConfigFields = JSON.parse(JSON.stringify(popupTableConfigFields));
+				// ẩn pop up
+				this.isPopupTableConfigVisible = false;
+			} catch (error) {
+				console.log(error);
+			}
 		},
 		/**
 		 * cập nhật lại cấu hình các trường nào được hiện/ẩn trên bảng user ngay khi nút "Áp dùng" trên pop up được bấm
 		 * author TQCONG 21/8/2022
 		 */
 		updatePopupTableConfig() {
-			// gán giá trị của các trường của object temp cho object chính (lúc này số field trong object temp có thể ít hơn số field trong object chính - vì được lọc khi người dùng nhập qua ô search)
-			Object.keys(this.tempPopupTableConfigFields).forEach((fieldName) => {
-				// @ts-ignore
-				this.popupTableConfigFields[fieldName] = JSON.parse(
+			try {
+				// gán giá trị của các trường của object temp cho object chính (lúc này số field trong object temp có thể ít hơn số field trong object chính - vì được lọc khi người dùng nhập qua ô search)
+				Object.keys(this.tempPopupTableConfigFields).forEach((fieldName) => {
 					// @ts-ignore
-					JSON.stringify(this.tempPopupTableConfigFields[fieldName])
-				);
-			});
+					this.popupTableConfigFields[fieldName] = JSON.parse(
+						// @ts-ignore
+						JSON.stringify(this.tempPopupTableConfigFields[fieldName])
+					);
+				});
 
-			// ẩn pop up
-			this.isPopupTableConfigVisible = false;
+				// ẩn pop up
+				this.isPopupTableConfigVisible = false;
+			} catch (error) {
+				console.log(error);
+			}
 		},
 		/**
 		 * ẩn/hiện pop up table config
@@ -774,6 +782,7 @@ export default defineComponent({
 		togglePopupTableConfig() {
 			this.isPopupTableConfigVisible = !this.isPopupTableConfigVisible;
 		},
+
 		/**
 		 * xử lý khi nút "xoá" ở mỗi dòng của bảng user được click
 		 * author TQCONG 13/8/2022
@@ -812,16 +821,13 @@ export default defineComponent({
 				// gọi action xoá user từ store
 				await this.deleteUser();
 
-				// thông báo xoá thành công
-				//...
-				console.log("xoa thanh cong");
 				// reload lại list user
 				this.paginationRequest.currentPage = 1;
 			} catch (error) {
-				// thông báo xoá không thành công
 				console.log(error);
 			}
 		},
+
 		/**
 		 * (hàm import từ helper) - trả về object chứa tên trạng thái và màu để css
 		 * author TQCONG 13/8/2022
@@ -847,13 +853,16 @@ export default defineComponent({
 		 * author TQCONG 12/8/2022
 		 */
 		handleShowConfirmDeleteDialog(user: User): void {
-			console.log("delete");
-			// cập nhật store với user mới từ dòng được bấm của bảng user
-			this.setUser(user);
-			// hiện dialog xác nhận xoá
-			this.$nextTick(() => {
-				this.showDialog = true;
-			});
+			try {
+				// cập nhật store với user mới từ dòng được bấm của bảng user
+				this.setUser(user);
+				// hiện dialog xác nhận xoá
+				this.$nextTick(() => {
+					this.showDialog = true;
+				});
+			} catch (error) {
+				console.log(error);
+			}
 		},
 
 		...mapMutations(["setUser", "setNeedReload", "setShowLoader", "setToastConfig"]),
@@ -876,16 +885,27 @@ export default defineComponent({
 				console.log(error);
 			}
 		},
+
+		/**
+		 * Giảm chỉ số currentpage khi bấm nút "trang trước"
+		 * Created by TQCONG 20/8/2022
+		 */
 		decreaseCurrentPage() {
 			if (this.paginationRequest.currentPage > 1) {
 				this.paginationRequest.currentPage--;
 			}
 		},
+
+		/**
+		 * Tăng chỉ số currentpage khi bấm nút "trang sau"
+		 * Created by TQCONG 20/8/2022
+		 */
 		increaseCurrentPage() {
 			if (this.paginationRequest.currentPage < this.paginationResponse.totalPages) {
 				this.paginationRequest.currentPage++;
 			}
 		},
+
 		/**
 		 * lấy ra list user dựa vào bộ lọc và phân trang
 		 * author TQCONG 12/8/2022
@@ -923,14 +943,23 @@ export default defineComponent({
 			}
 		},
 
+		/**
+		 * cập nhật số bản ghi/trang trong sự kiện onchange của thẻ select chọn số bản ghi/trang
+		 * author TQCONG 20/8/2022
+		 */
 		updatePageSize(pageSize: number) {
 			try {
 				this.paginationRequest.pageSize = pageSize;
+				this.paginationRequest.currentPage=1;
 			} catch (error) {
 				console.log(error);
 			}
 		},
 
+		/**
+		 * xử lý các nghiệp vụ cần thiết khi dx-datagrid vừa được khởi tạo
+		 * author TQCONG 20/8/2022
+		 */
 		addClassDataGrid() {
 			try {
 				document.getElementById("gridContainer")?.classList.add("ms-datagrid");
@@ -939,10 +968,6 @@ export default defineComponent({
 			} catch (error) {
 				console.log(error);
 			}
-		},
-
-		consoleLog(data: any) {
-			console.log(data);
 		},
 
 		/**
@@ -975,6 +1000,7 @@ export default defineComponent({
 
 			// lấy ra list role
 			await this.getAllRoles();
+
 			// thêm option tất cả vào mảng role
 			const roleAll: Role = new Role();
 			roleAll.name = "Tất cả";
@@ -994,6 +1020,5 @@ export default defineComponent({
 <style scoped>
 /* custom css cho dx-datagrid - dùng css vì không thể override bằng scss */
 @import "./dx-datagrid.css";
-/* @import "./dx-select.css"; */
 @import "./dx-popup.css";
 </style>

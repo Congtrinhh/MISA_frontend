@@ -1,3 +1,7 @@
+/**
+ * Class chứa response lỗi từ server gửi về
+ * author TQCONG 19/8/2022
+ */
 export default class ErrorMessageResponse {
 	constructor() {
 		this._userMsg = "";

@@ -1,13 +1,16 @@
+// message lỗi 
 export const error = {
 	messageDefault: "Có lỗi xảy ra",
 };
 
+// message thông báo
 export const notification = {
 	deleteSuccess: "Xoá thành công",
 	updateSuccess: "Sửa thành công",
 	insertSuccess: "Thêm thành công",
 };
 
+// message validate
 export const validate = {
 	default: {
 		required: "Trường này là bắt buộc",

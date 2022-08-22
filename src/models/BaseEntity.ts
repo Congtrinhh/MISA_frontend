@@ -1,5 +1,9 @@
 import { ModificationMode } from "@/enums/ModificationMode";
 
+/**
+ * Class base entity
+ * author TQCONG 19/8/2022
+ */
 export default class BaseEntity {
 	constructor() {
 		this._createdDate = new Date();

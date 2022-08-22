@@ -10,6 +10,9 @@ const services = {
 	roles: RoleService,
 };
 
+// import và gọi hàm này ở file .vue như ví dụ sau:
+// import ServiceFactory from "@/services/ServiceFactory";
+// const RoleService: any = ServiceFactory.get("roles"); (đây là ví dụ file ts, file js tương tự)
 const ServiceFactory = {
 	get: (name) => services[name],
 };

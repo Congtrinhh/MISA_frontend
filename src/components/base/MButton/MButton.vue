@@ -53,6 +53,10 @@ export default defineComponent({
 		},
 	},
 	computed: {
+		/**
+		 * check xem button thuộc loại chứa icon hay không
+		 * author TQCONG 14/8/2022
+		 */
 		hasIcon() {
 			return this.iconClasses && this.iconClasses.trim();
 		},

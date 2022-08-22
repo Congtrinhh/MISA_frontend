@@ -1,7 +1,6 @@
 <template>
-	<div>
+	<div id="selectItemPerPage">
 		<div class="ms-select">
-			<!-- <button class="btn-select" @click="toggleDropdown">{{ selected }}</button> -->
 			<button type="button" width="50" height="40" class="btn-select ms-con-dropdown parent-dropdown">
 				<button
 					tabindex="1"
@@ -13,7 +12,6 @@
 					<div
 						class="ms-icon-default flex items-center justify-center ms-button--icon ms-icon-white"
 						size="16px"
-						style="order: 2; margin-right: 0px; margin-left: 4px"
 					>
 						<i size="16px" class="ms-icon notranslate icon-scale mi-chevron-down"></i>
 					</div>
@@ -24,7 +22,11 @@
 			<div class="ms-dropdown-wrapper" v-show="showDropdown">
 				<div class="ms-dropdown">
 					<template v-for="(option, index) in options" :key="index">
-						<div class="ms-dropdown-item" @click="handleSetSelected(option)" :class="{ selected: option == selected }">
+						<div
+							class="ms-dropdown-item"
+							@click="handleSetSelected(option)"
+							:class="{ selected: option == selected }"
+						>
 							<a class="ms-dropdown-item-link flex justify-between checked">
 								<div>{{ option }}</div>
 								<div class="icon-check" :class="option == selected ? 'mi-check' : ''"></div>
@@ -58,14 +60,18 @@ export default defineComponent({
 		options: null,
 	},
 	methods: {
-        handleSetSelected(newValue:any):void{
-            // update selected
-            this.selected = newValue;
-            // emit sự kiện để update prop khi dùng v-model ở component cha
-            this.$emit('valueChange', newValue);
-            // ẩn dropdown
-            this.toggleDropdown();
-        },
+		handleSetSelected(newValue: any): void {
+			try {
+				// update selected
+				this.selected = newValue;
+				// emit sự kiện để update prop khi dùng v-model ở component cha
+				this.$emit("valueChange", newValue);
+				// ẩn dropdown
+				this.toggleDropdown();
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		/**
 		 * ẩn/hiện dropdown
 		 * author TQCONG 12/8/2022

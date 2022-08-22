@@ -91,9 +91,7 @@ export default createStore({
 				console.log(error);
 			}
 		},
-		updateUser(context, user: User): void {
-			context.commit("setUser", user);
-		},
+
 		/**
 		 * xoá user sau khi ... (hàm này cần xem lại)
 		 * @param context
@@ -128,7 +126,7 @@ export default createStore({
 			} catch (error: any) {
 				// ẩn loader
 				context.commit("setShowLoader", false);
-				
+
 				if (error.response.data) {
 					const errorResp: ErrorMessageResponse = error.response.data;
 					myToastConfig.type = "error";

@@ -7,6 +7,7 @@ export default class Department extends BaseEntity {
 		this._description = "";
 		this._name = "";
 	}
+	
 	/// Khoá chính
 	private _departmentId: number;
 	public get departmentId(): number {

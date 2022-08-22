@@ -1,5 +1,9 @@
 import BasePaginationRequest from "./BasePaginationRequest";
 
+/**
+ * Class thông tin phân trang của user gửi lên server
+ * author TQCONG 19/8/2022
+ */
 export default class UserPaginationRequest extends BasePaginationRequest {
 	constructor() {
 		super();

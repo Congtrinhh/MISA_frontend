@@ -59,7 +59,37 @@ export default defineComponent({
 	},
 
 	props: {
-		config: null,
+		config: {
+			type: Object,
+			default(rawProps: object) {
+				console.log(rawProps)
+				return {
+					width: 500,
+					headerTitle: "Dialog",
+					cancelBtn: {
+						text: "Huỷ",
+						classes:
+							"btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null",
+					},
+					confirmBtn: {
+						text: "Đồng ý",
+						classes: "ms-component ms-button ms-button-primary ms-button-filled ms-button-null",
+					},
+				};
+			},
+		},
+		// this.dialogConfig = {
+		// 		width: 500,
+		// 		headerTitle: "Xoá người dùng",
+		// 		cancelBtn: {
+		// 			text: "Huỷ",
+		// 			classes: "ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null",
+		// 		},
+		// 		confirmBtn: {
+		// 			text: "Xoá",
+		// 			classes: "ms-component ms-button ms-button-danger ms-button-filled ms-button-null",
+		// 		},
+		// 	};
 	},
 
 	methods: {

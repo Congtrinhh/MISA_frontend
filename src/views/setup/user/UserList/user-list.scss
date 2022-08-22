@@ -716,3 +716,37 @@ i {
 }
 // end of footer
 // end of pop up adjust column ---------------------------------------------------------------------------------------
+
+// fix style inline in file vue template
+.content-main-header {
+	height: 60px;
+}
+.input-search-user-child {
+	height: 36px;
+	width: 240px;
+}
+.search-pop-up-table-config-wrapper {
+	height: 35px;
+	width: 100%;
+}
+.display-none {
+	display: none;
+}
+.pop-up-title-wrapper {
+	height: 35px;
+}
+.no-data-wrapper {
+	height: 250px;
+	display: none;
+}
+.no-data-text {
+	font-style: italic;
+	color: rgb(221, 221, 221);
+}
+.page-total b {
+	padding: 0px 6px;
+}
+.con-ms-pagination {
+	height: 40px;
+}
+// end of fix style inline in file vue template

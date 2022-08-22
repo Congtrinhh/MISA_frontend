@@ -1,13 +1,13 @@
 <template>
 	<div id="userCreateNewWrapper" ref="dialogCreateUser">
-		<Form @submit="onSubmit" v-slot="{ meta }" class="pop-up-content">
+		<Form @submit="onSubmit" ref="formCreateNewUsers" v-slot="{ meta }" class="pop-up-content">
 			<!-- pop up header -->
 			<header class="header">
 				<div class="flex items-center justify-between">
 					<div class="header-title">Thêm người dùng</div>
 					<div class="flex align-center">
 						<div class="h-full"></div>
-						<div id="closeBtn" @click="$emit('closeDialogBtnClick')" class="btn-cancel popup-header-icon">
+						<div id="closeBtn" @click="handleCloseDialogBtnClickEvent" class="btn-cancel popup-header-icon">
 							<i class="btn-cancel-icon"></i>
 							<DxTooltip
 								:hide-on-outside-click="false"
@@ -315,10 +315,14 @@
 														{{ errorMessage }}
 													</div></Field
 												>
+
+												<!-- icon xoá dòng -->
+												<div @click="removeTableRow(index)" title="Xóa" class="btn-delete-row">
+													<div class="icon-delete-custom"></div>
+												</div>
 											</div>
-										</td>
-									</tr></template
-								>
+										</td></tr
+								></template>
 							</tbody>
 						</table>
 					</div>
@@ -338,20 +342,47 @@
 			<div class="pop-up-footer flex justify-flexend">
 				<div class="buttons flex justify-flexend direction-row-reverse">
 					<MButton
-						id="btnSave"
+						id="btnSaveOfFormCreateUsers"
+						ref="btnSaveOfFormCreateUsers"
 						:disabled="!meta.valid"
 						btnClasses="ms-component ms-button ms-button-primary ms-button-filled ms-button-null"
 						type="submit"
 						>Lưu</MButton
 					>
 					<MButton
-						@click="raiseCloseDialogBtnClickEvent"
+						@click="handleCloseDialogBtnClickEvent"
+						id="btnCloseOfFormCreateUsers"
 						btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
 						>Huỷ</MButton
 					>
 				</div>
 			</div>
 			<!-- end of buttons submit -->
+
+			<!-- dialog cảnh báo thay đổi -->
+			<MDialog
+				v-if="showWarningChangeDialog"
+				:config="{ headerTitle: 'Chú ý' }"
+				@cancelBtnClick="closeWarningChangeDialog"
+			>
+				<template #default>
+					<div class="warning-change-body">Dữ liệu đã bị thay đổi, bạn có muốn thoát không?</div>
+				</template>
+				<template #dialog-footer-content>
+					<div class="warning-change-footer">
+						<div class="warning-change-footer-buttons">
+							<MButton @click="closeWarningChangeDialogAndMainForm">Có</MButton>
+							<!-- <MButton @click="handleBtnConfirmWarningChangeDialogClick">Có</MButton> -->
+						</div>
+						<MButton
+							@click="closeWarningChangeDialog"
+							btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
+							>Không</MButton
+						>
+					</div>
+				</template>
+			</MDialog>
+			<!-- end of dialog cảnh báo thay đổi -->
 
 			<!-- dialog chi tiết lỗi -->
 			<MDialog
@@ -421,9 +452,6 @@ export default defineComponent({
 			// list user để thêm
 			users: new Array<User>(),
 
-			// form đâ thay đổi hay chưa - dùng để đưa ra dialog thông báo
-			modified: false,
-
 			// userCode hiện tại, làm căn cứ để thêm userCode mới cho mỗi dòng dữ liệu mới
 			currentUserCode: "",
 
@@ -444,16 +472,71 @@ export default defineComponent({
 
 			// danh sách lỗi từ server gửi về
 			errorMessages: new Array<string>(),
+
+			// hiện dialog cảnh báo thay đổi
+			showWarningChangeDialog: false,
+
+			// form đâ thay đổi hay chưa - dùng để đưa ra dialog thông báo nếu list user đã bị thay đổi
+			isModified: false,
 		};
 	},
 
 	methods: {
 		/**
-		 * emit sự kiện ẩn dialog thêm mới lên component cha
+		 * xoá 1 dòng của bảng user
 		 * author TQCONG 22/8/2022
 		 */
-		raiseCloseDialogBtnClickEvent() {
+		removeTableRow(index: number) {
+			if (this.users.length > 1) {
+				this.users.splice(index, 1);
+			}
+		},
+
+		/**
+		 * hàm xử lý khi nút xác nhận "Lưu" ở dialog cảnh báo thay đổi được bấm
+		 * author TQCONG 22/8/2022
+		 */
+		handleBtnConfirmWarningChangeDialogClick() {
+			// ẩn dialog cảnh báo thay đổi
+			this.closeWarningChangeDialog();
+
+			// thực hiện hành động submit form
+			// lẽ ra cần click vào nút "Lưu" của form thì đúng hơn [time limited - fix later]
+			this.onSubmit(null);
+		},
+
+		/**
+		 * đóng dialog cảnh báo thay đổi và đóng luôn form thêm mới user
+		 * author TQCONG 22/8/2022
+		 */
+
+		closeWarningChangeDialogAndMainForm() {
+			// emit sự kiện ẩn form thêm mới lên component cha
 			this.$emit("closeDialogBtnClick");
+		},
+
+		/**
+		 * đóng dialog cảnh báo thay đổi
+		 * author TQCONG 22/8/2022
+		 */
+
+		closeWarningChangeDialog() {
+			this.showWarningChangeDialog = false;
+		},
+
+		/**
+		 * hàm xử lý khi nút ẩn dialog thêm mới user được click
+		 * author TQCONG 22/8/2022
+		 */
+		handleCloseDialogBtnClickEvent() {
+			// nếu form đã bị chỉnh sửa, hiện form cảnh báo
+			if (this.isModified) {
+				this.showWarningChangeDialog = true;
+			}
+			// ngược lại, ẩn form thêm mới user
+			else {
+				this.$emit("closeDialogBtnClick");
+			}
 		},
 
 		/**
@@ -685,6 +768,15 @@ export default defineComponent({
 				"table tbody tr:first-of-type td.column-user-code input.ms-input-item"
 			);
 			firstEl?.focus();
+
+			// watch sự thay đổi của list user sau khi đã set up user đầu tiên
+			this.$watch(
+				"users",
+				(newVal: User[]) => {
+					this.isModified = true;
+				},
+				{ deep: true }
+			);
 		} catch (error) {
 			console.log(error);
 		}

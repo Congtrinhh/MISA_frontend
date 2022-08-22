@@ -360,9 +360,11 @@
 }
 
 .user-action-wrapper {
-	height: 100%;
+	/* height: 100%;
 	position: sticky;
-	right: 0;
+	right: 0; */
+
+	margin-right: -8px !important;
 }
 
 .grid-container .dx-datagrid .dx-row-lines > td:last-child {
@@ -399,3 +401,24 @@
 	width: 12px !important;
 }
 /* end of vertical scrollbar */
+
+
+.grid-container td {
+    position: relative!important;
+}
+
+/* fix lỗi nút sửa và xoá ở mỗi hàng không chịu đứng yên */
+.grid-container .dx-datagrid-table-fixed .dx-header-row > td:last-child  {
+    visibility: hidden;
+	z-index: -111;
+}
+
+.user-action-dx-column {
+	width: 110px !important;
+	max-width: 110px !important;
+}
+
+.dx-datagrid .dx-datagrid-content-fixed .dx-datagrid-table .dx-col-fixed {
+	background: transparent;
+	width: 110px !important;
+}

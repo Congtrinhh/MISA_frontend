@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import TheSidebar from "@/components/base/TheSidebar/TheSidebar.vue";
+import TheSidebar from "@/components/layout/TheSidebar/TheSidebar.vue";
 
 export default defineComponent({
 	components: { TheSidebar },

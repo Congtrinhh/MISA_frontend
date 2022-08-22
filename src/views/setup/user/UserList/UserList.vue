@@ -419,7 +419,15 @@
 										<!-- end of user status -->
 
 										<!-- action -->
-										<DxColumn caption="" cell-template="userAction" />
+										<DxColumn
+											caption=""
+											cell-template="userAction"
+											header-cell-template="userActionHeader"
+											:fixed="true"
+											fixed-position="right"
+											 css-class="user-action-dx-column"
+										/>
+										<template #userActionHeader> <div class="user-action-header-wrapper display-none"></div> </template>
 										<template #userAction="{ data }">
 											<div class="user-action-wrapper flex justify-flexend m-x-8">
 												<div
@@ -569,7 +577,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import  DxDataGrid, { DxColumn, DxPager, DxPaging } from "devextreme-vue/data-grid";
+import DxDataGrid, { DxColumn, DxPager, DxPaging } from "devextreme-vue/data-grid";
 import DxSelectBox, { DxItem } from "devextreme-vue/select-box";
 import User from "@/models/User";
 import Role from "@/models/Role";
@@ -950,7 +958,7 @@ export default defineComponent({
 		updatePageSize(pageSize: number) {
 			try {
 				this.paginationRequest.pageSize = pageSize;
-				this.paginationRequest.currentPage=1;
+				this.paginationRequest.currentPage = 1;
 			} catch (error) {
 				console.log(error);
 			}

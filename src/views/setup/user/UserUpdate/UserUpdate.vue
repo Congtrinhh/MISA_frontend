@@ -103,6 +103,10 @@ export default defineComponent({
 	},
 
 	watch: {
+		/**
+		 * Mỗi khi giá trị của user để update thay đổi, validate biến này
+		 * author TQCONG 15/8/2022
+		 */
 		userToUpdate: {
 			handler: function (newVal) {
 				this.isUserValid = this.validateUser(newVal);

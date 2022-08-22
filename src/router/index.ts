@@ -2,18 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: "/process/setting/user",
+		path: "/setting/user",
 		name: "user-setting",
 		component: () => import("../views/setup/user/UserPage/UserPage.vue"),
 	},
 	{
-		path: "/process/setting/role",
+		path: "/setting/role",
 		name: "role-setting",
 		component: () => import("../views/setup/role/RolePage/RolePage.vue"),
 	},
 	{
 		path: "/",
-		redirect: "/process/setting/user",
+		redirect: "/setting/user",
 	},
 ];
 

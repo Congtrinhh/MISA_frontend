@@ -81,6 +81,11 @@ main.main-content {
 			background-color: #f3f8ff;
 			height: 56px;
 			text-align: left;
+
+			position: sticky;
+			z-index: 1;
+			top: 0;
+			left: 0;
 		}
 		th {
 			padding: 6px;
@@ -121,7 +126,6 @@ main.main-content {
 		tbody td:not(:first-of-type) {
 			min-width: 200px;
 			// min-width: 300px;
-			
 		}
 
 		thead th:first-of-type,
@@ -344,8 +348,74 @@ i {
 	border: 1px solid #c40d0d;
 }
 
-
 .column-delete-btn {
 	position: sticky;
 	right: 0;
+}
+
+// dialog warning change
+.warning-change-body {
+	font-weight: 500;
+	font-size: 15px;
+	margin: 8px 0;
+}
+.warning-change-footer {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+
+	.warning-change-footer-buttons {
+		display: flex;
+	}
+}
+
+// icon xoa dong
+
+#userCreateNewWrapper table tbody tr:hover .btn-delete-row {
+	display: flex;
+}
+
+.btn-delete-row {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	z-index: 10;
+	background: #fff;
+	transform: translateY(-50%);
+
+	display: none;
+}
+.btn-delete-row:hover {
+	background-color: #dadce3;
+}
+.icon-delete-custom {
+	background-color: #de1e1e !important;
+}
+.icon-delete,
+.icon-delete-custom {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../../assets/img/Icon_process.93f7e484.svg);
+	-moz-mask-image: url(../../../../assets/img/Icon_process.93f7e484.svg);
+	-ms-mask-image: url(../../../../assets/img/Icon_process.93f7e484.svg);
+	-o-mask-image: url(../../../../assets/img/Icon_process.93f7e484.svg);
+	mask-image: url(../../../../assets/img/Icon_process.93f7e484.svg);
+	-webkit-mask-position: -264px 0;
+	-moz-mask-position: -264px 0;
+	-ms-mask-position: -264px 0;
+	-o-mask-position: -264px 0;
+	mask-position: -264px 0;
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
 }

@@ -198,3 +198,27 @@ i {
 	margin-right: 0px;
 	margin-left: 4px;
 }
+
+.mi-chevron-down,
+.mi-chevron-down-black {
+	width: 24px;
+	height: 24px;
+	-webkit-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-moz-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-ms-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-o-mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	mask-image: url(../../../assets/img/Icon.de5bb0db.svg);
+	-webkit-mask-position: -144px -24px;
+	-moz-mask-position: -144px -24px;
+	-ms-mask-position: -144px -24px;
+	-o-mask-position: -144px -24px;
+	mask-position: -144px -24px;
+	-webkit-mask-repeat: no-repeat;
+	-moz-mask-repeat: no-repeat;
+	-ms-mask-repeat: no-repeat;
+	-o-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+.mi-chevron-down {
+	background-color: $icon-default-color !important;
+}

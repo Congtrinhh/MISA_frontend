@@ -33,11 +33,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import UserList from "@/views/setup/user/UserList.vue";
-import UserUpdate from "@/views/setup/user/UserUpdate.vue";
-import UserCreateNew from "@/views/setup/user/UserCreateNew.vue";
+import UserList from "@/views/setup/user/UserList/UserList.vue";
+import UserUpdate from "@/views/setup/user/UserUpdate/UserUpdate.vue";
+import UserCreateNew from "@/views/setup/user/UserCreateNew/UserCreateNew.vue";
 import { DxToast, DxPosition } from "devextreme-vue/toast";
-import PageLoader from "@/components/base/PageLoader.vue";
+import PageLoader from "@/components/base/PageLoader/PageLoader.vue";
 
 export default defineComponent({
 	components: {
@@ -82,5 +82,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "../../../assets/css/views/setup/user/user-page.scss";
+@import "./user-page.scss";
 </style>

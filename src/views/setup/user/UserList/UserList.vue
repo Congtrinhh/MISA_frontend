@@ -588,14 +588,14 @@ import Role from "@/models/Role";
 import PaginationResponse from "@/models/paging/PaginationResponse";
 import UserPaginationRequest from "@/models/paging/UserPaginationRequest";
 import { Status } from "@/enums/Status";
-import MDialog from "@/components/base/MDialog.vue";
-import MSelect from "@/components/base/MSelect.vue";
-import MButton from "@/components/base/MButton.vue";
+import MDialog from "@/components/base/MDialog/MDialog.vue";
+import MSelect from "@/components/base/MSelect/MSelect.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 import DxPopup, { DxPosition } from "devextreme-vue/popup";
 import { DxTooltip } from "devextreme-vue/tooltip";
 import { DxScrollView } from "devextreme-vue/scroll-view";
 
-import UserDetail from "@/views/setup/user/UserDetail.vue";
+import UserDetail from "@/views/setup/user/UserDetail/UserDetail.vue";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
 
 import ToastConfig from "@/enums/ToastConfig";
@@ -709,7 +709,7 @@ export default defineComponent({
 		hidePopUpConfigTable() {
 			this.isPopupTableConfigVisible = false;
 		},
-		
+
 		/**
 		 * lọc các trường được chọn lam option trong pop up cấu hình ẩn hiện trường của bảng user
 		 * author TQCONG 21/8/2022
@@ -988,12 +988,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/css/views/setup/user/user-list.scss";
+@import "./user-list.scss";
 </style>
 
 <style scoped>
 /* custom css cho dx-datagrid - dùng css vì không thể override bằng scss */
-@import "@/assets/css/views/setup/user/customize/dx-datagrid.css";
-@import "@/assets/css/views/setup/user/customize/dx-select.css";
-@import "@/assets/css/views/setup/user/customize/dx-popup.css";
+@import "./dx-datagrid.css";
+/* @import "./dx-select.css"; */
+@import "./dx-popup.css";
 </style>

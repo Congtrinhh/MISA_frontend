@@ -1,0 +1,79 @@
+:root {
+	--text-primary-color: #171b2a;
+	--icon-default-color: #686c7b;
+}
+#popupTableConfig {
+	/* position: absolute;
+	top: 0;
+	left: 0; */
+}
+
+.dx-overlay-wrapper {
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.dx-overlay-shader {
+	pointer-events: auto;
+	background-color: transparent;
+}
+
+.dx-overlay-content {
+	position: absolute;
+	pointer-events: auto;
+	z-index: 1000;
+	outline: 0;
+	overflow: hidden;
+
+	width: 80vw;
+	height: 80vh;
+	z-index: 1501;
+	left: 0px;
+	top: 0px;
+	transform: translate(192px, 93px) scale(1);
+	transition: none 0s ease 0s;
+	opacity: 1;
+}
+
+/*  */
+.dx-popup-wrapper > .dx-overlay-content {
+	border: 1px solid #ddd;
+	background: #fff;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	border-radius: 6px;
+}
+.dx-popover-wrapper .dx-overlay-content {
+	overflow: visible;
+}
+.dx-overlay-content {
+	min-width: 150px;
+}
+.dx-popup-wrapper > .dx-overlay-content {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.175);
+	color: var(--text-primary-color);
+
+	width: 316px;
+	height: auto;
+	z-index: 1501;
+	left: 0px;
+	top: 0px;
+	transform: translate(1594px, 175px);
+	transition: none 0s ease 0s;
+	visibility: visible;
+	opacity: 1;
+}
+
+@media only screen and (max-height: 1080px) {
+	.list-content {
+		height: calc(100% - 168px);
+	}
+}
+@media only screen and (max-height: 768px) {
+	.list-content {
+		height: 250px;
+	}
+}
+
+#adjust-colum-popover .dx-scrollable {
+	height: 100%;
+}

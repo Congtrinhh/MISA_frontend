@@ -5,12 +5,10 @@
 				<div class="content-user">
 					<div class="mi-close" @click="setShowUserDetailScreen(false)"></div>
 					<div class="section-1 ms-row">
-						<div
-							class="avatar-wrapper ms-col ms-xs- ms-sm- ms-lg-"
-						>
+						<div class="avatar-wrapper ms-col ms-xs- ms-sm- ms-lg-">
 							<div class="avatar m-r-8" v-html="getUserAvatarMarkup(user, 'user-avatar-66')"></div>
 						</div>
-						<div class="basic-info-wrapper ms-col ms-xs- ms-sm- ms-lg-" >
+						<div class="basic-info-wrapper ms-col ms-xs- ms-sm- ms-lg-">
 							<div class="fullName font-20 bold">{{ user?.fullName }}</div>
 							<div class="email">{{ user?.email }}</div>
 							<div class="status">
@@ -64,7 +62,7 @@
 								<div class="jobPositionName">{{ user?.positionName }}</div>
 							</div>
 						</div>
-						<div class="font-20 bold permission-info-header" >THÔNG TIN PHÂN QUYỀN</div>
+						<div class="font-20 bold permission-info-header">THÔNG TIN PHÂN QUYỀN</div>
 						<div class="w-full roles-wrapper flex flex-column">
 							<div class="role-header bold">Vai trò</div>
 							<template v-for="(role, index) in user.roles" :key="index">
@@ -84,7 +82,7 @@
 import { defineComponent } from "vue";
 import { mapMutations, mapGetters } from "vuex";
 import { getUserAvatarMarkup, getUserStatusStyles } from "@/helpers/common";
-import MButton from "@/components/base/MButton.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 
 export default defineComponent({
 	components: { MButton },
@@ -114,5 +112,5 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import "../../../assets/css/views/setup/user/user-detail.scss";
+@import "./user-detail.scss";
 </style>

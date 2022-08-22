@@ -59,13 +59,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MDialog from "@/components/base/MDialog.vue";
+import MDialog from "@/components/base/MDialog/MDialog.vue";
 import { mapActions, mapGetters } from "vuex";
 import Role from "@/models/Role";
 import User from "@/models/User";
 import { ModificationMode } from "@/enums/ModificationMode";
 import { getUserAvatarMarkup } from "@/helpers/common";
-import MButton from "@/components/base/MButton.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
 
 // dùng để gọi API
@@ -247,5 +247,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../../../assets/css/views/setup/user/user-update.scss";
+@import "./user-update.scss";
 </style>

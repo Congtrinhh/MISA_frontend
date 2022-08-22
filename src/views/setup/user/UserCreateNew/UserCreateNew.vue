@@ -383,14 +383,14 @@ import Role from "@/models/Role";
 import DxSelectBox from "devextreme-vue/select-box";
 import { DxTagBox } from "devextreme-vue/tag-box";
 import { UserStatus } from "@/resources/enums";
-import MButton from "@/components/base/MButton.vue";
+import MButton from "@/components/base/MButton/MButton.vue";
 import ToastConfig from "@/enums/ToastConfig";
 import ErrorMessageResponse from "@/models/exception/ErrorMessageResponse";
 import { error, notification, validate } from "@/resources/messages";
 import { mapMutations } from "vuex";
 import { DxScrollView } from "devextreme-vue/scroll-view";
 import { DxTooltip } from "devextreme-vue/tooltip";
-import MDialog from "@/components/base/MDialog.vue";
+import MDialog from "@/components/base/MDialog/MDialog.vue";
 import { addLeadingZeros } from "@/helpers/common";
 
 // @ts-ignore
@@ -448,11 +448,16 @@ export default defineComponent({
 	},
 
 	methods: {
+		/**
+		 * ẩn dialog chi tiết lỗi
+		 * author TQCONG 22/8/2022
+		 */
 		closeErrorDetailDialog() {
 			this.showErrorDetailDialog = false;
 		},
 
 		...mapMutations(["setToastConfig", "setShowLoader"]),
+
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
 		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm
@@ -673,11 +678,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../../../assets/css/views/setup/user/user-create-new.scss";
+@import "./user-create-new.scss";
 </style>
 
 <style scoped>
 /* custom css cho dx-datagrid - dùng css vì không thể override bằng scss */
-@import "@/assets/css/views/setup/user/customize/dx-datagrid-create-new-user.css";
+@import "./dx-datagrid-create-new-user.css";
 /* @import "@/assets/css/views/setup/user/customize/dx-select.css"; */
 </style>

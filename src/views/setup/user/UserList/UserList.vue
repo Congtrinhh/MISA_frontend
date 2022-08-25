@@ -47,7 +47,6 @@
 								<div class="wrap-ms-select-box m-l-12">
 									<DxSelectBox
 										:data-source="roles"
-										v-model:value="paginationRequest.roleId"
 										placeholder="Chọn vai trò"
 										item-template="item"
 										display-expr="name"
@@ -55,6 +54,7 @@
 										id="selectBoxRole"
 										:hover-state-enabled="true"
 										class="ms-select-box"
+										@value-changed="roleIdFilterChange"
 									>
 										<template #item="{ data }">
 											<div class="dropdown-item" :id="`roleOption${data.roleId}`">
@@ -293,6 +293,7 @@
 										:hover-state-enabled="true"
 										columnResizingMode="widget"
 										showScrollbar="always"
+										noDataText="Không có dữ liệu"
 									>
 										<!-- user code -->
 										<DxColumn
@@ -425,9 +426,11 @@
 											header-cell-template="userActionHeader"
 											:fixed="true"
 											fixed-position="right"
-											 css-class="user-action-dx-column"
+											css-class="user-action-dx-column"
 										/>
-										<template #userActionHeader> <div class="user-action-header-wrapper display-none"></div> </template>
+										<template #userActionHeader>
+											<div class="user-action-header-wrapper display-none"></div>
+										</template>
 										<template #userAction="{ data }">
 											<div class="user-action-wrapper flex justify-flexend m-x-8">
 												<div
@@ -691,12 +694,22 @@ export default defineComponent({
 
 	methods: {
 		/**
+		 * hàm xử lý khi dx-selectbox lọc theo vai trò thay đổi giá trị
+		 * author TQCONG 25/8/2022
+		 */
+		roleIdFilterChange(e: any) {
+			this.paginationRequest.roleId = e.value;
+			this.paginationRequest.currentPage = 1;
+		},
+
+		/**
 		 * emit sự kiện bấm vào nút thêm mới lên component cha
 		 * author TQCONG 22/8/2022
 		 */
 		raiseBtnAddNewUserClickEvent() {
 			this.$emit("btnAddNewUserClick");
 		},
+
 		/**
 		 * focus vào ô search của pop up chỉnh cột
 		 * author TQCONG 21/8/2022

@@ -106,3 +106,8 @@
 .dx-selectbox.dx-state-focused {
 	border-color:  #02a3ec !important;
 }
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused {
+    color: #02a3ec !important;
+	background-color: #f3fbfd !important;
+}

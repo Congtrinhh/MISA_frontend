@@ -145,6 +145,7 @@
 														placeholder=""
 														v-model="user.department"
 														:class="errorMessage ? 'invalid' : ''"
+														:onKeyDown="showDxSelectBoxDropdown"
 													>
 														<template #item="{ data }">
 															<div
@@ -186,6 +187,7 @@
 														placeholder=""
 														v-model="user.position"
 														:class="errorMessage ? 'invalid' : ''"
+														:onKeyDown="showDxSelectBoxDropdown"
 													>
 														<template #item="{ data }">
 															<div
@@ -251,6 +253,7 @@
 																: 'dx-show-invalid-badge dx-tagbox dx-tagbox-only-select dx-selectbox dx-textbox dx-texteditor dx-texteditor-empty dx-widget dx-tagbox-default-template dx-dropdowneditor dx-dropdowneditor-field-clickable ms-select-box dx-editor-outlined'
 														"
 														:multiline="false"
+														:onKeyDown="showDxSelectBoxDropdown"
 													>
 														<template #item="{ data }">
 															<div
@@ -293,6 +296,7 @@
 														placeholder=""
 														v-model="user.status"
 														:class="{ invalid: errorMessage }"
+														:onKeyDown="showDxSelectBoxDropdown"
 													>
 														<template #item="{ data }">
 															<div
@@ -371,14 +375,19 @@
 				<template #dialog-footer-content>
 					<div class="warning-change-footer">
 						<div class="warning-change-footer-buttons">
+							<MButton
+								@click="closeWarningChangeDialog"
+								btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
+								>Không</MButton
+							>
 							<MButton @click="closeWarningChangeDialogAndMainForm">Có</MButton>
 							<!-- <MButton @click="handleBtnConfirmWarningChangeDialogClick">Có</MButton> -->
 						</div>
-						<MButton
+						<!-- <MButton
 							@click="closeWarningChangeDialog"
 							btnClasses="btn-left ms-component ms-button m-r-12 ms-button-secondary ms-button-filled ms-button-null"
 							>Không</MButton
-						>
+						> -->
 					</div>
 				</template>
 			</MDialog>
@@ -482,6 +491,15 @@ export default defineComponent({
 	},
 
 	methods: {
+		showDxSelectBoxDropdown(e: any) {
+			console.log(e);
+			const keyCode: number = e.event.which;
+			// key: arrow down
+			if (keyCode === 40) {
+				e.component.open();
+			}
+		},
+
 		/**
 		 * xoá 1 dòng của bảng user
 		 * author TQCONG 22/8/2022
@@ -551,7 +569,7 @@ export default defineComponent({
 
 		/**
 		 * xử lý khi nút submit được click khi form đã hợp lệ
-		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm
+		 * khi submit, lấy giá trị từ user list thay vì tham số của hàm để tạo mới nhiều user
 		 * author TQCONG 14/8/2022
 		 */
 		async onSubmit(values: any) {
